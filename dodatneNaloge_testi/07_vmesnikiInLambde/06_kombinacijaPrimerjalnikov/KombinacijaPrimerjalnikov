@@ -1,0 +1,25 @@
+
+public class KombinacijaPrimerjalnikov{
+
+
+
+    public static <T> Comparator<T> kombinacija(List<Comparator<T>> primerjalniki){
+            return(a,b) ->{
+        	for(Comparator<T> primerjalnik : primerjalniki){
+                int x = primerjalnik.compare(a,b)
+                if( x != 0){
+                    return x;
+                }
+            }
+            return 0;
+         }
+
+
+
+    }
+
+
+
+
+
+}
