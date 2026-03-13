@@ -1,0 +1,2818 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" 
+          "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <head>
+        <title>Prikaz rezultatov testiranja</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <style>
+            .tableBase { border-collapse: collapse; }
+            .tableBase > tbody > tr > td { border: 1px solid black; padding: 7px;}
+            .tableResults { table-layout: fixed; border-spacing: 0px; border-collapse: separate; }
+            table#nasredini { margin-left:auto; margin-right:auto; }
+            table tbody td.hoverOk {background-color:#9F9; border: 1px solid #63B563; width: 15px; color: black; text-align: center; }
+            .hoverOk:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #63B563; }
+            .hoverOk:hover td { background: transparent; }
+            .hoverOk > a:link, .hoverOk > a:visited, .hoverOk > a:hover, .hoverOk > a:active { color: black; font-size: 0.9em; }
+            table tbody td.hoverErr {background-color:#FFBF00; border: 1px solid #CB9800; width: 15px; color: black; text-align: center; }
+            .hoverErr:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #CB9800; }
+            .hoverErr:hover td { background: transparent; }
+            .hoverErr > a:link, .hoverErr > a:visited, .hoverErr > a:hover, .hoverErr > a:active { color: black; font-size: 0.9em; }
+            table tbody td.hoverRuntime {background-color:#FF9; border: 1px solid #D8D87E; width: 15px; color: black; text-align: center; }
+            .hoverRuntime:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #D8D87E; }
+            .hoverRuntime:hover td { background: transparent; }
+            .hoverRuntime > a:link, .hoverRuntime > a:visited, .hoverRuntime > a:hover, .hoverRuntime > a:active { color: black; font-size: 0.9em; }
+            table tbody td.hoverCompile {background-color:#C00000; border: 1px solid #710B0B; width: 15px; color: black; text-align: center; }
+            .hoverCompile:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #710B0B; }
+            .hoverCompile:hover td { background: transparent; }
+            .hoverCompile > a:link, .hoverCompile > a:visited, .hoverCompile > a:hover, .hoverCompile > a:active { color: black; font-size: 0.9em; }
+            table tbody td.hoverMissing {background-color:#F0F0F0; border: 1px solid #ABABAB; width: 15px; color: black; text-align: center; }
+            .hoverMissing:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #ABABAB; }
+            .hoverMissing:hover td { background: transparent; }
+            .hoverMissing > a:link, .hoverMissing > a:visited, .hoverMissing > a:hover, .hoverMissing > a:active { color: black; font-size: 0.9em; }
+            table tbody td.hoverTimeout {background-color:#B9F; border: 1px solid #9070CE; width: 15px; color: black; text-align: center; }
+            .hoverTimeout:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #9070CE; }
+            .hoverTimeout:hover td { background: transparent; }
+            .hoverTimeout > a:link, .hoverTimeout > a:visited, .hoverTimeout > a:hover, .hoverTimeout > a:active { color: black; font-size: 0.9em; }
+            table tbody td.hoverImage {background-color:#D0E0F0; border: 1px solid #a6b3c0; width: 15px; color: black; text-align: center; }
+            .hoverImage:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #a6b3c0; }
+            .hoverImage:hover td { background: transparent; }
+            .hoverImage > a:link, .hoverImage > a:visited, .hoverImage > a:hover, .hoverImage > a:active { color: black; font-size: 0.9em; }
+            .tableCommon { border-collapse: collapse; }
+            .tableOK > tbody > tr > td { border: 1px solid #63B563; padding: 7px;}
+            .tableError > tbody > tr > td { border: 1px solid #CB9800; padding: 7px;}
+            .tableRuntime > tbody > tr > td { border: 1px solid #D8D87E; padding: 7px;}
+            .tableCompiler > tbody > tr > td { border: 1px solid #710B0B; padding: 7px;}
+            .tableMissing > tbody > tr > td { border: 1px solid #ABABAB; padding: 7px;}
+            .tableTimeout > tbody > tr > td { border: 1px solid #9070CE; padding: 7px;}
+            .tableImage > tbody > tr > td { border: 1px solid #a6b3c0; padding: 7px;}
+            .tableSummary { table-layout: fixed; }
+            .texttt { font-family: DejaVu Sans Mono, monospace; font-size: 0.8em; }
+            table.diff > tbody > tr > td { border: none; font-family: DejaVu Sans Mono, monospace}
+            .diff_add { color: green; font-family: DejaVu Sans Mono, monospace; }
+            .diff_sub { color: blue; font-family: DejaVu Sans Mono, monospace; }
+            .diff_chg { color: red; font-family: DejaVu Sans Mono, monospace; }
+            a { color: blue; text-decoration: none; height: 100%; width: 100%; vertical-align: middle; }
+            a:link { color: blue; text-decoration: none; }
+            a:link { color: blue; text-decoration: none; }
+            a:hover { color: blue; text-decoration: underline; }
+            body, td { font: normal normal 100%/1.0 DejaVu Sans, sans-serif; }
+            h1 { font-weight: bold; font-size: 150%; }
+            h2 { font-weight: normal; font-size: 125%; border-top: 1px solid black; border-bottom: 1px solid black; background: #DEF; padding: 5px; margin-top: 36px; margin-bottom: 36px}
+            .container{ margin: 0px auto; width: 70%; min-width: 700px; margin-top: 1.8cm; margin-bottom: 1.8cm; }
+            .rwordb{ color: blue; font-weight: bold; }
+            .rwordv{ color:#8000ff; font-weight: bold; }
+            .vcomment{ color: green; }
+            .bcomment{ color: green; }
+            .niz{ color:#a31515; }
+            .stevilo{ color:#ff8000; }
+            tab { padding-left: 4em; }
+            #grad1 {
+                background: -webkit-linear-gradient(left, #E0E0E0 , white);
+                background: -o-linear-gradient(right, #E0E0E0, white);
+                background: -moz-linear-gradient(right, #E0E0E0, white);
+                background: linear-gradient(to right, #E0E0E0 , white);
+            }
+            #grad2 {
+                background: -webkit-linear-gradient(left, #9F9 , white);
+                background: -o-linear-gradient(right, #9F9, white);
+                background: -moz-linear-gradient(right, #9F9, white);
+                background: linear-gradient(to right, #9F9 , white);
+            }
+            .capSlika { display:block; height: 25px; margin:0 auto; font-size: 1.0em; text-align: left; }
+            .dborder { padding: 0px; border: 1px solid #CACACA; }
+            .capText { display: block; margin:0 auto; font-size: 0.9em; text-align: left; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+        <a name="top"></a>
+        <h1 id="grad2" style="padding: 10px; border: 0px solid black; color: #000000;">Rezultati preverjanja metod programa (50/50)</h1>
+        <div style="height: 20px"></div>
+        <a name="summary"></a>
+        <h2>Povzetek rezultatov</h2>
+        <table id="nasredini" class="tableBase tableResults">
+            <tbody>
+                <tr>
+                <td class="hoverOk"><a href="#testcase1">1</a></td>
+                <td class="hoverOk"><a href="#testcase2">2</a></td>
+                <td class="hoverOk"><a href="#testcase3">3</a></td>
+                <td class="hoverOk"><a href="#testcase4">4</a></td>
+                <td class="hoverOk"><a href="#testcase5">5</a></td>
+                <td class="hoverOk"><a href="#testcase6">6</a></td>
+                <td class="hoverOk"><a href="#testcase7">7</a></td>
+                <td class="hoverOk"><a href="#testcase8">8</a></td>
+                <td class="hoverOk"><a href="#testcase9">9</a></td>
+                <td class="hoverOk"><a href="#testcase10">10</a></td>
+                </tr>
+                <tr></tr>
+            </tbody>
+        </table>
+        <table id="nasredini" class="tableBase tableResults">
+            <tbody>
+                <tr>
+                <td class="hoverOk"><a href="#testcase11">11</a></td>
+                <td class="hoverOk"><a href="#testcase12">12</a></td>
+                <td class="hoverOk"><a href="#testcase13">13</a></td>
+                <td class="hoverOk"><a href="#testcase14">14</a></td>
+                <td class="hoverOk"><a href="#testcase15">15</a></td>
+                <td class="hoverOk"><a href="#testcase16">16</a></td>
+                <td class="hoverOk"><a href="#testcase17">17</a></td>
+                <td class="hoverOk"><a href="#testcase18">18</a></td>
+                <td class="hoverOk"><a href="#testcase19">19</a></td>
+                <td class="hoverOk"><a href="#testcase20">20</a></td>
+                </tr>
+                <tr></tr>
+            </tbody>
+        </table>
+        <table id="nasredini" class="tableBase tableResults">
+            <tbody>
+                <tr>
+                <td class="hoverOk"><a href="#testcase21">21</a></td>
+                <td class="hoverOk"><a href="#testcase22">22</a></td>
+                <td class="hoverOk"><a href="#testcase23">23</a></td>
+                <td class="hoverOk"><a href="#testcase24">24</a></td>
+                <td class="hoverOk"><a href="#testcase25">25</a></td>
+                <td class="hoverOk"><a href="#testcase26">26</a></td>
+                <td class="hoverOk"><a href="#testcase27">27</a></td>
+                <td class="hoverOk"><a href="#testcase28">28</a></td>
+                <td class="hoverOk"><a href="#testcase29">29</a></td>
+                <td class="hoverOk"><a href="#testcase30">30</a></td>
+                </tr>
+                <tr></tr>
+            </tbody>
+        </table>
+        <table id="nasredini" class="tableBase tableResults">
+            <tbody>
+                <tr>
+                <td class="hoverOk"><a href="#testcase31">31</a></td>
+                <td class="hoverOk"><a href="#testcase32">32</a></td>
+                <td class="hoverOk"><a href="#testcase33">33</a></td>
+                <td class="hoverOk"><a href="#testcase34">34</a></td>
+                <td class="hoverOk"><a href="#testcase35">35</a></td>
+                <td class="hoverOk"><a href="#testcase36">36</a></td>
+                <td class="hoverOk"><a href="#testcase37">37</a></td>
+                <td class="hoverOk"><a href="#testcase38">38</a></td>
+                <td class="hoverOk"><a href="#testcase39">39</a></td>
+                <td class="hoverOk"><a href="#testcase40">40</a></td>
+                </tr>
+                <tr></tr>
+            </tbody>
+        </table>
+        <table id="nasredini" class="tableBase tableResults">
+            <tbody>
+                <tr>
+                <td class="hoverOk"><a href="#testcase41">41</a></td>
+                <td class="hoverOk"><a href="#testcase42">42</a></td>
+                <td class="hoverOk"><a href="#testcase43">43</a></td>
+                <td class="hoverOk"><a href="#testcase44">44</a></td>
+                <td class="hoverOk"><a href="#testcase45">45</a></td>
+                <td class="hoverOk"><a href="#testcase46">46</a></td>
+                <td class="hoverOk"><a href="#testcase47">47</a></td>
+                <td class="hoverOk"><a href="#testcase48">48</a></td>
+                <td class="hoverOk"><a href="#testcase49">49</a></td>
+                <td class="hoverOk"><a href="#testcase50">50</a></td>
+                </tr>
+                <tr></tr>
+            </tbody>
+        </table>
+        <div style="height: 20px"></div>
+        <h2>Rezultati</h2>
+        <a name="testcase1"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 1</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test01 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab>List<Integer> seznam = List.of(<br/>
+<tab><tab><tab><span class="stevilo">48</span>, <span class="stevilo">872</span>, <span class="stevilo">841</span>, <span class="stevilo">151</span>, <span class="stevilo">606</span>, <span class="stevilo">236</span>, <span class="stevilo">28</span>, <span class="stevilo">776</span>, <span class="stevilo">551</span>, <span class="stevilo">328</span>, <span class="stevilo">697</span>, <span class="stevilo">845</span>, <span class="stevilo">971</span>, <span class="stevilo">222</span><br/>
+<tab><tab>);<br/>
+<tab><tab>System.out.println(Cetrta.odsek(seznam.iterator(), <span class="stevilo">12</span>, <span class="stevilo">12</span>));<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [971]<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase2"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 2</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test02 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab>List<String> seznam = List.of(<br/>
+<tab><tab><tab><span class="niz">"Rozalija"</span>, <span class="niz">"Barbara"</span>, <span class="niz">"Klara"</span>, <span class="niz">"Matej"</span>, <span class="niz">"Simona"</span>, <span class="niz">"Maja"</span>, <span class="niz">"Rozalija"</span>, <span class="niz">"Klara"</span>, <span class="niz">"Olga"</span>, <span class="niz">"Emil"</span>, <span class="niz">"Nikolaj"</span>, <span class="niz">"Bojan"</span>, <span class="niz">"Janez"</span>, <span class="niz">"Iva"</span>, <span class="niz">"Simona"</span>, <span class="niz">"Francka"</span>, <span class="niz">"Tone"</span>, <span class="niz">"Hilda"</span>, <span class="niz">"Nina"</span>, <span class="niz">"Nina"</span>, <span class="niz">"Tone"</span>, <span class="niz">"Gabrijela"</span>, <span class="niz">"Simona"</span>, <span class="niz">"Vlado"</span>, <span class="niz">"Nikolaj"</span>, <span class="niz">"Hilda"</span>, <span class="niz">"Nikolaj"</span>, <span class="niz">"Simona"</span>, <span class="niz">"Barbara"</span>, <span class="niz">"Simona"</span>, <span class="niz">"Franci"</span>, <span class="niz">"Cvetka"</span>, <span class="niz">"Ula"</span>, <span class="niz">"Cene"</span>, <span class="niz">"Klara"</span>, <span class="niz">"Eva"</span>, <span class="niz">"Hinko"</span>, <span class="niz">"Ana"</span>, <span class="niz">"Bojan"</span><br/>
+<tab><tab>);<br/>
+<tab><tab>System.out.println(Cetrta.odsek(seznam.iterator(), <span class="stevilo">15</span>, <span class="stevilo">31</span>));<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [Francka,&nbsp;Tone,&nbsp;Hilda,&nbsp;Nina,&nbsp;Nina,&nbsp;Tone,&nbsp;Gabrijela,&nbsp;Simona,&nbsp;Vlado,&nbsp;Nikolaj,&nbsp;Hilda,&nbsp;Nikolaj,&nbsp;Simona,&nbsp;Barbara,&nbsp;Simona,&nbsp;Franci,&nbsp;Cvetka]<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase3"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 3</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test03 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab>List<Integer> seznam = List.of(<br/>
+<tab><tab><tab><span class="stevilo">780</span>, <span class="stevilo">958</span>, <span class="stevilo">536</span>, <span class="stevilo">95</span>, <span class="stevilo">182</span>, <span class="stevilo">184</span>, <span class="stevilo">84</span>, <span class="stevilo">669</span>, <span class="stevilo">742</span>, <span class="stevilo">193</span>, <span class="stevilo">818</span>, <span class="stevilo">247</span>, <span class="stevilo">622</span>, <span class="stevilo">100</span>, <span class="stevilo">955</span>, <span class="stevilo">126</span>, <span class="stevilo">234</span><br/>
+<tab><tab>);<br/>
+<tab><tab>System.out.println(Cetrta.odsek(seznam.iterator(), <span class="stevilo">8</span>, <span class="stevilo">13</span>));<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [742,&nbsp;193,&nbsp;818,&nbsp;247,&nbsp;622,&nbsp;100]<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase4"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 4</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test04 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab>List<String> seznam = List.of(<br/>
+<tab><tab><tab><span class="niz">"Klara"</span>, <span class="niz">"Hinko"</span>, <span class="niz">"Ula"</span>, <span class="niz">"Franci"</span>, <span class="niz">"Cene"</span>, <span class="niz">"Oton"</span>, <span class="niz">"Bojan"</span>, <span class="niz">"Karel"</span>, <span class="niz">"Lidija"</span>, <span class="niz">"Maja"</span>, <span class="niz">"Cene"</span>, <span class="niz">"Matej"</span>, <span class="niz">"Ana"</span>, <span class="niz">"Olga"</span>, <span class="niz">"Ivan"</span>, <span class="niz">"Cene"</span>, <span class="niz">"Rok"</span>, <span class="niz">"Gabrijela"</span>, <span class="niz">"Maja"</span>, <span class="niz">"Lidija"</span>, <span class="niz">"Cene"</span>, <span class="niz">"Janez"</span>, <span class="niz">"Nikolaj"</span>, <span class="niz">"Karel"</span>, <span class="niz">"Hinko"</span>, <span class="niz">"Hinko"</span>, <span class="niz">"Nina"</span>, <span class="niz">"Simona"</span>, <span class="niz">"Rok"</span>, <span class="niz">"Eva"</span>, <span class="niz">"Jana"</span>, <span class="niz">"Oton"</span>, <span class="niz">"Iva"</span>, <span class="niz">"Nina"</span>, <span class="niz">"Cene"</span>, <span class="niz">"Darja"</span>, <span class="niz">"Nina"</span>, <span class="niz">"Iva"</span>, <span class="niz">"Petra"</span>, <span class="niz">"Olga"</span>, <span class="niz">"Ivan"</span>, <span class="niz">"Urban"</span>, <span class="niz">"Andrej"</span>, <span class="niz">"Gorazd"</span>, <span class="niz">"Hilda"</span>, <span class="niz">"Lidija"</span>, <span class="niz">"Nikolaj"</span>, <span class="niz">"Eva"</span>, <span class="niz">"Vita"</span>, <span class="niz">"Vlado"</span>, <span class="niz">"Gabrijela"</span>, <span class="niz">"Vlado"</span>, <span class="niz">"Peter"</span>, <span class="niz">"Bojan"</span>, <span class="niz">"Cvetka"</span>, <span class="niz">"Ula"</span>, <span class="niz">"Andrej"</span>, <span class="niz">"Dejan"</span>, <span class="niz">"Emil"</span>, <span class="niz">"Cene"</span>, <span class="niz">"Karel"</span>, <span class="niz">"Jana"</span>, <span class="niz">"Nikolaj"</span>, <span class="niz">"Maja"</span>, <span class="niz">"Klara"</span>, <span class="niz">"Ula"</span>, <span class="niz">"Vlado"</span>, <span class="niz">"Rozalija"</span>, <span class="niz">"Peter"</span>, <span class="niz">"Rozalija"</span>, <span class="niz">"Francka"</span>, <span class="niz">"Oton"</span>, <span class="niz">"Tatjana"</span>, <span class="niz">"Olga"</span>, <span class="niz">"Lidija"</span>, <span class="niz">"Janez"</span>, <span class="niz">"Peter"</span>, <span class="niz">"Barbara"</span>, <span class="niz">"Dejan"</span>, <span class="niz">"Rok"</span>, <span class="niz">"Oton"</span>, <span class="niz">"Franci"</span><br/>
+<tab><tab>);<br/>
+<tab><tab>System.out.println(Cetrta.odsek(seznam.iterator(), <span class="stevilo">39</span>, <span class="stevilo">50</span>));<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [Olga,&nbsp;Ivan,&nbsp;Urban,&nbsp;Andrej,&nbsp;Gorazd,&nbsp;Hilda,&nbsp;Lidija,&nbsp;Nikolaj,&nbsp;Eva,&nbsp;Vita,&nbsp;Vlado,&nbsp;Gabrijela]<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase5"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 5</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test05 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab>List<Integer> seznam = List.of(<br/>
+<tab><tab><tab><span class="stevilo">514</span>, <span class="stevilo">728</span>, <span class="stevilo">405</span>, <span class="stevilo">268</span>, <span class="stevilo">587</span>, <span class="stevilo">562</span>, <span class="stevilo">7</span>, <span class="stevilo">398</span>, <span class="stevilo">685</span>, <span class="stevilo">776</span>, <span class="stevilo">57</span>, <span class="stevilo">532</span>, <span class="stevilo">94</span>, <span class="stevilo">955</span>, <span class="stevilo">27</span>, <span class="stevilo">65</span>, <span class="stevilo">994</span>, <span class="stevilo">444</span>, <span class="stevilo">224</span>, <span class="stevilo">941</span>, <span class="stevilo">859</span>, <span class="stevilo">856</span>, <span class="stevilo">754</span>, <span class="stevilo">783</span>, <span class="stevilo">728</span>, <span class="stevilo">219</span>, <span class="stevilo">683</span>, <span class="stevilo">122</span>, <span class="stevilo">191</span>, <span class="stevilo">990</span>, <span class="stevilo">43</span>, <span class="stevilo">90</span>, <span class="stevilo">732</span>, <span class="stevilo">492</span>, <span class="stevilo">697</span>, <span class="stevilo">847</span>, <span class="stevilo">135</span>, <span class="stevilo">720</span>, <span class="stevilo">37</span>, <span class="stevilo">283</span>, <span class="stevilo">877</span>, <span class="stevilo">229</span>, <span class="stevilo">188</span>, <span class="stevilo">709</span>, <span class="stevilo">754</span>, <span class="stevilo">357</span>, <span class="stevilo">443</span>, <span class="stevilo">239</span>, <span class="stevilo">503</span>, <span class="stevilo">720</span>, <span class="stevilo">531</span>, <span class="stevilo">318</span>, <span class="stevilo">187</span>, <span class="stevilo">955</span>, <span class="stevilo">170</span>, <span class="stevilo">234</span>, <span class="stevilo">16</span>, <span class="stevilo">870</span>, <span class="stevilo">220</span>, <span class="stevilo">626</span>, <span class="stevilo">482</span>, <span class="stevilo">62</span>, <span class="stevilo">991</span>, <span class="stevilo">900</span>, <span class="stevilo">239</span>, <span class="stevilo">552</span>, <span class="stevilo">457</span>, <span class="stevilo">123</span>, <span class="stevilo">706</span>, <span class="stevilo">813</span>, <span class="stevilo">412</span>, <span class="stevilo">543</span>, <span class="stevilo">677</span>, <span class="stevilo">971</span>, <span class="stevilo">417</span>, <span class="stevilo">281</span>, <span class="stevilo">108</span>, <span class="stevilo">50</span>, <span class="stevilo">321</span>, <span class="stevilo">3</span>, <span class="stevilo">986</span><br/>
+<tab><tab>);<br/>
+<tab><tab>System.out.println(Cetrta.odsek(seznam.iterator(), <span class="stevilo">11</span>, <span class="stevilo">12</span>));<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [532,&nbsp;94]<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase6"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 6</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test06 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab>List<String> seznam = List.of(<br/>
+<tab><tab><tab><span class="niz">"Rozalija"</span>, <span class="niz">"Hinko"</span>, <span class="niz">"Nina"</span>, <span class="niz">"Gabrijela"</span>, <span class="niz">"Ana"</span>, <span class="niz">"Gabrijela"</span>, <span class="niz">"Olga"</span>, <span class="niz">"Franci"</span>, <span class="niz">"Ivan"</span>, <span class="niz">"Franci"</span>, <span class="niz">"Dejan"</span>, <span class="niz">"Cvetka"</span>, <span class="niz">"Vita"</span>, <span class="niz">"Rozalija"</span>, <span class="niz">"Tone"</span>, <span class="niz">"Zinka"</span>, <span class="niz">"Bojan"</span>, <span class="niz">"Cvetka"</span>, <span class="niz">"Vita"</span>, <span class="niz">"Bojan"</span>, <span class="niz">"Franci"</span>, <span class="niz">"Urban"</span>, <span class="niz">"Bojan"</span>, <span class="niz">"Darja"</span>, <span class="niz">"Rok"</span>, <span class="niz">"Cene"</span>, <span class="niz">"Gorazd"</span>, <span class="niz">"Petra"</span>, <span class="niz">"Matej"</span>, <span class="niz">"Eva"</span>, <span class="niz">"Cene"</span>, <span class="niz">"Andrej"</span>, <span class="niz">"Cvetka"</span>, <span class="niz">"Zoran"</span>, <span class="niz">"Nina"</span>, <span class="niz">"Simona"</span>, <span class="niz">"Bojan"</span>, <span class="niz">"Rok"</span>, <span class="niz">"Ana"</span>, <span class="niz">"Maja"</span>, <span class="niz">"Matej"</span>, <span class="niz">"Iva"</span>, <span class="niz">"Jana"</span>, <span class="niz">"Vita"</span>, <span class="niz">"Maja"</span>, <span class="niz">"Simon"</span>, <span class="niz">"Rozalija"</span>, <span class="niz">"Olga"</span>, <span class="niz">"Leon"</span>, <span class="niz">"Tone"</span>, <span class="niz">"Maja"</span>, <span class="niz">"Franci"</span>, <span class="niz">"Francka"</span>, <span class="niz">"Nikolaj"</span>, <span class="niz">"Matej"</span>, <span class="niz">"Barbara"</span>, <span class="niz">"Nikolaj"</span>, <span class="niz">"Peter"</span>, <span class="niz">"Nina"</span>, <span class="niz">"Zinka"</span>, <span class="niz">"Ula"</span><br/>
+<tab><tab>);<br/>
+<tab><tab>System.out.println(Cetrta.odsek(seznam.iterator(), <span class="stevilo">4</span>, <span class="stevilo">10</span>));<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [Ana,&nbsp;Gabrijela,&nbsp;Olga,&nbsp;Franci,&nbsp;Ivan,&nbsp;Franci,&nbsp;Dejan]<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase7"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 7</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test07 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab>List<Integer> seznam = List.of(<br/>
+<tab><tab><tab><span class="stevilo">981</span>, <span class="stevilo">642</span>, <span class="stevilo">322</span>, <span class="stevilo">256</span>, <span class="stevilo">690</span>, <span class="stevilo">207</span>, <span class="stevilo">17</span>, <span class="stevilo">129</span>, <span class="stevilo">384</span>, <span class="stevilo">74</span>, <span class="stevilo">226</span>, <span class="stevilo">628</span>, <span class="stevilo">481</span>, <span class="stevilo">816</span>, <span class="stevilo">599</span>, <span class="stevilo">981</span>, <span class="stevilo">7</span>, <span class="stevilo">320</span>, <span class="stevilo">686</span>, <span class="stevilo">387</span>, <span class="stevilo">504</span>, <span class="stevilo">829</span>, <span class="stevilo">506</span>, <span class="stevilo">147</span>, <span class="stevilo">753</span>, <span class="stevilo">924</span>, <span class="stevilo">103</span>, <span class="stevilo">102</span>, <span class="stevilo">172</span>, <span class="stevilo">367</span>, <span class="stevilo">734</span>, <span class="stevilo">579</span>, <span class="stevilo">990</span>, <span class="stevilo">338</span>, <span class="stevilo">835</span>, <span class="stevilo">986</span>, <span class="stevilo">536</span>, <span class="stevilo">467</span>, <span class="stevilo">992</span>, <span class="stevilo">572</span>, <span class="stevilo">372</span>, <span class="stevilo">149</span>, <span class="stevilo">729</span>, <span class="stevilo">498</span>, <span class="stevilo">585</span>, <span class="stevilo">174</span>, <span class="stevilo">333</span>, <span class="stevilo">143</span>, <span class="stevilo">124</span>, <span class="stevilo">187</span>, <span class="stevilo">234</span>, <span class="stevilo">253</span>, <span class="stevilo">575</span>, <span class="stevilo">994</span>, <span class="stevilo">850</span>, <span class="stevilo">60</span>, <span class="stevilo">784</span>, <span class="stevilo">193</span>, <span class="stevilo">995</span>, <span class="stevilo">193</span>, <span class="stevilo">920</span>, <span class="stevilo">105</span>, <span class="stevilo">1000</span>, <span class="stevilo">404</span>, <span class="stevilo">295</span>, <span class="stevilo">831</span>, <span class="stevilo">621</span>, <span class="stevilo">702</span>, <span class="stevilo">240</span>, <span class="stevilo">2</span>, <span class="stevilo">946</span><br/>
+<tab><tab>);<br/>
+<tab><tab>System.out.println(Cetrta.odsek(seznam.iterator(), <span class="stevilo">41</span>, <span class="stevilo">59</span>));<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [149,&nbsp;729,&nbsp;498,&nbsp;585,&nbsp;174,&nbsp;333,&nbsp;143,&nbsp;124,&nbsp;187,&nbsp;234,&nbsp;253,&nbsp;575,&nbsp;994,&nbsp;850,&nbsp;60,&nbsp;784,&nbsp;193,&nbsp;995,&nbsp;193]<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase8"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 8</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test08 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab>List<String> seznam = List.of(<br/>
+<tab><tab><tab><span class="niz">"Ivan"</span>, <span class="niz">"Vlado"</span>, <span class="niz">"Darja"</span>, <span class="niz">"Simon"</span><br/>
+<tab><tab>);<br/>
+<tab><tab>System.out.println(Cetrta.odsek(seznam.iterator(), <span class="stevilo">2</span>, <span class="stevilo">2</span>));<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [Darja]<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase9"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 9</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test09 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab>List<Integer> seznam = List.of(<br/>
+<tab><tab><tab><span class="stevilo">626</span>, <span class="stevilo">982</span>, <span class="stevilo">631</span>, <span class="stevilo">357</span>, <span class="stevilo">147</span>, <span class="stevilo">577</span>, <span class="stevilo">908</span>, <span class="stevilo">630</span>, <span class="stevilo">126</span>, <span class="stevilo">188</span><br/>
+<tab><tab>);<br/>
+<tab><tab>System.out.println(Cetrta.odsek(seznam.iterator(), <span class="stevilo">0</span>, <span class="stevilo">9</span>));<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [626,&nbsp;982,&nbsp;631,&nbsp;357,&nbsp;147,&nbsp;577,&nbsp;908,&nbsp;630,&nbsp;126,&nbsp;188]<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase10"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 10</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test10 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab>List<String> seznam = List.of(<br/>
+<tab><tab><tab><span class="niz">"Hilda"</span>, <span class="niz">"Emil"</span>, <span class="niz">"Janez"</span>, <span class="niz">"Iva"</span>, <span class="niz">"Ivan"</span>, <span class="niz">"Zoran"</span>, <span class="niz">"Oton"</span>, <span class="niz">"Lidija"</span>, <span class="niz">"Hinko"</span>, <span class="niz">"Simon"</span>, <span class="niz">"Dejan"</span>, <span class="niz">"Ana"</span>, <span class="niz">"Simon"</span>, <span class="niz">"Simon"</span>, <span class="niz">"Dejan"</span>, <span class="niz">"Cene"</span>, <span class="niz">"Dejan"</span>, <span class="niz">"Barbara"</span>, <span class="niz">"Janez"</span>, <span class="niz">"Cene"</span>, <span class="niz">"Ana"</span>, <span class="niz">"Janez"</span>, <span class="niz">"Tone"</span>, <span class="niz">"Maja"</span>, <span class="niz">"Hilda"</span>, <span class="niz">"Jana"</span>, <span class="niz">"Eva"</span>, <span class="niz">"Vita"</span>, <span class="niz">"Simon"</span>, <span class="niz">"Cene"</span>, <span class="niz">"Vita"</span>, <span class="niz">"Olga"</span>, <span class="niz">"Nikolaj"</span>, <span class="niz">"Janez"</span>, <span class="niz">"Gorazd"</span>, <span class="niz">"Vlado"</span>, <span class="niz">"Karel"</span>, <span class="niz">"Ana"</span>, <span class="niz">"Dejan"</span>, <span class="niz">"Klara"</span>, <span class="niz">"Maja"</span>, <span class="niz">"Matej"</span>, <span class="niz">"Lidija"</span>, <span class="niz">"Andrej"</span>, <span class="niz">"Janez"</span>, <span class="niz">"Klara"</span>, <span class="niz">"Franci"</span>, <span class="niz">"Karel"</span>, <span class="niz">"Simona"</span>, <span class="niz">"Franci"</span>, <span class="niz">"Nikolaj"</span><br/>
+<tab><tab>);<br/>
+<tab><tab>System.out.println(Cetrta.odsek(seznam.iterator(), <span class="stevilo">13</span>, <span class="stevilo">34</span>));<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [Simon,&nbsp;Dejan,&nbsp;Cene,&nbsp;Dejan,&nbsp;Barbara,&nbsp;Janez,&nbsp;Cene,&nbsp;Ana,&nbsp;Janez,&nbsp;Tone,&nbsp;Maja,&nbsp;Hilda,&nbsp;Jana,&nbsp;Eva,&nbsp;Vita,&nbsp;Simon,&nbsp;Cene,&nbsp;Vita,&nbsp;Olga,&nbsp;Nikolaj,&nbsp;Janez,&nbsp;Gorazd]<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase11"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 11</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test11 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab>List<Integer> seznam = List.of(<br/>
+<tab><tab><tab><span class="stevilo">460</span>, <span class="stevilo">722</span>, <span class="stevilo">985</span>, <span class="stevilo">563</span>, <span class="stevilo">283</span>, <span class="stevilo">838</span>, <span class="stevilo">483</span>, <span class="stevilo">795</span>, <span class="stevilo">787</span>, <span class="stevilo">301</span>, <span class="stevilo">309</span>, <span class="stevilo">600</span>, <span class="stevilo">820</span>, <span class="stevilo">350</span>, <span class="stevilo">170</span>, <span class="stevilo">298</span>, <span class="stevilo">105</span>, <span class="stevilo">575</span>, <span class="stevilo">200</span>, <span class="stevilo">430</span>, <span class="stevilo">200</span>, <span class="stevilo">884</span>, <span class="stevilo">585</span>, <span class="stevilo">786</span>, <span class="stevilo">195</span>, <span class="stevilo">364</span>, <span class="stevilo">502</span>, <span class="stevilo">999</span>, <span class="stevilo">613</span>, <span class="stevilo">267</span>, <span class="stevilo">995</span>, <span class="stevilo">993</span>, <span class="stevilo">611</span>, <span class="stevilo">426</span>, <span class="stevilo">447</span>, <span class="stevilo">691</span>, <span class="stevilo">848</span>, <span class="stevilo">561</span>, <span class="stevilo">264</span>, <span class="stevilo">13</span>, <span class="stevilo">187</span>, <span class="stevilo">311</span>, <span class="stevilo">625</span>, <span class="stevilo">219</span>, <span class="stevilo">726</span>, <span class="stevilo">420</span>, <span class="stevilo">774</span>, <span class="stevilo">736</span>, <span class="stevilo">821</span>, <span class="stevilo">120</span>, <span class="stevilo">415</span>, <span class="stevilo">658</span>, <span class="stevilo">909</span>, <span class="stevilo">779</span>, <span class="stevilo">257</span>, <span class="stevilo">719</span>, <span class="stevilo">620</span>, <span class="stevilo">656</span>, <span class="stevilo">153</span>, <span class="stevilo">569</span>, <span class="stevilo">611</span>, <span class="stevilo">143</span>, <span class="stevilo">609</span>, <span class="stevilo">260</span>, <span class="stevilo">289</span>, <span class="stevilo">347</span>, <span class="stevilo">410</span>, <span class="stevilo">928</span>, <span class="stevilo">143</span>, <span class="stevilo">922</span>, <span class="stevilo">892</span>, <span class="stevilo">825</span>, <span class="stevilo">841</span>, <span class="stevilo">264</span>, <span class="stevilo">374</span>, <span class="stevilo">559</span>, <span class="stevilo">867</span><br/>
+<tab><tab>);<br/>
+<tab><tab>System.out.println(Cetrta.odsek(seznam.iterator(), <span class="stevilo">26</span>, <span class="stevilo">35</span>));<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [502,&nbsp;999,&nbsp;613,&nbsp;267,&nbsp;995,&nbsp;993,&nbsp;611,&nbsp;426,&nbsp;447,&nbsp;691]<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase12"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 12</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test12 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab>List<String> seznam = List.of(<br/>
+<tab><tab><tab><span class="niz">"Oton"</span>, <span class="niz">"Hinko"</span>, <span class="niz">"Iva"</span>, <span class="niz">"Peter"</span>, <span class="niz">"Nikolaj"</span>, <span class="niz">"Ivan"</span>, <span class="niz">"Oton"</span>, <span class="niz">"Urban"</span>, <span class="niz">"Ula"</span>, <span class="niz">"Jana"</span>, <span class="niz">"Rozalija"</span>, <span class="niz">"Gorazd"</span>, <span class="niz">"Rok"</span>, <span class="niz">"Gabrijela"</span><br/>
+<tab><tab>);<br/>
+<tab><tab>System.out.println(Cetrta.odsek(seznam.iterator(), <span class="stevilo">3</span>, <span class="stevilo">6</span>));<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [Peter,&nbsp;Nikolaj,&nbsp;Ivan,&nbsp;Oton]<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase13"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 13</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test13 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab>List<Integer> seznam = List.of(<br/>
+<tab><tab><tab><span class="stevilo">464</span>, <span class="stevilo">735</span>, <span class="stevilo">387</span>, <span class="stevilo">7</span>, <span class="stevilo">232</span>, <span class="stevilo">948</span>, <span class="stevilo">982</span>, <span class="stevilo">586</span>, <span class="stevilo">819</span>, <span class="stevilo">629</span>, <span class="stevilo">753</span>, <span class="stevilo">542</span>, <span class="stevilo">340</span>, <span class="stevilo">40</span>, <span class="stevilo">66</span>, <span class="stevilo">230</span>, <span class="stevilo">768</span>, <span class="stevilo">416</span>, <span class="stevilo">61</span>, <span class="stevilo">4</span>, <span class="stevilo">824</span>, <span class="stevilo">441</span>, <span class="stevilo">655</span>, <span class="stevilo">32</span>, <span class="stevilo">846</span>, <span class="stevilo">811</span>, <span class="stevilo">517</span>, <span class="stevilo">418</span>, <span class="stevilo">23</span>, <span class="stevilo">495</span>, <span class="stevilo">774</span>, <span class="stevilo">233</span>, <span class="stevilo">822</span>, <span class="stevilo">390</span>, <span class="stevilo">646</span>, <span class="stevilo">456</span>, <span class="stevilo">953</span>, <span class="stevilo">787</span>, <span class="stevilo">601</span>, <span class="stevilo">17</span>, <span class="stevilo">315</span>, <span class="stevilo">649</span>, <span class="stevilo">617</span>, <span class="stevilo">17</span>, <span class="stevilo">879</span>, <span class="stevilo">224</span>, <span class="stevilo">797</span>, <span class="stevilo">671</span>, <span class="stevilo">320</span>, <span class="stevilo">882</span>, <span class="stevilo">848</span>, <span class="stevilo">789</span>, <span class="stevilo">943</span>, <span class="stevilo">975</span>, <span class="stevilo">469</span>, <span class="stevilo">687</span>, <span class="stevilo">273</span>, <span class="stevilo">259</span>, <span class="stevilo">110</span>, <span class="stevilo">260</span>, <span class="stevilo">798</span>, <span class="stevilo">176</span>, <span class="stevilo">476</span>, <span class="stevilo">841</span>, <span class="stevilo">490</span>, <span class="stevilo">277</span>, <span class="stevilo">368</span>, <span class="stevilo">869</span>, <span class="stevilo">271</span>, <span class="stevilo">587</span>, <span class="stevilo">912</span>, <span class="stevilo">708</span>, <span class="stevilo">275</span>, <span class="stevilo">777</span>, <span class="stevilo">22</span>, <span class="stevilo">629</span>, <span class="stevilo">65</span>, <span class="stevilo">980</span>, <span class="stevilo">136</span>, <span class="stevilo">686</span>, <span class="stevilo">942</span>, <span class="stevilo">630</span>, <span class="stevilo">204</span>, <span class="stevilo">874</span>, <span class="stevilo">704</span>, <span class="stevilo">971</span>, <span class="stevilo">251</span>, <span class="stevilo">772</span>, <span class="stevilo">670</span>, <span class="stevilo">138</span>, <span class="stevilo">943</span>, <span class="stevilo">736</span><br/>
+<tab><tab>);<br/>
+<tab><tab>System.out.println(Cetrta.odsek(seznam.iterator(), <span class="stevilo">30</span>, <span class="stevilo">56</span>));<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [774,&nbsp;233,&nbsp;822,&nbsp;390,&nbsp;646,&nbsp;456,&nbsp;953,&nbsp;787,&nbsp;601,&nbsp;17,&nbsp;315,&nbsp;649,&nbsp;617,&nbsp;17,&nbsp;879,&nbsp;224,&nbsp;797,&nbsp;671,&nbsp;320,&nbsp;882,&nbsp;848,&nbsp;789,&nbsp;943,&nbsp;975,&nbsp;469,&nbsp;687,&nbsp;273]<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase14"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 14</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test14 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab>List<String> seznam = List.of(<br/>
+<tab><tab><tab><span class="niz">"Emil"</span>, <span class="niz">"Jana"</span>, <span class="niz">"Hinko"</span>, <span class="niz">"Lidija"</span>, <span class="niz">"Tone"</span>, <span class="niz">"Iva"</span>, <span class="niz">"Iva"</span>, <span class="niz">"Simona"</span>, <span class="niz">"Tone"</span>, <span class="niz">"Barbara"</span>, <span class="niz">"Olga"</span>, <span class="niz">"Peter"</span>, <span class="niz">"Urban"</span>, <span class="niz">"Tatjana"</span>, <span class="niz">"Eva"</span>, <span class="niz">"Ivan"</span>, <span class="niz">"Tone"</span>, <span class="niz">"Ivan"</span>, <span class="niz">"Cvetka"</span>, <span class="niz">"Olga"</span>, <span class="niz">"Vita"</span>, <span class="niz">"Lidija"</span>, <span class="niz">"Vita"</span>, <span class="niz">"Peter"</span>, <span class="niz">"Simona"</span>, <span class="niz">"Matej"</span>, <span class="niz">"Rok"</span>, <span class="niz">"Karel"</span>, <span class="niz">"Emil"</span>, <span class="niz">"Nikolaj"</span>, <span class="niz">"Bojan"</span>, <span class="niz">"Barbara"</span>, <span class="niz">"Zinka"</span>, <span class="niz">"Zinka"</span>, <span class="niz">"Leon"</span>, <span class="niz">"Simona"</span>, <span class="niz">"Vlado"</span>, <span class="niz">"Hinko"</span>, <span class="niz">"Oton"</span>, <span class="niz">"Klara"</span>, <span class="niz">"Leon"</span>, <span class="niz">"Janez"</span>, <span class="niz">"Emil"</span>, <span class="niz">"Eva"</span>, <span class="niz">"Francka"</span>, <span class="niz">"Iva"</span>, <span class="niz">"Janez"</span>, <span class="niz">"Emil"</span>, <span class="niz">"Zoran"</span>, <span class="niz">"Barbara"</span>, <span class="niz">"Barbara"</span><br/>
+<tab><tab>);<br/>
+<tab><tab>System.out.println(Cetrta.odsek(seznam.iterator(), <span class="stevilo">4</span>, <span class="stevilo">10</span>));<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [Tone,&nbsp;Iva,&nbsp;Iva,&nbsp;Simona,&nbsp;Tone,&nbsp;Barbara,&nbsp;Olga]<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase15"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 15</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test15 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab>List<Integer> seznam = List.of(<br/>
+<tab><tab><tab><span class="stevilo">957</span>, <span class="stevilo">120</span>, <span class="stevilo">754</span>, <span class="stevilo">475</span>, <span class="stevilo">616</span>, <span class="stevilo">738</span>, <span class="stevilo">91</span>, <span class="stevilo">453</span>, <span class="stevilo">505</span>, <span class="stevilo">488</span>, <span class="stevilo">991</span>, <span class="stevilo">915</span>, <span class="stevilo">347</span>, <span class="stevilo">158</span>, <span class="stevilo">812</span>, <span class="stevilo">683</span>, <span class="stevilo">740</span>, <span class="stevilo">330</span>, <span class="stevilo">561</span>, <span class="stevilo">462</span>, <span class="stevilo">997</span>, <span class="stevilo">526</span>, <span class="stevilo">57</span>, <span class="stevilo">829</span>, <span class="stevilo">199</span>, <span class="stevilo">525</span>, <span class="stevilo">32</span>, <span class="stevilo">151</span>, <span class="stevilo">59</span>, <span class="stevilo">159</span>, <span class="stevilo">509</span>, <span class="stevilo">287</span><br/>
+<tab><tab>);<br/>
+<tab><tab>System.out.println(Cetrta.odsek(seznam.iterator(), <span class="stevilo">3</span>, <span class="stevilo">5</span>));<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [475,&nbsp;616,&nbsp;738]<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase16"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 16</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test16 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab>List<String> seznam = List.of(<br/>
+<tab><tab><tab><span class="niz">"Klara"</span>, <span class="niz">"Franci"</span>, <span class="niz">"Zinka"</span>, <span class="niz">"Eva"</span>, <span class="niz">"Cvetka"</span>, <span class="niz">"Iva"</span>, <span class="niz">"Nina"</span>, <span class="niz">"Tone"</span>, <span class="niz">"Zinka"</span>, <span class="niz">"Nikolaj"</span>, <span class="niz">"Eva"</span>, <span class="niz">"Nina"</span>, <span class="niz">"Jana"</span>, <span class="niz">"Nina"</span>, <span class="niz">"Zoran"</span>, <span class="niz">"Francka"</span>, <span class="niz">"Andrej"</span>, <span class="niz">"Darja"</span>, <span class="niz">"Vita"</span>, <span class="niz">"Gabrijela"</span>, <span class="niz">"Maja"</span>, <span class="niz">"Franci"</span>, <span class="niz">"Oton"</span>, <span class="niz">"Emil"</span>, <span class="niz">"Cvetka"</span>, <span class="niz">"Barbara"</span>, <span class="niz">"Dejan"</span>, <span class="niz">"Nikolaj"</span>, <span class="niz">"Karel"</span>, <span class="niz">"Janez"</span>, <span class="niz">"Leon"</span>, <span class="niz">"Vlado"</span>, <span class="niz">"Zinka"</span>, <span class="niz">"Simona"</span>, <span class="niz">"Franci"</span>, <span class="niz">"Dejan"</span>, <span class="niz">"Vita"</span>, <span class="niz">"Jana"</span>, <span class="niz">"Francka"</span>, <span class="niz">"Bojan"</span>, <span class="niz">"Bojan"</span>, <span class="niz">"Matej"</span>, <span class="niz">"Karel"</span>, <span class="niz">"Janez"</span>, <span class="niz">"Maja"</span>, <span class="niz">"Urban"</span>, <span class="niz">"Oton"</span>, <span class="niz">"Andrej"</span>, <span class="niz">"Zoran"</span>, <span class="niz">"Rok"</span>, <span class="niz">"Francka"</span>, <span class="niz">"Andrej"</span>, <span class="niz">"Franci"</span>, <span class="niz">"Rok"</span>, <span class="niz">"Klara"</span>, <span class="niz">"Andrej"</span>, <span class="niz">"Simon"</span>, <span class="niz">"Janez"</span>, <span class="niz">"Zoran"</span>, <span class="niz">"Vlado"</span>, <span class="niz">"Oton"</span>, <span class="niz">"Gorazd"</span>, <span class="niz">"Eva"</span>, <span class="niz">"Gorazd"</span>, <span class="niz">"Peter"</span>, <span class="niz">"Dejan"</span>, <span class="niz">"Maja"</span>, <span class="niz">"Leon"</span>, <span class="niz">"Simon"</span>, <span class="niz">"Leon"</span>, <span class="niz">"Urban"</span>, <span class="niz">"Gabrijela"</span>, <span class="niz">"Urban"</span>, <span class="niz">"Bojan"</span>, <span class="niz">"Urban"</span>, <span class="niz">"Tatjana"</span>, <span class="niz">"Oton"</span>, <span class="niz">"Ula"</span>, <span class="niz">"Rok"</span>, <span class="niz">"Peter"</span>, <span class="niz">"Hinko"</span>, <span class="niz">"Karel"</span>, <span class="niz">"Cene"</span>, <span class="niz">"Barbara"</span>, <span class="niz">"Vlado"</span>, <span class="niz">"Oton"</span>, <span class="niz">"Hinko"</span>, <span class="niz">"Dejan"</span>, <span class="niz">"Peter"</span>, <span class="niz">"Janez"</span>, <span class="niz">"Leon"</span>, <span class="niz">"Simona"</span><br/>
+<tab><tab>);<br/>
+<tab><tab>System.out.println(Cetrta.odsek(seznam.iterator(), <span class="stevilo">36</span>, <span class="stevilo">40</span>));<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [Vita,&nbsp;Jana,&nbsp;Francka,&nbsp;Bojan,&nbsp;Bojan]<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase17"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 17</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test17 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab>List<Integer> seznam = List.of(<br/>
+<tab><tab><tab><span class="stevilo">776</span>, <span class="stevilo">520</span><br/>
+<tab><tab>);<br/>
+<tab><tab>System.out.println(Cetrta.odsek(seznam.iterator(), <span class="stevilo">0</span>, <span class="stevilo">1</span>));<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [776,&nbsp;520]<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase18"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 18</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test18 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab>List<String> seznam = List.of(<br/>
+<tab><tab><tab><span class="niz">"Gabrijela"</span>, <span class="niz">"Ivan"</span>, <span class="niz">"Darja"</span>, <span class="niz">"Ivan"</span>, <span class="niz">"Andrej"</span>, <span class="niz">"Klara"</span>, <span class="niz">"Eva"</span>, <span class="niz">"Petra"</span>, <span class="niz">"Urban"</span>, <span class="niz">"Nina"</span>, <span class="niz">"Janez"</span>, <span class="niz">"Karel"</span>, <span class="niz">"Vita"</span>, <span class="niz">"Klara"</span>, <span class="niz">"Urban"</span>, <span class="niz">"Ana"</span>, <span class="niz">"Iva"</span>, <span class="niz">"Andrej"</span>, <span class="niz">"Simona"</span>, <span class="niz">"Matej"</span>, <span class="niz">"Eva"</span><br/>
+<tab><tab>);<br/>
+<tab><tab>System.out.println(Cetrta.odsek(seznam.iterator(), <span class="stevilo">4</span>, <span class="stevilo">16</span>));<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [Andrej,&nbsp;Klara,&nbsp;Eva,&nbsp;Petra,&nbsp;Urban,&nbsp;Nina,&nbsp;Janez,&nbsp;Karel,&nbsp;Vita,&nbsp;Klara,&nbsp;Urban,&nbsp;Ana,&nbsp;Iva]<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase19"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 19</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test19 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab>List<Integer> seznam = List.of(<br/>
+<tab><tab><tab><span class="stevilo">87</span>, <span class="stevilo">350</span><br/>
+<tab><tab>);<br/>
+<tab><tab>System.out.println(Cetrta.odsek(seznam.iterator(), <span class="stevilo">1</span>, <span class="stevilo">1</span>));<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [350]<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase20"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 20</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test20 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab>List<String> seznam = List.of(<br/>
+<tab><tab><tab><span class="niz">"Peter"</span>, <span class="niz">"Eva"</span>, <span class="niz">"Barbara"</span>, <span class="niz">"Darja"</span>, <span class="niz">"Simon"</span>, <span class="niz">"Oton"</span>, <span class="niz">"Ula"</span>, <span class="niz">"Ivan"</span>, <span class="niz">"Andrej"</span>, <span class="niz">"Peter"</span>, <span class="niz">"Janez"</span>, <span class="niz">"Zoran"</span>, <span class="niz">"Eva"</span>, <span class="niz">"Zinka"</span>, <span class="niz">"Vlado"</span>, <span class="niz">"Ula"</span>, <span class="niz">"Leon"</span>, <span class="niz">"Zoran"</span>, <span class="niz">"Rozalija"</span>, <span class="niz">"Darja"</span>, <span class="niz">"Cene"</span>, <span class="niz">"Vita"</span>, <span class="niz">"Petra"</span>, <span class="niz">"Karel"</span>, <span class="niz">"Tatjana"</span>, <span class="niz">"Jana"</span>, <span class="niz">"Bojan"</span>, <span class="niz">"Zinka"</span>, <span class="niz">"Nina"</span>, <span class="niz">"Ivan"</span>, <span class="niz">"Francka"</span>, <span class="niz">"Dejan"</span>, <span class="niz">"Zoran"</span>, <span class="niz">"Rok"</span>, <span class="niz">"Ula"</span>, <span class="niz">"Vlado"</span>, <span class="niz">"Leon"</span>, <span class="niz">"Nikolaj"</span>, <span class="niz">"Urban"</span>, <span class="niz">"Emil"</span>, <span class="niz">"Maja"</span>, <span class="niz">"Darja"</span>, <span class="niz">"Vlado"</span>, <span class="niz">"Olga"</span>, <span class="niz">"Ana"</span>, <span class="niz">"Gorazd"</span>, <span class="niz">"Zoran"</span>, <span class="niz">"Franci"</span>, <span class="niz">"Ivan"</span>, <span class="niz">"Emil"</span>, <span class="niz">"Tone"</span>, <span class="niz">"Jana"</span>, <span class="niz">"Zoran"</span>, <span class="niz">"Ula"</span>, <span class="niz">"Oton"</span>, <span class="niz">"Hilda"</span>, <span class="niz">"Eva"</span>, <span class="niz">"Bojan"</span>, <span class="niz">"Urban"</span>, <span class="niz">"Zoran"</span>, <span class="niz">"Zoran"</span>, <span class="niz">"Vlado"</span>, <span class="niz">"Gorazd"</span>, <span class="niz">"Tone"</span>, <span class="niz">"Darja"</span>, <span class="niz">"Ula"</span>, <span class="niz">"Lidija"</span>, <span class="niz">"Franci"</span>, <span class="niz">"Cene"</span>, <span class="niz">"Emil"</span>, <span class="niz">"Eva"</span>, <span class="niz">"Simon"</span>, <span class="niz">"Rok"</span>, <span class="niz">"Franci"</span>, <span class="niz">"Rok"</span>, <span class="niz">"Eva"</span>, <span class="niz">"Andrej"</span>, <span class="niz">"Zoran"</span>, <span class="niz">"Klara"</span>, <span class="niz">"Hinko"</span>, <span class="niz">"Jana"</span>, <span class="niz">"Iva"</span>, <span class="niz">"Simon"</span>, <span class="niz">"Zoran"</span>, <span class="niz">"Jana"</span>, <span class="niz">"Dejan"</span>, <span class="niz">"Peter"</span>, <span class="niz">"Peter"</span>, <span class="niz">"Tone"</span>, <span class="niz">"Nikolaj"</span>, <span class="niz">"Ula"</span><br/>
+<tab><tab>);<br/>
+<tab><tab>System.out.println(Cetrta.odsek(seznam.iterator(), <span class="stevilo">18</span>, <span class="stevilo">81</span>));<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [Rozalija,&nbsp;Darja,&nbsp;Cene,&nbsp;Vita,&nbsp;Petra,&nbsp;Karel,&nbsp;Tatjana,&nbsp;Jana,&nbsp;Bojan,&nbsp;Zinka,&nbsp;Nina,&nbsp;Ivan,&nbsp;Francka,&nbsp;Dejan,&nbsp;Zoran,&nbsp;Rok,&nbsp;Ula,&nbsp;Vlado,&nbsp;Leon,&nbsp;Nikolaj,&nbsp;Urban,&nbsp;Emil,&nbsp;Maja,&nbsp;Darja,&nbsp;Vlado,&nbsp;Olga,&nbsp;Ana,&nbsp;Gorazd,&nbsp;Zoran,&nbsp;Franci,&nbsp;Ivan,&nbsp;Emil,&nbsp;Tone,&nbsp;Jana,&nbsp;Zoran,&nbsp;Ula,&nbsp;Oton,&nbsp;Hilda,&nbsp;Eva,&nbsp;Bojan,&nbsp;Urban,&nbsp;Zoran,&nbsp;Zoran,&nbsp;Vlado,&nbsp;Gorazd,&nbsp;Tone,&nbsp;Darja,&nbsp;Ula,&nbsp;Lidija,&nbsp;Franci,&nbsp;Cene,&nbsp;Emil,&nbsp;Eva,&nbsp;Simon,&nbsp;Rok,&nbsp;Franci,&nbsp;Rok,&nbsp;Eva,&nbsp;Andrej,&nbsp;Zoran,&nbsp;Klara,&nbsp;Hinko,&nbsp;Jana,&nbsp;Iva]<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase21"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 21</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test21 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab>List<Integer> seznam = List.of(<br/>
+<tab><tab><tab><span class="stevilo">41</span>, <span class="stevilo">123</span>, <span class="stevilo">826</span>, <span class="stevilo">167</span>, <span class="stevilo">449</span>, <span class="stevilo">852</span>, <span class="stevilo">311</span>, <span class="stevilo">466</span>, <span class="stevilo">820</span>, <span class="stevilo">148</span>, <span class="stevilo">921</span>, <span class="stevilo">383</span>, <span class="stevilo">604</span>, <span class="stevilo">67</span>, <span class="stevilo">813</span>, <span class="stevilo">965</span>, <span class="stevilo">861</span>, <span class="stevilo">203</span>, <span class="stevilo">437</span>, <span class="stevilo">820</span>, <span class="stevilo">382</span>, <span class="stevilo">748</span>, <span class="stevilo">93</span>, <span class="stevilo">661</span>, <span class="stevilo">53</span>, <span class="stevilo">33</span>, <span class="stevilo">355</span>, <span class="stevilo">846</span>, <span class="stevilo">213</span>, <span class="stevilo">678</span>, <span class="stevilo">707</span>, <span class="stevilo">522</span>, <span class="stevilo">114</span>, <span class="stevilo">394</span>, <span class="stevilo">938</span>, <span class="stevilo">527</span>, <span class="stevilo">14</span>, <span class="stevilo">143</span>, <span class="stevilo">801</span>, <span class="stevilo">718</span>, <span class="stevilo">764</span>, <span class="stevilo">948</span>, <span class="stevilo">819</span>, <span class="stevilo">856</span>, <span class="stevilo">902</span>, <span class="stevilo">781</span>, <span class="stevilo">834</span>, <span class="stevilo">725</span>, <span class="stevilo">601</span>, <span class="stevilo">176</span>, <span class="stevilo">148</span>, <span class="stevilo">488</span>, <span class="stevilo">111</span>, <span class="stevilo">189</span>, <span class="stevilo">311</span>, <span class="stevilo">148</span>, <span class="stevilo">593</span>, <span class="stevilo">132</span><br/>
+<tab><tab>);<br/>
+<tab><tab>System.out.println(Cetrta.odsek(seznam.iterator(), <span class="stevilo">27</span>, <span class="stevilo">57</span>));<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [846,&nbsp;213,&nbsp;678,&nbsp;707,&nbsp;522,&nbsp;114,&nbsp;394,&nbsp;938,&nbsp;527,&nbsp;14,&nbsp;143,&nbsp;801,&nbsp;718,&nbsp;764,&nbsp;948,&nbsp;819,&nbsp;856,&nbsp;902,&nbsp;781,&nbsp;834,&nbsp;725,&nbsp;601,&nbsp;176,&nbsp;148,&nbsp;488,&nbsp;111,&nbsp;189,&nbsp;311,&nbsp;148,&nbsp;593,&nbsp;132]<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase22"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 22</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test22 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab>List<String> seznam = List.of(<br/>
+<tab><tab><tab><span class="niz">"Urban"</span>, <span class="niz">"Oton"</span>, <span class="niz">"Francka"</span>, <span class="niz">"Darja"</span>, <span class="niz">"Ivan"</span>, <span class="niz">"Rok"</span>, <span class="niz">"Matej"</span>, <span class="niz">"Rok"</span>, <span class="niz">"Simona"</span>, <span class="niz">"Ana"</span>, <span class="niz">"Simona"</span>, <span class="niz">"Eva"</span>, <span class="niz">"Emil"</span>, <span class="niz">"Karel"</span>, <span class="niz">"Zinka"</span>, <span class="niz">"Cene"</span>, <span class="niz">"Peter"</span>, <span class="niz">"Vlado"</span>, <span class="niz">"Matej"</span>, <span class="niz">"Eva"</span>, <span class="niz">"Cene"</span>, <span class="niz">"Vita"</span>, <span class="niz">"Vita"</span>, <span class="niz">"Leon"</span>, <span class="niz">"Nina"</span>, <span class="niz">"Darja"</span>, <span class="niz">"Rozalija"</span>, <span class="niz">"Matej"</span>, <span class="niz">"Vlado"</span>, <span class="niz">"Emil"</span>, <span class="niz">"Gabrijela"</span>, <span class="niz">"Eva"</span>, <span class="niz">"Rok"</span>, <span class="niz">"Hinko"</span>, <span class="niz">"Peter"</span>, <span class="niz">"Karel"</span>, <span class="niz">"Nina"</span>, <span class="niz">"Gabrijela"</span>, <span class="niz">"Oton"</span>, <span class="niz">"Eva"</span>, <span class="niz">"Darja"</span>, <span class="niz">"Urban"</span>, <span class="niz">"Zinka"</span>, <span class="niz">"Lidija"</span>, <span class="niz">"Maja"</span>, <span class="niz">"Simon"</span>, <span class="niz">"Vlado"</span>, <span class="niz">"Gabrijela"</span>, <span class="niz">"Rozalija"</span>, <span class="niz">"Simon"</span>, <span class="niz">"Barbara"</span>, <span class="niz">"Ivan"</span>, <span class="niz">"Zinka"</span>, <span class="niz">"Lidija"</span>, <span class="niz">"Andrej"</span>, <span class="niz">"Rozalija"</span>, <span class="niz">"Tatjana"</span>, <span class="niz">"Dejan"</span>, <span class="niz">"Lidija"</span>, <span class="niz">"Urban"</span>, <span class="niz">"Emil"</span>, <span class="niz">"Peter"</span>, <span class="niz">"Francka"</span>, <span class="niz">"Ana"</span>, <span class="niz">"Cene"</span>, <span class="niz">"Simon"</span>, <span class="niz">"Tone"</span>, <span class="niz">"Emil"</span>, <span class="niz">"Barbara"</span>, <span class="niz">"Maja"</span>, <span class="niz">"Gorazd"</span>, <span class="niz">"Karel"</span>, <span class="niz">"Vlado"</span>, <span class="niz">"Gorazd"</span>, <span class="niz">"Olga"</span>, <span class="niz">"Zoran"</span>, <span class="niz">"Bojan"</span>, <span class="niz">"Hinko"</span><br/>
+<tab><tab>);<br/>
+<tab><tab>System.out.println(Cetrta.odsek(seznam.iterator(), <span class="stevilo">16</span>, <span class="stevilo">41</span>));<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [Peter,&nbsp;Vlado,&nbsp;Matej,&nbsp;Eva,&nbsp;Cene,&nbsp;Vita,&nbsp;Vita,&nbsp;Leon,&nbsp;Nina,&nbsp;Darja,&nbsp;Rozalija,&nbsp;Matej,&nbsp;Vlado,&nbsp;Emil,&nbsp;Gabrijela,&nbsp;Eva,&nbsp;Rok,&nbsp;Hinko,&nbsp;Peter,&nbsp;Karel,&nbsp;Nina,&nbsp;Gabrijela,&nbsp;Oton,&nbsp;Eva,&nbsp;Darja,&nbsp;Urban]<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase23"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 23</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test23 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab>List<Integer> seznam = List.of(<br/>
+<tab><tab><tab><span class="stevilo">250</span>, <span class="stevilo">822</span>, <span class="stevilo">189</span>, <span class="stevilo">342</span>, <span class="stevilo">585</span>, <span class="stevilo">986</span>, <span class="stevilo">158</span>, <span class="stevilo">524</span>, <span class="stevilo">942</span>, <span class="stevilo">343</span>, <span class="stevilo">878</span>, <span class="stevilo">738</span>, <span class="stevilo">434</span>, <span class="stevilo">522</span>, <span class="stevilo">2</span>, <span class="stevilo">503</span>, <span class="stevilo">184</span>, <span class="stevilo">827</span>, <span class="stevilo">556</span>, <span class="stevilo">817</span>, <span class="stevilo">244</span>, <span class="stevilo">289</span>, <span class="stevilo">364</span>, <span class="stevilo">762</span>, <span class="stevilo">863</span>, <span class="stevilo">458</span>, <span class="stevilo">338</span>, <span class="stevilo">35</span>, <span class="stevilo">808</span>, <span class="stevilo">370</span>, <span class="stevilo">576</span>, <span class="stevilo">60</span>, <span class="stevilo">147</span>, <span class="stevilo">737</span>, <span class="stevilo">249</span>, <span class="stevilo">404</span>, <span class="stevilo">195</span>, <span class="stevilo">888</span>, <span class="stevilo">193</span>, <span class="stevilo">451</span>, <span class="stevilo">465</span>, <span class="stevilo">706</span>, <span class="stevilo">205</span>, <span class="stevilo">134</span>, <span class="stevilo">880</span>, <span class="stevilo">458</span>, <span class="stevilo">25</span>, <span class="stevilo">450</span>, <span class="stevilo">862</span>, <span class="stevilo">223</span>, <span class="stevilo">888</span>, <span class="stevilo">466</span>, <span class="stevilo">517</span>, <span class="stevilo">402</span>, <span class="stevilo">172</span>, <span class="stevilo">966</span>, <span class="stevilo">159</span>, <span class="stevilo">278</span>, <span class="stevilo">709</span>, <span class="stevilo">337</span>, <span class="stevilo">81</span>, <span class="stevilo">295</span>, <span class="stevilo">719</span>, <span class="stevilo">740</span>, <span class="stevilo">140</span>, <span class="stevilo">90</span>, <span class="stevilo">936</span><br/>
+<tab><tab>);<br/>
+<tab><tab>System.out.println(Cetrta.odsek(seznam.iterator(), <span class="stevilo">34</span>, <span class="stevilo">35</span>));<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [249,&nbsp;404]<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase24"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 24</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test24 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab>List<String> seznam = List.of(<br/>
+<tab><tab><tab><span class="niz">"Janez"</span>, <span class="niz">"Nina"</span>, <span class="niz">"Nikolaj"</span>, <span class="niz">"Darja"</span>, <span class="niz">"Ana"</span>, <span class="niz">"Tone"</span>, <span class="niz">"Eva"</span>, <span class="niz">"Oton"</span>, <span class="niz">"Rozalija"</span>, <span class="niz">"Iva"</span>, <span class="niz">"Iva"</span>, <span class="niz">"Ana"</span>, <span class="niz">"Zoran"</span>, <span class="niz">"Rozalija"</span>, <span class="niz">"Cvetka"</span>, <span class="niz">"Iva"</span>, <span class="niz">"Hinko"</span>, <span class="niz">"Tatjana"</span>, <span class="niz">"Simona"</span>, <span class="niz">"Peter"</span>, <span class="niz">"Olga"</span>, <span class="niz">"Barbara"</span>, <span class="niz">"Jana"</span>, <span class="niz">"Zinka"</span>, <span class="niz">"Rok"</span>, <span class="niz">"Klara"</span>, <span class="niz">"Emil"</span>, <span class="niz">"Rozalija"</span>, <span class="niz">"Francka"</span>, <span class="niz">"Nikolaj"</span>, <span class="niz">"Zinka"</span>, <span class="niz">"Bojan"</span>, <span class="niz">"Karel"</span>, <span class="niz">"Urban"</span>, <span class="niz">"Andrej"</span>, <span class="niz">"Vlado"</span>, <span class="niz">"Ula"</span>, <span class="niz">"Ana"</span>, <span class="niz">"Simon"</span>, <span class="niz">"Ivan"</span>, <span class="niz">"Maja"</span>, <span class="niz">"Rok"</span>, <span class="niz">"Ana"</span>, <span class="niz">"Tatjana"</span>, <span class="niz">"Klara"</span>, <span class="niz">"Iva"</span>, <span class="niz">"Zinka"</span>, <span class="niz">"Eva"</span>, <span class="niz">"Iva"</span>, <span class="niz">"Gorazd"</span>, <span class="niz">"Petra"</span>, <span class="niz">"Karel"</span>, <span class="niz">"Simona"</span>, <span class="niz">"Jana"</span>, <span class="niz">"Zinka"</span>, <span class="niz">"Matej"</span>, <span class="niz">"Simon"</span>, <span class="niz">"Rozalija"</span>, <span class="niz">"Lidija"</span><br/>
+<tab><tab>);<br/>
+<tab><tab>System.out.println(Cetrta.odsek(seznam.iterator(), <span class="stevilo">4</span>, <span class="stevilo">10</span>));<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [Ana,&nbsp;Tone,&nbsp;Eva,&nbsp;Oton,&nbsp;Rozalija,&nbsp;Iva,&nbsp;Iva]<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase25"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 25</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test25 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab>List<Integer> seznam = List.of(<br/>
+<tab><tab><tab><span class="stevilo">991</span>, <span class="stevilo">59</span>, <span class="stevilo">485</span>, <span class="stevilo">628</span>, <span class="stevilo">182</span>, <span class="stevilo">137</span>, <span class="stevilo">496</span>, <span class="stevilo">228</span>, <span class="stevilo">900</span>, <span class="stevilo">584</span>, <span class="stevilo">639</span>, <span class="stevilo">708</span>, <span class="stevilo">489</span>, <span class="stevilo">526</span>, <span class="stevilo">782</span>, <span class="stevilo">473</span>, <span class="stevilo">967</span>, <span class="stevilo">301</span>, <span class="stevilo">863</span>, <span class="stevilo">475</span>, <span class="stevilo">719</span>, <span class="stevilo">71</span>, <span class="stevilo">953</span>, <span class="stevilo">676</span>, <span class="stevilo">767</span>, <span class="stevilo">886</span>, <span class="stevilo">2</span>, <span class="stevilo">357</span>, <span class="stevilo">137</span>, <span class="stevilo">175</span>, <span class="stevilo">442</span>, <span class="stevilo">587</span>, <span class="stevilo">667</span>, <span class="stevilo">559</span>, <span class="stevilo">173</span>, <span class="stevilo">645</span>, <span class="stevilo">290</span>, <span class="stevilo">248</span>, <span class="stevilo">49</span>, <span class="stevilo">51</span>, <span class="stevilo">794</span><br/>
+<tab><tab>);<br/>
+<tab><tab>System.out.println(Cetrta.odsek(seznam.iterator(), <span class="stevilo">0</span>, <span class="stevilo">10</span>));<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [991,&nbsp;59,&nbsp;485,&nbsp;628,&nbsp;182,&nbsp;137,&nbsp;496,&nbsp;228,&nbsp;900,&nbsp;584,&nbsp;639]<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase26"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 26</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test26 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ZACETEK = -<span class="stevilo">126563</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_BREZ_IZPISA = <span class="stevilo">967</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_IZPISOV = <span class="stevilo">71</span>;<br/>
+<br/>
+<tab><tab>Iterator<Integer> iterator = <span class="rwordb">new</span> Iterator<>() {<br/>
+<tab><tab><tab>Random random = <span class="rwordb">new</span> Random(<span class="stevilo">100026</span>);<br/>
+<tab><tab><tab><span class="rwordv">int</span> n = ZACETEK;<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> <span class="rwordb">boolean</span> hasNext() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">true</span>;<br/>
+<tab><tab><tab>}<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> Integer next() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">this</span>.n += random.nextInt(<span class="stevilo">8</span>) + <span class="stevilo">1</span>;<br/>
+<tab><tab><tab>}<br/>
+<tab><tab>};<br/>
+<br/>
+<tab><tab>Iterator<Integer> manjkajoci = Cetrta.manjkajoci(iterator, ZACETEK);<br/>
+<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_BREZ_IZPISA;  i++) {<br/>
+<tab><tab><tab>manjkajoci.next();<br/>
+<tab><tab>}<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_IZPISOV;  i++) {<br/>
+<tab><tab><tab>System.out.println(manjkajoci.next());<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            -125327<br/>-125326<br/>-125324<br/>-125323<br/>-125322<br/>-125320<br/>-125319<br/>-125318<br/>-125317<br/>-125316<br/>-125314<br/>-125313<br/>-125312<br/>-125311<br/>-125309<br/>-125307<br/>-125306<br/>-125305<br/>-125304<br/>-125303<br/>-125302<br/>-125300<br/>-125298<br/>-125297<br/>-125296<br/>-125295<br/>-125294<br/>-125291<br/>-125289<br/>-125288<br/>-125287<br/>-125285<br/>-125284<br/>-125283<br/>-125282<br/>-125281<br/>-125280<br/>-125279<br/>-125276<br/>-125275<br/>-125274<br/>-125273<br/>-125271<br/>-125269<br/>-125268<br/>-125267<br/>-125266<br/>-125265<br/>-125264<br/>-125263<br/>-125261<br/>-125260<br/>-125259<br/>-125258<br/>-125256<br/>-125255<br/>-125254<br/>-125253<br/>-125252<br/>-125251<br/>-125250<br/>-125248<br/>-125247<br/>-125246<br/>-125244<br/>-125243<br/>-125242<br/>-125240<br/>-125239<br/>-125238<br/>-125237<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase27"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 27</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test27 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ZACETEK = <span class="stevilo">205708</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_BREZ_IZPISA = <span class="stevilo">8864486</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_IZPISOV = <span class="stevilo">65</span>;<br/>
+<br/>
+<tab><tab>Iterator<Integer> iterator = <span class="rwordb">new</span> Iterator<>() {<br/>
+<tab><tab><tab>Random random = <span class="rwordb">new</span> Random(<span class="stevilo">100027</span>);<br/>
+<tab><tab><tab><span class="rwordv">int</span> n = ZACETEK;<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> <span class="rwordb">boolean</span> hasNext() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">true</span>;<br/>
+<tab><tab><tab>}<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> Integer next() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">this</span>.n += random.nextInt(<span class="stevilo">4</span>) + <span class="stevilo">1</span>;<br/>
+<tab><tab><tab>}<br/>
+<tab><tab>};<br/>
+<br/>
+<tab><tab>Iterator<Integer> manjkajoci = Cetrta.manjkajoci(iterator, ZACETEK);<br/>
+<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_BREZ_IZPISA;  i++) {<br/>
+<tab><tab><tab>manjkajoci.next();<br/>
+<tab><tab>}<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_IZPISOV;  i++) {<br/>
+<tab><tab><tab>System.out.println(manjkajoci.next());<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            14979093<br/>14979096<br/>14979100<br/>14979102<br/>14979104<br/>14979105<br/>14979107<br/>14979109<br/>14979111<br/>14979112<br/>14979116<br/>14979118<br/>14979120<br/>14979121<br/>14979125<br/>14979127<br/>14979129<br/>14979130<br/>14979131<br/>14979133<br/>14979134<br/>14979135<br/>14979137<br/>14979139<br/>14979140<br/>14979142<br/>14979143<br/>14979145<br/>14979147<br/>14979148<br/>14979150<br/>14979151<br/>14979152<br/>14979154<br/>14979156<br/>14979157<br/>14979158<br/>14979160<br/>14979161<br/>14979163<br/>14979164<br/>14979165<br/>14979167<br/>14979168<br/>14979170<br/>14979171<br/>14979173<br/>14979174<br/>14979175<br/>14979177<br/>14979179<br/>14979180<br/>14979181<br/>14979183<br/>14979184<br/>14979185<br/>14979188<br/>14979189<br/>14979190<br/>14979193<br/>14979194<br/>14979195<br/>14979197<br/>14979198<br/>14979201<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase28"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 28</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test28 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ZACETEK = -<span class="stevilo">379776</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_BREZ_IZPISA = <span class="stevilo">51492</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_IZPISOV = <span class="stevilo">23</span>;<br/>
+<br/>
+<tab><tab>Iterator<Integer> iterator = <span class="rwordb">new</span> Iterator<>() {<br/>
+<tab><tab><tab>Random random = <span class="rwordb">new</span> Random(<span class="stevilo">100028</span>);<br/>
+<tab><tab><tab><span class="rwordv">int</span> n = ZACETEK;<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> <span class="rwordb">boolean</span> hasNext() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">true</span>;<br/>
+<tab><tab><tab>}<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> Integer next() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">this</span>.n += random.nextInt(<span class="stevilo">9</span>) + <span class="stevilo">1</span>;<br/>
+<tab><tab><tab>}<br/>
+<tab><tab>};<br/>
+<br/>
+<tab><tab>Iterator<Integer> manjkajoci = Cetrta.manjkajoci(iterator, ZACETEK);<br/>
+<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_BREZ_IZPISA;  i++) {<br/>
+<tab><tab><tab>manjkajoci.next();<br/>
+<tab><tab>}<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_IZPISOV;  i++) {<br/>
+<tab><tab><tab>System.out.println(manjkajoci.next());<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            -315293<br/>-315292<br/>-315291<br/>-315290<br/>-315288<br/>-315287<br/>-315286<br/>-315284<br/>-315283<br/>-315282<br/>-315281<br/>-315280<br/>-315279<br/>-315277<br/>-315274<br/>-315273<br/>-315272<br/>-315270<br/>-315267<br/>-315265<br/>-315264<br/>-315263<br/>-315262<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase29"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 29</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test29 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ZACETEK = <span class="stevilo">729212</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_BREZ_IZPISA = <span class="stevilo">5689</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_IZPISOV = <span class="stevilo">42</span>;<br/>
+<br/>
+<tab><tab>Iterator<Integer> iterator = <span class="rwordb">new</span> Iterator<>() {<br/>
+<tab><tab><tab>Random random = <span class="rwordb">new</span> Random(<span class="stevilo">100029</span>);<br/>
+<tab><tab><tab><span class="rwordv">int</span> n = ZACETEK;<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> <span class="rwordb">boolean</span> hasNext() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">true</span>;<br/>
+<tab><tab><tab>}<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> Integer next() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">this</span>.n += random.nextInt(<span class="stevilo">4</span>) + <span class="stevilo">1</span>;<br/>
+<tab><tab><tab>}<br/>
+<tab><tab>};<br/>
+<br/>
+<tab><tab>Iterator<Integer> manjkajoci = Cetrta.manjkajoci(iterator, ZACETEK);<br/>
+<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_BREZ_IZPISA;  i++) {<br/>
+<tab><tab><tab>manjkajoci.next();<br/>
+<tab><tab>}<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_IZPISOV;  i++) {<br/>
+<tab><tab><tab>System.out.println(manjkajoci.next());<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            738649<br/>738650<br/>738651<br/>738654<br/>738656<br/>738657<br/>738658<br/>738660<br/>738661<br/>738663<br/>738667<br/>738668<br/>738669<br/>738671<br/>738672<br/>738673<br/>738675<br/>738676<br/>738678<br/>738682<br/>738685<br/>738686<br/>738688<br/>738690<br/>738691<br/>738693<br/>738694<br/>738696<br/>738697<br/>738698<br/>738701<br/>738704<br/>738705<br/>738706<br/>738708<br/>738710<br/>738711<br/>738712<br/>738714<br/>738715<br/>738716<br/>738718<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase30"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 30</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test30 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ZACETEK = -<span class="stevilo">162161</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_BREZ_IZPISA = <span class="stevilo">8673</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_IZPISOV = <span class="stevilo">43</span>;<br/>
+<br/>
+<tab><tab>Iterator<Integer> iterator = <span class="rwordb">new</span> Iterator<>() {<br/>
+<tab><tab><tab>Random random = <span class="rwordb">new</span> Random(<span class="stevilo">100030</span>);<br/>
+<tab><tab><tab><span class="rwordv">int</span> n = ZACETEK;<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> <span class="rwordb">boolean</span> hasNext() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">true</span>;<br/>
+<tab><tab><tab>}<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> Integer next() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">this</span>.n += random.nextInt(<span class="stevilo">3</span>) + <span class="stevilo">1</span>;<br/>
+<tab><tab><tab>}<br/>
+<tab><tab>};<br/>
+<br/>
+<tab><tab>Iterator<Integer> manjkajoci = Cetrta.manjkajoci(iterator, ZACETEK);<br/>
+<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_BREZ_IZPISA;  i++) {<br/>
+<tab><tab><tab>manjkajoci.next();<br/>
+<tab><tab>}<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_IZPISOV;  i++) {<br/>
+<tab><tab><tab>System.out.println(manjkajoci.next());<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            -144877<br/>-144874<br/>-144870<br/>-144869<br/>-144866<br/>-144865<br/>-144863<br/>-144861<br/>-144860<br/>-144856<br/>-144855<br/>-144852<br/>-144849<br/>-144848<br/>-144845<br/>-144841<br/>-144839<br/>-144836<br/>-144834<br/>-144832<br/>-144830<br/>-144827<br/>-144825<br/>-144822<br/>-144820<br/>-144819<br/>-144817<br/>-144816<br/>-144814<br/>-144813<br/>-144811<br/>-144810<br/>-144807<br/>-144806<br/>-144803<br/>-144802<br/>-144800<br/>-144799<br/>-144794<br/>-144793<br/>-144789<br/>-144788<br/>-144786<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase31"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 31</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test31 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ZACETEK = <span class="stevilo">947312</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_BREZ_IZPISA = <span class="stevilo">2530</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_IZPISOV = <span class="stevilo">34</span>;<br/>
+<br/>
+<tab><tab>Iterator<Integer> iterator = <span class="rwordb">new</span> Iterator<>() {<br/>
+<tab><tab><tab>Random random = <span class="rwordb">new</span> Random(<span class="stevilo">100031</span>);<br/>
+<tab><tab><tab><span class="rwordv">int</span> n = ZACETEK;<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> <span class="rwordb">boolean</span> hasNext() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">true</span>;<br/>
+<tab><tab><tab>}<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> Integer next() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">this</span>.n += random.nextInt(<span class="stevilo">9</span>) + <span class="stevilo">1</span>;<br/>
+<tab><tab><tab>}<br/>
+<tab><tab>};<br/>
+<br/>
+<tab><tab>Iterator<Integer> manjkajoci = Cetrta.manjkajoci(iterator, ZACETEK);<br/>
+<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_BREZ_IZPISA;  i++) {<br/>
+<tab><tab><tab>manjkajoci.next();<br/>
+<tab><tab>}<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_IZPISOV;  i++) {<br/>
+<tab><tab><tab>System.out.println(manjkajoci.next());<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            950486<br/>950487<br/>950488<br/>950490<br/>950491<br/>950492<br/>950495<br/>950497<br/>950498<br/>950499<br/>950500<br/>950503<br/>950504<br/>950505<br/>950506<br/>950507<br/>950508<br/>950509<br/>950510<br/>950513<br/>950514<br/>950515<br/>950516<br/>950517<br/>950518<br/>950519<br/>950520<br/>950522<br/>950523<br/>950524<br/>950525<br/>950526<br/>950527<br/>950528<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase32"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 32</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test32 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ZACETEK = -<span class="stevilo">434232</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_BREZ_IZPISA = <span class="stevilo">16</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_IZPISOV = <span class="stevilo">96</span>;<br/>
+<br/>
+<tab><tab>Iterator<Integer> iterator = <span class="rwordb">new</span> Iterator<>() {<br/>
+<tab><tab><tab>Random random = <span class="rwordb">new</span> Random(<span class="stevilo">100032</span>);<br/>
+<tab><tab><tab><span class="rwordv">int</span> n = ZACETEK;<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> <span class="rwordb">boolean</span> hasNext() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">true</span>;<br/>
+<tab><tab><tab>}<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> Integer next() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">this</span>.n += random.nextInt(<span class="stevilo">2</span>) + <span class="stevilo">1</span>;<br/>
+<tab><tab><tab>}<br/>
+<tab><tab>};<br/>
+<br/>
+<tab><tab>Iterator<Integer> manjkajoci = Cetrta.manjkajoci(iterator, ZACETEK);<br/>
+<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_BREZ_IZPISA;  i++) {<br/>
+<tab><tab><tab>manjkajoci.next();<br/>
+<tab><tab>}<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_IZPISOV;  i++) {<br/>
+<tab><tab><tab>System.out.println(manjkajoci.next());<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            -434174<br/>-434172<br/>-434170<br/>-434168<br/>-434163<br/>-434160<br/>-434158<br/>-434153<br/>-434151<br/>-434149<br/>-434147<br/>-434145<br/>-434143<br/>-434139<br/>-434137<br/>-434134<br/>-434132<br/>-434130<br/>-434126<br/>-434123<br/>-434121<br/>-434119<br/>-434117<br/>-434103<br/>-434098<br/>-434096<br/>-434093<br/>-434091<br/>-434089<br/>-434081<br/>-434078<br/>-434076<br/>-434074<br/>-434072<br/>-434070<br/>-434066<br/>-434064<br/>-434059<br/>-434054<br/>-434050<br/>-434047<br/>-434045<br/>-434042<br/>-434039<br/>-434037<br/>-434035<br/>-434033<br/>-434031<br/>-434029<br/>-434026<br/>-434023<br/>-434021<br/>-434019<br/>-434013<br/>-434011<br/>-434008<br/>-434005<br/>-434003<br/>-433999<br/>-433997<br/>-433995<br/>-433993<br/>-433991<br/>-433987<br/>-433984<br/>-433981<br/>-433979<br/>-433976<br/>-433974<br/>-433970<br/>-433968<br/>-433965<br/>-433961<br/>-433959<br/>-433957<br/>-433953<br/>-433946<br/>-433943<br/>-433940<br/>-433937<br/>-433935<br/>-433933<br/>-433931<br/>-433929<br/>-433927<br/>-433924<br/>-433922<br/>-433920<br/>-433918<br/>-433916<br/>-433914<br/>-433908<br/>-433904<br/>-433902<br/>-433899<br/>-433897<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase33"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 33</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test33 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ZACETEK = -<span class="stevilo">282403</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_BREZ_IZPISA = <span class="stevilo">66722</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_IZPISOV = <span class="stevilo">44</span>;<br/>
+<br/>
+<tab><tab>Iterator<Integer> iterator = <span class="rwordb">new</span> Iterator<>() {<br/>
+<tab><tab><tab>Random random = <span class="rwordb">new</span> Random(<span class="stevilo">100033</span>);<br/>
+<tab><tab><tab><span class="rwordv">int</span> n = ZACETEK;<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> <span class="rwordb">boolean</span> hasNext() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">true</span>;<br/>
+<tab><tab><tab>}<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> Integer next() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">this</span>.n += random.nextInt(<span class="stevilo">4</span>) + <span class="stevilo">1</span>;<br/>
+<tab><tab><tab>}<br/>
+<tab><tab>};<br/>
+<br/>
+<tab><tab>Iterator<Integer> manjkajoci = Cetrta.manjkajoci(iterator, ZACETEK);<br/>
+<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_BREZ_IZPISA;  i++) {<br/>
+<tab><tab><tab>manjkajoci.next();<br/>
+<tab><tab>}<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_IZPISOV;  i++) {<br/>
+<tab><tab><tab>System.out.println(manjkajoci.next());<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            -171344<br/>-171342<br/>-171341<br/>-171340<br/>-171338<br/>-171337<br/>-171336<br/>-171334<br/>-171333<br/>-171330<br/>-171329<br/>-171328<br/>-171326<br/>-171325<br/>-171322<br/>-171321<br/>-171320<br/>-171317<br/>-171316<br/>-171315<br/>-171313<br/>-171312<br/>-171311<br/>-171309<br/>-171306<br/>-171303<br/>-171302<br/>-171301<br/>-171299<br/>-171297<br/>-171296<br/>-171294<br/>-171292<br/>-171288<br/>-171287<br/>-171286<br/>-171284<br/>-171283<br/>-171280<br/>-171279<br/>-171278<br/>-171276<br/>-171275<br/>-171273<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase34"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 34</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test34 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ZACETEK = -<span class="stevilo">125210</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_BREZ_IZPISA = <span class="stevilo">650</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_IZPISOV = <span class="stevilo">43</span>;<br/>
+<br/>
+<tab><tab>Iterator<Integer> iterator = <span class="rwordb">new</span> Iterator<>() {<br/>
+<tab><tab><tab>Random random = <span class="rwordb">new</span> Random(<span class="stevilo">100034</span>);<br/>
+<tab><tab><tab><span class="rwordv">int</span> n = ZACETEK;<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> <span class="rwordb">boolean</span> hasNext() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">true</span>;<br/>
+<tab><tab><tab>}<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> Integer next() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">this</span>.n += random.nextInt(<span class="stevilo">4</span>) + <span class="stevilo">1</span>;<br/>
+<tab><tab><tab>}<br/>
+<tab><tab>};<br/>
+<br/>
+<tab><tab>Iterator<Integer> manjkajoci = Cetrta.manjkajoci(iterator, ZACETEK);<br/>
+<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_BREZ_IZPISA;  i++) {<br/>
+<tab><tab><tab>manjkajoci.next();<br/>
+<tab><tab>}<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_IZPISOV;  i++) {<br/>
+<tab><tab><tab>System.out.println(manjkajoci.next());<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            -124142<br/>-124141<br/>-124139<br/>-124138<br/>-124137<br/>-124135<br/>-124134<br/>-124133<br/>-124130<br/>-124129<br/>-124127<br/>-124125<br/>-124124<br/>-124123<br/>-124120<br/>-124118<br/>-124116<br/>-124115<br/>-124114<br/>-124111<br/>-124110<br/>-124109<br/>-124107<br/>-124106<br/>-124104<br/>-124102<br/>-124099<br/>-124097<br/>-124096<br/>-124095<br/>-124092<br/>-124090<br/>-124089<br/>-124087<br/>-124085<br/>-124084<br/>-124083<br/>-124081<br/>-124080<br/>-124078<br/>-124077<br/>-124075<br/>-124074<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase35"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 35</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test35 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ZACETEK = <span class="stevilo">585852</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_BREZ_IZPISA = <span class="stevilo">3069</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_IZPISOV = <span class="stevilo">73</span>;<br/>
+<br/>
+<tab><tab>Iterator<Integer> iterator = <span class="rwordb">new</span> Iterator<>() {<br/>
+<tab><tab><tab>Random random = <span class="rwordb">new</span> Random(<span class="stevilo">100035</span>);<br/>
+<tab><tab><tab><span class="rwordv">int</span> n = ZACETEK;<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> <span class="rwordb">boolean</span> hasNext() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">true</span>;<br/>
+<tab><tab><tab>}<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> Integer next() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">this</span>.n += random.nextInt(<span class="stevilo">10</span>) + <span class="stevilo">1</span>;<br/>
+<tab><tab><tab>}<br/>
+<tab><tab>};<br/>
+<br/>
+<tab><tab>Iterator<Integer> manjkajoci = Cetrta.manjkajoci(iterator, ZACETEK);<br/>
+<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_BREZ_IZPISA;  i++) {<br/>
+<tab><tab><tab>manjkajoci.next();<br/>
+<tab><tab>}<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_IZPISOV;  i++) {<br/>
+<tab><tab><tab>System.out.println(manjkajoci.next());<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            589598<br/>589599<br/>589601<br/>589602<br/>589603<br/>589604<br/>589605<br/>589606<br/>589608<br/>589609<br/>589611<br/>589612<br/>589613<br/>589614<br/>589615<br/>589617<br/>589618<br/>589619<br/>589620<br/>589621<br/>589622<br/>589623<br/>589625<br/>589628<br/>589629<br/>589630<br/>589632<br/>589633<br/>589634<br/>589635<br/>589636<br/>589638<br/>589639<br/>589641<br/>589642<br/>589644<br/>589645<br/>589646<br/>589648<br/>589649<br/>589651<br/>589652<br/>589653<br/>589655<br/>589656<br/>589658<br/>589659<br/>589660<br/>589661<br/>589662<br/>589663<br/>589665<br/>589666<br/>589667<br/>589668<br/>589669<br/>589670<br/>589671<br/>589672<br/>589673<br/>589675<br/>589676<br/>589677<br/>589678<br/>589679<br/>589680<br/>589681<br/>589682<br/>589683<br/>589685<br/>589686<br/>589687<br/>589689<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase36"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 36</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test36 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ZACETEK = -<span class="stevilo">900873</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_BREZ_IZPISA = <span class="stevilo">5</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_IZPISOV = <span class="stevilo">41</span>;<br/>
+<br/>
+<tab><tab>Iterator<Integer> iterator = <span class="rwordb">new</span> Iterator<>() {<br/>
+<tab><tab><tab>Random random = <span class="rwordb">new</span> Random(<span class="stevilo">100036</span>);<br/>
+<tab><tab><tab><span class="rwordv">int</span> n = ZACETEK;<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> <span class="rwordb">boolean</span> hasNext() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">true</span>;<br/>
+<tab><tab><tab>}<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> Integer next() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">this</span>.n += random.nextInt(<span class="stevilo">6</span>) + <span class="stevilo">1</span>;<br/>
+<tab><tab><tab>}<br/>
+<tab><tab>};<br/>
+<br/>
+<tab><tab>Iterator<Integer> manjkajoci = Cetrta.manjkajoci(iterator, ZACETEK);<br/>
+<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_BREZ_IZPISA;  i++) {<br/>
+<tab><tab><tab>manjkajoci.next();<br/>
+<tab><tab>}<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_IZPISOV;  i++) {<br/>
+<tab><tab><tab>System.out.println(manjkajoci.next());<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            -900866<br/>-900864<br/>-900862<br/>-900861<br/>-900859<br/>-900858<br/>-900857<br/>-900856<br/>-900855<br/>-900853<br/>-900851<br/>-900850<br/>-900849<br/>-900847<br/>-900845<br/>-900844<br/>-900843<br/>-900842<br/>-900840<br/>-900839<br/>-900838<br/>-900837<br/>-900836<br/>-900834<br/>-900833<br/>-900832<br/>-900829<br/>-900828<br/>-900826<br/>-900825<br/>-900824<br/>-900823<br/>-900821<br/>-900820<br/>-900818<br/>-900817<br/>-900816<br/>-900815<br/>-900814<br/>-900812<br/>-900811<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase37"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 37</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test37 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ZACETEK = <span class="stevilo">900959</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_BREZ_IZPISA = <span class="stevilo">3295</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_IZPISOV = <span class="stevilo">17</span>;<br/>
+<br/>
+<tab><tab>Iterator<Integer> iterator = <span class="rwordb">new</span> Iterator<>() {<br/>
+<tab><tab><tab>Random random = <span class="rwordb">new</span> Random(<span class="stevilo">100037</span>);<br/>
+<tab><tab><tab><span class="rwordv">int</span> n = ZACETEK;<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> <span class="rwordb">boolean</span> hasNext() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">true</span>;<br/>
+<tab><tab><tab>}<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> Integer next() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">this</span>.n += random.nextInt(<span class="stevilo">4</span>) + <span class="stevilo">1</span>;<br/>
+<tab><tab><tab>}<br/>
+<tab><tab>};<br/>
+<br/>
+<tab><tab>Iterator<Integer> manjkajoci = Cetrta.manjkajoci(iterator, ZACETEK);<br/>
+<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_BREZ_IZPISA;  i++) {<br/>
+<tab><tab><tab>manjkajoci.next();<br/>
+<tab><tab>}<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_IZPISOV;  i++) {<br/>
+<tab><tab><tab>System.out.println(manjkajoci.next());<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            906432<br/>906434<br/>906436<br/>906437<br/>906439<br/>906441<br/>906443<br/>906444<br/>906445<br/>906448<br/>906450<br/>906451<br/>906452<br/>906455<br/>906456<br/>906458<br/>906460<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase38"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 38</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test38 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ZACETEK = <span class="stevilo">323445</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_BREZ_IZPISA = <span class="stevilo">557529</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_IZPISOV = <span class="stevilo">48</span>;<br/>
+<br/>
+<tab><tab>Iterator<Integer> iterator = <span class="rwordb">new</span> Iterator<>() {<br/>
+<tab><tab><tab>Random random = <span class="rwordb">new</span> Random(<span class="stevilo">100038</span>);<br/>
+<tab><tab><tab><span class="rwordv">int</span> n = ZACETEK;<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> <span class="rwordb">boolean</span> hasNext() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">true</span>;<br/>
+<tab><tab><tab>}<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> Integer next() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">this</span>.n += random.nextInt(<span class="stevilo">9</span>) + <span class="stevilo">1</span>;<br/>
+<tab><tab><tab>}<br/>
+<tab><tab>};<br/>
+<br/>
+<tab><tab>Iterator<Integer> manjkajoci = Cetrta.manjkajoci(iterator, ZACETEK);<br/>
+<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_BREZ_IZPISA;  i++) {<br/>
+<tab><tab><tab>manjkajoci.next();<br/>
+<tab><tab>}<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_IZPISOV;  i++) {<br/>
+<tab><tab><tab>System.out.println(manjkajoci.next());<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            1020552<br/>1020553<br/>1020555<br/>1020556<br/>1020557<br/>1020558<br/>1020559<br/>1020560<br/>1020562<br/>1020563<br/>1020564<br/>1020565<br/>1020567<br/>1020568<br/>1020569<br/>1020570<br/>1020571<br/>1020572<br/>1020574<br/>1020575<br/>1020576<br/>1020577<br/>1020578<br/>1020580<br/>1020581<br/>1020582<br/>1020585<br/>1020586<br/>1020588<br/>1020589<br/>1020591<br/>1020592<br/>1020593<br/>1020594<br/>1020597<br/>1020598<br/>1020599<br/>1020600<br/>1020602<br/>1020603<br/>1020605<br/>1020607<br/>1020608<br/>1020609<br/>1020610<br/>1020612<br/>1020613<br/>1020614<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase39"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 39</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test39 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ZACETEK = <span class="stevilo">703203</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_BREZ_IZPISA = <span class="stevilo">99271</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_IZPISOV = <span class="stevilo">22</span>;<br/>
+<br/>
+<tab><tab>Iterator<Integer> iterator = <span class="rwordb">new</span> Iterator<>() {<br/>
+<tab><tab><tab>Random random = <span class="rwordb">new</span> Random(<span class="stevilo">100039</span>);<br/>
+<tab><tab><tab><span class="rwordv">int</span> n = ZACETEK;<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> <span class="rwordb">boolean</span> hasNext() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">true</span>;<br/>
+<tab><tab><tab>}<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> Integer next() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">this</span>.n += random.nextInt(<span class="stevilo">5</span>) + <span class="stevilo">1</span>;<br/>
+<tab><tab><tab>}<br/>
+<tab><tab>};<br/>
+<br/>
+<tab><tab>Iterator<Integer> manjkajoci = Cetrta.manjkajoci(iterator, ZACETEK);<br/>
+<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_BREZ_IZPISA;  i++) {<br/>
+<tab><tab><tab>manjkajoci.next();<br/>
+<tab><tab>}<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_IZPISOV;  i++) {<br/>
+<tab><tab><tab>System.out.println(manjkajoci.next());<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            851841<br/>851842<br/>851843<br/>851844<br/>851846<br/>851847<br/>851850<br/>851851<br/>851853<br/>851854<br/>851855<br/>851857<br/>851858<br/>851859<br/>851860<br/>851862<br/>851863<br/>851864<br/>851865<br/>851867<br/>851868<br/>851871<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase40"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 40</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test40 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ZACETEK = -<span class="stevilo">351912</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_BREZ_IZPISA = <span class="stevilo">90610</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_IZPISOV = <span class="stevilo">45</span>;<br/>
+<br/>
+<tab><tab>Iterator<Integer> iterator = <span class="rwordb">new</span> Iterator<>() {<br/>
+<tab><tab><tab>Random random = <span class="rwordb">new</span> Random(<span class="stevilo">100040</span>);<br/>
+<tab><tab><tab><span class="rwordv">int</span> n = ZACETEK;<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> <span class="rwordb">boolean</span> hasNext() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">true</span>;<br/>
+<tab><tab><tab>}<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> Integer next() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">this</span>.n += random.nextInt(<span class="stevilo">2</span>) + <span class="stevilo">1</span>;<br/>
+<tab><tab><tab>}<br/>
+<tab><tab>};<br/>
+<br/>
+<tab><tab>Iterator<Integer> manjkajoci = Cetrta.manjkajoci(iterator, ZACETEK);<br/>
+<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_BREZ_IZPISA;  i++) {<br/>
+<tab><tab><tab>manjkajoci.next();<br/>
+<tab><tab>}<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_IZPISOV;  i++) {<br/>
+<tab><tab><tab>System.out.println(manjkajoci.next());<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            -79670<br/>-79668<br/>-79666<br/>-79662<br/>-79660<br/>-79658<br/>-79655<br/>-79651<br/>-79649<br/>-79647<br/>-79644<br/>-79642<br/>-79638<br/>-79636<br/>-79634<br/>-79632<br/>-79626<br/>-79623<br/>-79621<br/>-79617<br/>-79615<br/>-79611<br/>-79607<br/>-79604<br/>-79602<br/>-79599<br/>-79596<br/>-79592<br/>-79587<br/>-79582<br/>-79578<br/>-79574<br/>-79572<br/>-79567<br/>-79564<br/>-79560<br/>-79557<br/>-79553<br/>-79550<br/>-79546<br/>-79544<br/>-79540<br/>-79538<br/>-79535<br/>-79531<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase41"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 41</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test41 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ZACETEK = <span class="stevilo">270431</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_BREZ_IZPISA = <span class="stevilo">48379</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_IZPISOV = <span class="stevilo">28</span>;<br/>
+<br/>
+<tab><tab>Iterator<Integer> iterator = <span class="rwordb">new</span> Iterator<>() {<br/>
+<tab><tab><tab>Random random = <span class="rwordb">new</span> Random(<span class="stevilo">100041</span>);<br/>
+<tab><tab><tab><span class="rwordv">int</span> n = ZACETEK;<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> <span class="rwordb">boolean</span> hasNext() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">true</span>;<br/>
+<tab><tab><tab>}<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> Integer next() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">this</span>.n += random.nextInt(<span class="stevilo">6</span>) + <span class="stevilo">1</span>;<br/>
+<tab><tab><tab>}<br/>
+<tab><tab>};<br/>
+<br/>
+<tab><tab>Iterator<Integer> manjkajoci = Cetrta.manjkajoci(iterator, ZACETEK);<br/>
+<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_BREZ_IZPISA;  i++) {<br/>
+<tab><tab><tab>manjkajoci.next();<br/>
+<tab><tab>}<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_IZPISOV;  i++) {<br/>
+<tab><tab><tab>System.out.println(manjkajoci.next());<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            338233<br/>338234<br/>338236<br/>338237<br/>338238<br/>338239<br/>338241<br/>338244<br/>338245<br/>338247<br/>338248<br/>338249<br/>338250<br/>338251<br/>338253<br/>338254<br/>338255<br/>338256<br/>338257<br/>338261<br/>338262<br/>338264<br/>338265<br/>338267<br/>338268<br/>338269<br/>338270<br/>338271<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase42"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 42</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test42 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ZACETEK = <span class="stevilo">138945</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_BREZ_IZPISA = <span class="stevilo">901</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_IZPISOV = <span class="stevilo">70</span>;<br/>
+<br/>
+<tab><tab>Iterator<Integer> iterator = <span class="rwordb">new</span> Iterator<>() {<br/>
+<tab><tab><tab>Random random = <span class="rwordb">new</span> Random(<span class="stevilo">100042</span>);<br/>
+<tab><tab><tab><span class="rwordv">int</span> n = ZACETEK;<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> <span class="rwordb">boolean</span> hasNext() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">true</span>;<br/>
+<tab><tab><tab>}<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> Integer next() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">this</span>.n += random.nextInt(<span class="stevilo">7</span>) + <span class="stevilo">1</span>;<br/>
+<tab><tab><tab>}<br/>
+<tab><tab>};<br/>
+<br/>
+<tab><tab>Iterator<Integer> manjkajoci = Cetrta.manjkajoci(iterator, ZACETEK);<br/>
+<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_BREZ_IZPISA;  i++) {<br/>
+<tab><tab><tab>manjkajoci.next();<br/>
+<tab><tab>}<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_IZPISOV;  i++) {<br/>
+<tab><tab><tab>System.out.println(manjkajoci.next());<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            140136<br/>140137<br/>140139<br/>140140<br/>140141<br/>140142<br/>140143<br/>140145<br/>140146<br/>140147<br/>140149<br/>140150<br/>140151<br/>140153<br/>140154<br/>140155<br/>140157<br/>140158<br/>140159<br/>140160<br/>140163<br/>140165<br/>140166<br/>140167<br/>140168<br/>140169<br/>140170<br/>140173<br/>140174<br/>140175<br/>140176<br/>140178<br/>140179<br/>140180<br/>140181<br/>140182<br/>140183<br/>140185<br/>140186<br/>140187<br/>140189<br/>140190<br/>140191<br/>140192<br/>140193<br/>140194<br/>140196<br/>140197<br/>140198<br/>140199<br/>140201<br/>140202<br/>140204<br/>140205<br/>140206<br/>140209<br/>140210<br/>140212<br/>140213<br/>140214<br/>140215<br/>140216<br/>140217<br/>140220<br/>140221<br/>140222<br/>140224<br/>140225<br/>140226<br/>140227<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase43"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 43</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test43 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ZACETEK = -<span class="stevilo">560249</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_BREZ_IZPISA = <span class="stevilo">142196</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_IZPISOV = <span class="stevilo">32</span>;<br/>
+<br/>
+<tab><tab>Iterator<Integer> iterator = <span class="rwordb">new</span> Iterator<>() {<br/>
+<tab><tab><tab>Random random = <span class="rwordb">new</span> Random(<span class="stevilo">100043</span>);<br/>
+<tab><tab><tab><span class="rwordv">int</span> n = ZACETEK;<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> <span class="rwordb">boolean</span> hasNext() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">true</span>;<br/>
+<tab><tab><tab>}<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> Integer next() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">this</span>.n += random.nextInt(<span class="stevilo">6</span>) + <span class="stevilo">1</span>;<br/>
+<tab><tab><tab>}<br/>
+<tab><tab>};<br/>
+<br/>
+<tab><tab>Iterator<Integer> manjkajoci = Cetrta.manjkajoci(iterator, ZACETEK);<br/>
+<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_BREZ_IZPISA;  i++) {<br/>
+<tab><tab><tab>manjkajoci.next();<br/>
+<tab><tab>}<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_IZPISOV;  i++) {<br/>
+<tab><tab><tab>System.out.println(manjkajoci.next());<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            -360984<br/>-360982<br/>-360981<br/>-360980<br/>-360979<br/>-360978<br/>-360976<br/>-360975<br/>-360974<br/>-360972<br/>-360971<br/>-360970<br/>-360968<br/>-360967<br/>-360966<br/>-360965<br/>-360963<br/>-360962<br/>-360960<br/>-360959<br/>-360957<br/>-360956<br/>-360955<br/>-360954<br/>-360953<br/>-360951<br/>-360950<br/>-360949<br/>-360946<br/>-360945<br/>-360944<br/>-360942<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase44"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 44</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test44 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ZACETEK = -<span class="stevilo">51413</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_BREZ_IZPISA = <span class="stevilo">8057</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_IZPISOV = <span class="stevilo">75</span>;<br/>
+<br/>
+<tab><tab>Iterator<Integer> iterator = <span class="rwordb">new</span> Iterator<>() {<br/>
+<tab><tab><tab>Random random = <span class="rwordb">new</span> Random(<span class="stevilo">100044</span>);<br/>
+<tab><tab><tab><span class="rwordv">int</span> n = ZACETEK;<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> <span class="rwordb">boolean</span> hasNext() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">true</span>;<br/>
+<tab><tab><tab>}<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> Integer next() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">this</span>.n += random.nextInt(<span class="stevilo">7</span>) + <span class="stevilo">1</span>;<br/>
+<tab><tab><tab>}<br/>
+<tab><tab>};<br/>
+<br/>
+<tab><tab>Iterator<Integer> manjkajoci = Cetrta.manjkajoci(iterator, ZACETEK);<br/>
+<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_BREZ_IZPISA;  i++) {<br/>
+<tab><tab><tab>manjkajoci.next();<br/>
+<tab><tab>}<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_IZPISOV;  i++) {<br/>
+<tab><tab><tab>System.out.println(manjkajoci.next());<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            -40604<br/>-40603<br/>-40602<br/>-40599<br/>-40597<br/>-40596<br/>-40595<br/>-40594<br/>-40593<br/>-40591<br/>-40590<br/>-40589<br/>-40588<br/>-40586<br/>-40585<br/>-40583<br/>-40582<br/>-40581<br/>-40580<br/>-40578<br/>-40577<br/>-40576<br/>-40575<br/>-40573<br/>-40572<br/>-40571<br/>-40569<br/>-40567<br/>-40566<br/>-40565<br/>-40564<br/>-40562<br/>-40561<br/>-40560<br/>-40559<br/>-40557<br/>-40556<br/>-40555<br/>-40554<br/>-40553<br/>-40552<br/>-40550<br/>-40548<br/>-40547<br/>-40546<br/>-40544<br/>-40542<br/>-40541<br/>-40539<br/>-40538<br/>-40537<br/>-40536<br/>-40534<br/>-40533<br/>-40532<br/>-40531<br/>-40530<br/>-40529<br/>-40527<br/>-40526<br/>-40524<br/>-40523<br/>-40522<br/>-40521<br/>-40520<br/>-40518<br/>-40517<br/>-40515<br/>-40514<br/>-40513<br/>-40512<br/>-40511<br/>-40509<br/>-40508<br/>-40507<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase45"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 45</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test45 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ZACETEK = <span class="stevilo">298876</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_BREZ_IZPISA = <span class="stevilo">324132</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_IZPISOV = <span class="stevilo">40</span>;<br/>
+<br/>
+<tab><tab>Iterator<Integer> iterator = <span class="rwordb">new</span> Iterator<>() {<br/>
+<tab><tab><tab>Random random = <span class="rwordb">new</span> Random(<span class="stevilo">100045</span>);<br/>
+<tab><tab><tab><span class="rwordv">int</span> n = ZACETEK;<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> <span class="rwordb">boolean</span> hasNext() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">true</span>;<br/>
+<tab><tab><tab>}<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> Integer next() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">this</span>.n += random.nextInt(<span class="stevilo">3</span>) + <span class="stevilo">1</span>;<br/>
+<tab><tab><tab>}<br/>
+<tab><tab>};<br/>
+<br/>
+<tab><tab>Iterator<Integer> manjkajoci = Cetrta.manjkajoci(iterator, ZACETEK);<br/>
+<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_BREZ_IZPISA;  i++) {<br/>
+<tab><tab><tab>manjkajoci.next();<br/>
+<tab><tab>}<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_IZPISOV;  i++) {<br/>
+<tab><tab><tab>System.out.println(manjkajoci.next());<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            947242<br/>947244<br/>947245<br/>947247<br/>947248<br/>947250<br/>947253<br/>947254<br/>947256<br/>947259<br/>947261<br/>947262<br/>947264<br/>947265<br/>947267<br/>947268<br/>947271<br/>947273<br/>947274<br/>947277<br/>947278<br/>947280<br/>947284<br/>947285<br/>947287<br/>947288<br/>947290<br/>947291<br/>947295<br/>947298<br/>947299<br/>947301<br/>947302<br/>947305<br/>947307<br/>947309<br/>947311<br/>947315<br/>947316<br/>947318<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase46"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 46</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test46 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ZACETEK = <span class="stevilo">258389</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_BREZ_IZPISA = <span class="stevilo">943</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_IZPISOV = <span class="stevilo">88</span>;<br/>
+<br/>
+<tab><tab>Iterator<Integer> iterator = <span class="rwordb">new</span> Iterator<>() {<br/>
+<tab><tab><tab>Random random = <span class="rwordb">new</span> Random(<span class="stevilo">100046</span>);<br/>
+<tab><tab><tab><span class="rwordv">int</span> n = ZACETEK;<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> <span class="rwordb">boolean</span> hasNext() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">true</span>;<br/>
+<tab><tab><tab>}<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> Integer next() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">this</span>.n += random.nextInt(<span class="stevilo">2</span>) + <span class="stevilo">1</span>;<br/>
+<tab><tab><tab>}<br/>
+<tab><tab>};<br/>
+<br/>
+<tab><tab>Iterator<Integer> manjkajoci = Cetrta.manjkajoci(iterator, ZACETEK);<br/>
+<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_BREZ_IZPISA;  i++) {<br/>
+<tab><tab><tab>manjkajoci.next();<br/>
+<tab><tab>}<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_IZPISOV;  i++) {<br/>
+<tab><tab><tab>System.out.println(manjkajoci.next());<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            261184<br/>261187<br/>261193<br/>261196<br/>261202<br/>261204<br/>261209<br/>261211<br/>261213<br/>261216<br/>261218<br/>261221<br/>261223<br/>261226<br/>261231<br/>261233<br/>261235<br/>261239<br/>261241<br/>261247<br/>261257<br/>261259<br/>261263<br/>261272<br/>261274<br/>261276<br/>261278<br/>261281<br/>261283<br/>261285<br/>261287<br/>261294<br/>261296<br/>261298<br/>261300<br/>261302<br/>261304<br/>261307<br/>261310<br/>261312<br/>261314<br/>261316<br/>261318<br/>261321<br/>261323<br/>261325<br/>261327<br/>261336<br/>261338<br/>261342<br/>261344<br/>261346<br/>261350<br/>261352<br/>261358<br/>261360<br/>261362<br/>261364<br/>261368<br/>261374<br/>261376<br/>261379<br/>261384<br/>261386<br/>261392<br/>261395<br/>261401<br/>261403<br/>261406<br/>261408<br/>261410<br/>261413<br/>261415<br/>261417<br/>261419<br/>261423<br/>261426<br/>261428<br/>261433<br/>261435<br/>261438<br/>261441<br/>261443<br/>261448<br/>261450<br/>261456<br/>261460<br/>261466<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase47"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 47</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test47 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ZACETEK = -<span class="stevilo">887918</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_BREZ_IZPISA = <span class="stevilo">465959</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_IZPISOV = <span class="stevilo">79</span>;<br/>
+<br/>
+<tab><tab>Iterator<Integer> iterator = <span class="rwordb">new</span> Iterator<>() {<br/>
+<tab><tab><tab>Random random = <span class="rwordb">new</span> Random(<span class="stevilo">100047</span>);<br/>
+<tab><tab><tab><span class="rwordv">int</span> n = ZACETEK;<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> <span class="rwordb">boolean</span> hasNext() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">true</span>;<br/>
+<tab><tab><tab>}<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> Integer next() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">this</span>.n += random.nextInt(<span class="stevilo">7</span>) + <span class="stevilo">1</span>;<br/>
+<tab><tab><tab>}<br/>
+<tab><tab>};<br/>
+<br/>
+<tab><tab>Iterator<Integer> manjkajoci = Cetrta.manjkajoci(iterator, ZACETEK);<br/>
+<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_BREZ_IZPISA;  i++) {<br/>
+<tab><tab><tab>manjkajoci.next();<br/>
+<tab><tab>}<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_IZPISOV;  i++) {<br/>
+<tab><tab><tab>System.out.println(manjkajoci.next());<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            -266453<br/>-266452<br/>-266451<br/>-266450<br/>-266448<br/>-266446<br/>-266445<br/>-266444<br/>-266443<br/>-266442<br/>-266441<br/>-266439<br/>-266438<br/>-266437<br/>-266436<br/>-266434<br/>-266433<br/>-266432<br/>-266431<br/>-266430<br/>-266429<br/>-266427<br/>-266426<br/>-266425<br/>-266424<br/>-266423<br/>-266421<br/>-266420<br/>-266418<br/>-266417<br/>-266415<br/>-266414<br/>-266413<br/>-266412<br/>-266411<br/>-266410<br/>-266408<br/>-266407<br/>-266406<br/>-266405<br/>-266403<br/>-266402<br/>-266401<br/>-266400<br/>-266399<br/>-266396<br/>-266395<br/>-266394<br/>-266393<br/>-266391<br/>-266390<br/>-266389<br/>-266388<br/>-266387<br/>-266384<br/>-266383<br/>-266381<br/>-266380<br/>-266379<br/>-266377<br/>-266376<br/>-266375<br/>-266374<br/>-266372<br/>-266371<br/>-266370<br/>-266369<br/>-266368<br/>-266366<br/>-266365<br/>-266364<br/>-266362<br/>-266361<br/>-266359<br/>-266358<br/>-266357<br/>-266356<br/>-266355<br/>-266354<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase48"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 48</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test48 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ZACETEK = <span class="stevilo">768449</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_BREZ_IZPISA = <span class="stevilo">98231</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_IZPISOV = <span class="stevilo">68</span>;<br/>
+<br/>
+<tab><tab>Iterator<Integer> iterator = <span class="rwordb">new</span> Iterator<>() {<br/>
+<tab><tab><tab>Random random = <span class="rwordb">new</span> Random(<span class="stevilo">100048</span>);<br/>
+<tab><tab><tab><span class="rwordv">int</span> n = ZACETEK;<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> <span class="rwordb">boolean</span> hasNext() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">true</span>;<br/>
+<tab><tab><tab>}<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> Integer next() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">this</span>.n += random.nextInt(<span class="stevilo">5</span>) + <span class="stevilo">1</span>;<br/>
+<tab><tab><tab>}<br/>
+<tab><tab>};<br/>
+<br/>
+<tab><tab>Iterator<Integer> manjkajoci = Cetrta.manjkajoci(iterator, ZACETEK);<br/>
+<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_BREZ_IZPISA;  i++) {<br/>
+<tab><tab><tab>manjkajoci.next();<br/>
+<tab><tab>}<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_IZPISOV;  i++) {<br/>
+<tab><tab><tab>System.out.println(manjkajoci.next());<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            915886<br/>915887<br/>915889<br/>915891<br/>915892<br/>915893<br/>915894<br/>915896<br/>915897<br/>915898<br/>915899<br/>915901<br/>915903<br/>915904<br/>915905<br/>915906<br/>915908<br/>915909<br/>915910<br/>915913<br/>915915<br/>915916<br/>915918<br/>915919<br/>915920<br/>915921<br/>915924<br/>915925<br/>915927<br/>915930<br/>915931<br/>915932<br/>915933<br/>915935<br/>915936<br/>915937<br/>915939<br/>915940<br/>915941<br/>915942<br/>915944<br/>915946<br/>915947<br/>915950<br/>915952<br/>915953<br/>915954<br/>915956<br/>915957<br/>915959<br/>915961<br/>915962<br/>915964<br/>915966<br/>915967<br/>915968<br/>915969<br/>915971<br/>915973<br/>915976<br/>915978<br/>915980<br/>915982<br/>915983<br/>915984<br/>915986<br/>915988<br/>915989<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase49"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 49</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test49 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ZACETEK = -<span class="stevilo">531485</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_BREZ_IZPISA = <span class="stevilo">245</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_IZPISOV = <span class="stevilo">43</span>;<br/>
+<br/>
+<tab><tab>Iterator<Integer> iterator = <span class="rwordb">new</span> Iterator<>() {<br/>
+<tab><tab><tab>Random random = <span class="rwordb">new</span> Random(<span class="stevilo">100049</span>);<br/>
+<tab><tab><tab><span class="rwordv">int</span> n = ZACETEK;<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> <span class="rwordb">boolean</span> hasNext() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">true</span>;<br/>
+<tab><tab><tab>}<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> Integer next() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">this</span>.n += random.nextInt(<span class="stevilo">6</span>) + <span class="stevilo">1</span>;<br/>
+<tab><tab><tab>}<br/>
+<tab><tab>};<br/>
+<br/>
+<tab><tab>Iterator<Integer> manjkajoci = Cetrta.manjkajoci(iterator, ZACETEK);<br/>
+<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_BREZ_IZPISA;  i++) {<br/>
+<tab><tab><tab>manjkajoci.next();<br/>
+<tab><tab>}<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_IZPISOV;  i++) {<br/>
+<tab><tab><tab>System.out.println(manjkajoci.next());<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            -531147<br/>-531146<br/>-531145<br/>-531143<br/>-531139<br/>-531138<br/>-531137<br/>-531136<br/>-531134<br/>-531133<br/>-531132<br/>-531131<br/>-531129<br/>-531128<br/>-531127<br/>-531126<br/>-531124<br/>-531123<br/>-531121<br/>-531119<br/>-531118<br/>-531117<br/>-531116<br/>-531115<br/>-531113<br/>-531112<br/>-531111<br/>-531110<br/>-531108<br/>-531106<br/>-531105<br/>-531104<br/>-531103<br/>-531102<br/>-531100<br/>-531099<br/>-531098<br/>-531097<br/>-531095<br/>-531094<br/>-531093<br/>-531091<br/>-531090<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase50"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 50</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test50 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ZACETEK = <span class="stevilo">57478</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_BREZ_IZPISA = <span class="stevilo">4</span>;<br/>
+<tab><tab><span class="rwordb">final</span> <span class="rwordv">int</span> ST_IZPISOV = <span class="stevilo">68</span>;<br/>
+<br/>
+<tab><tab>Iterator<Integer> iterator = <span class="rwordb">new</span> Iterator<>() {<br/>
+<tab><tab><tab>Random random = <span class="rwordb">new</span> Random(<span class="stevilo">100050</span>);<br/>
+<tab><tab><tab><span class="rwordv">int</span> n = ZACETEK;<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> <span class="rwordb">boolean</span> hasNext() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">true</span>;<br/>
+<tab><tab><tab>}<br/>
+<br/>
+<tab><tab><tab>@Override<br/>
+<tab><tab><tab><span class="rwordv">public</span> Integer next() {<br/>
+<tab><tab><tab><tab><span class="rwordb">return</span> <span class="rwordb">this</span>.n += random.nextInt(<span class="stevilo">8</span>) + <span class="stevilo">1</span>;<br/>
+<tab><tab><tab>}<br/>
+<tab><tab>};<br/>
+<br/>
+<tab><tab>Iterator<Integer> manjkajoci = Cetrta.manjkajoci(iterator, ZACETEK);<br/>
+<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_BREZ_IZPISA;  i++) {<br/>
+<tab><tab><tab>manjkajoci.next();<br/>
+<tab><tab>}<br/>
+<tab><tab><span class="rwordb">for</span> (<span class="rwordv">int</span> i = <span class="stevilo">0</span>;  i < ST_IZPISOV;  i++) {<br/>
+<tab><tab><tab>System.out.println(manjkajoci.next());<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            57482<br/>57484<br/>57485<br/>57487<br/>57489<br/>57491<br/>57492<br/>57494<br/>57496<br/>57498<br/>57499<br/>57501<br/>57502<br/>57503<br/>57504<br/>57505<br/>57506<br/>57508<br/>57509<br/>57510<br/>57511<br/>57512<br/>57514<br/>57516<br/>57517<br/>57518<br/>57519<br/>57520<br/>57521<br/>57522<br/>57524<br/>57525<br/>57526<br/>57527<br/>57528<br/>57530<br/>57532<br/>57533<br/>57535<br/>57536<br/>57537<br/>57538<br/>57539<br/>57540<br/>57542<br/>57544<br/>57545<br/>57547<br/>57548<br/>57549<br/>57553<br/>57554<br/>57555<br/>57556<br/>57557<br/>57558<br/>57560<br/>57562<br/>57563<br/>57564<br/>57565<br/>57567<br/>57568<br/>57569<br/>57570<br/>57571<br/>57573<br/>57574<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+
+        <div style="height: 30px"></div>
+
+        <table id="grad1" class="tableLegend tableSummary"
+          <tbody>
+            <tr>
+              <td style="color: black;">
+              <table class="tableLegend">
+                <tr>
+	              <td style="background-color: #9F9; color: black; width: 10px; text-align: center; border: 1px solid black; padding: 2px;"></td>
+	              <td style="font-size: 0.7em; padding: 3px;">ok</td>
+                </tr>
+              </table>
+              </td>
+              <td style="color: black;">
+              <table class="tableLegend">
+                <tr>
+	              <td style="background-color: #FFBF00; color: black; width: 10px; text-align: center; border: 1px solid black; padding: 2px;"></td>
+	              <td style="font-size: 0.7em; padding: 3px;">napaka</td>
+                </tr>
+              </table>
+              </td>
+              <td style="color: black;">
+              <table class="tableLegend">
+                <tr>
+	              <td style="background-color: #FF9; color: black; width: 10px; text-align: center; border: 1px solid black; padding: 2px;"></td>
+	              <td style="font-size: 0.7em; padding: 3px;">napaka med izvajanjem</td>
+                </tr>
+              </table>
+              </td>
+              <td style="color: black;">
+              <table class="tableLegend">
+                <tr>
+	              <td style="background-color: #C00000; color: black; width: 10px; text-align: center; border: 1px solid black; padding: 2px;"></td>
+	              <td style="font-size: 0.7em; padding: 3px;">se ne prevede</td>
+                </tr>
+              </table>
+              </td>
+              <td style="color: black;">
+              <table class="tableLegend">
+                <tr>
+	              <td style="background-color: #B9F; color: black; width: 10px; text-align: center; border: 1px solid black; padding: 2px;"></td>
+	              <td style="font-size: 0.7em; padding: 3px;">timeout (1000 ms)</td>
+                </tr>
+              </table>
+              </td>
+              <td style="color: black;">
+              <table class="tableLegend">
+                <tr>
+	              <td style="background-color: #D0E0F0; color: black; width: 10px; text-align: center; border: 1px solid black; padding: 2px;"></td>
+	              <td style="font-size: 0.7em; padding: 3px;">rezultat izrisa</td>
+                </tr>
+              </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <a name="bottom"></a>
+        </div>
+    </body>
+    <!-- java class tester version "1.5.12" -->
+    <!-- 12.8.2025 14:29.52 -->
+    <!-- Gajs-MacBook-Air, [OSSupportsIPv6 v6]: True [SocketException]: Could not resolve host 'Gajs-MacBook-Air' -->
+</html>

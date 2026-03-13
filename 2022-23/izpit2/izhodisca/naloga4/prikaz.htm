@@ -1,0 +1,1071 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" 
+          "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <head>
+        <title>Prikaz rezultatov testiranja</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <style>
+            .tableBase { border-collapse: collapse; }
+            .tableBase > tbody > tr > td { border: 1px solid black; padding: 7px;}
+            .tableResults { table-layout: fixed; border-spacing: 0px; border-collapse: separate; }
+            table#nasredini { margin-left:auto; margin-right:auto; }
+            table tbody td.hoverOk {background-color:#9F9; border: 1px solid #63B563; width: 15px; color: black; text-align: center; }
+            .hoverOk:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #63B563; }
+            .hoverOk:hover td { background: transparent; }
+            .hoverOk > a:link, .hoverOk > a:visited, .hoverOk > a:hover, .hoverOk > a:active { color: black; font-size: 0.9em; }
+            table tbody td.hoverErr {background-color:#FFBF00; border: 1px solid #CB9800; width: 15px; color: black; text-align: center; }
+            .hoverErr:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #CB9800; }
+            .hoverErr:hover td { background: transparent; }
+            .hoverErr > a:link, .hoverErr > a:visited, .hoverErr > a:hover, .hoverErr > a:active { color: black; font-size: 0.9em; }
+            table tbody td.hoverRuntime {background-color:#FF9; border: 1px solid #D8D87E; width: 15px; color: black; text-align: center; }
+            .hoverRuntime:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #D8D87E; }
+            .hoverRuntime:hover td { background: transparent; }
+            .hoverRuntime > a:link, .hoverRuntime > a:visited, .hoverRuntime > a:hover, .hoverRuntime > a:active { color: black; font-size: 0.9em; }
+            table tbody td.hoverCompile {background-color:#C00000; border: 1px solid #710B0B; width: 15px; color: black; text-align: center; }
+            .hoverCompile:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #710B0B; }
+            .hoverCompile:hover td { background: transparent; }
+            .hoverCompile > a:link, .hoverCompile > a:visited, .hoverCompile > a:hover, .hoverCompile > a:active { color: black; font-size: 0.9em; }
+            table tbody td.hoverMissing {background-color:#F0F0F0; border: 1px solid #ABABAB; width: 15px; color: black; text-align: center; }
+            .hoverMissing:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #ABABAB; }
+            .hoverMissing:hover td { background: transparent; }
+            .hoverMissing > a:link, .hoverMissing > a:visited, .hoverMissing > a:hover, .hoverMissing > a:active { color: black; font-size: 0.9em; }
+            table tbody td.hoverTimeout {background-color:#B9F; border: 1px solid #9070CE; width: 15px; color: black; text-align: center; }
+            .hoverTimeout:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #9070CE; }
+            .hoverTimeout:hover td { background: transparent; }
+            .hoverTimeout > a:link, .hoverTimeout > a:visited, .hoverTimeout > a:hover, .hoverTimeout > a:active { color: black; font-size: 0.9em; }
+            table tbody td.hoverImage {background-color:#D0E0F0; border: 1px solid #a6b3c0; width: 15px; color: black; text-align: center; }
+            .hoverImage:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #a6b3c0; }
+            .hoverImage:hover td { background: transparent; }
+            .hoverImage > a:link, .hoverImage > a:visited, .hoverImage > a:hover, .hoverImage > a:active { color: black; font-size: 0.9em; }
+            .tableCommon { border-collapse: collapse; }
+            .tableOK > tbody > tr > td { border: 1px solid #63B563; padding: 7px;}
+            .tableError > tbody > tr > td { border: 1px solid #CB9800; padding: 7px;}
+            .tableRuntime > tbody > tr > td { border: 1px solid #D8D87E; padding: 7px;}
+            .tableCompiler > tbody > tr > td { border: 1px solid #710B0B; padding: 7px;}
+            .tableMissing > tbody > tr > td { border: 1px solid #ABABAB; padding: 7px;}
+            .tableTimeout > tbody > tr > td { border: 1px solid #9070CE; padding: 7px;}
+            .tableImage > tbody > tr > td { border: 1px solid #a6b3c0; padding: 7px;}
+            .tableSummary { table-layout: fixed; }
+            .texttt { font-family: DejaVu Sans Mono, monospace; font-size: 0.8em; }
+            table.diff > tbody > tr > td { border: none; font-family: DejaVu Sans Mono, monospace}
+            .diff_add { color: green; font-family: DejaVu Sans Mono, monospace; }
+            .diff_sub { color: blue; font-family: DejaVu Sans Mono, monospace; }
+            .diff_chg { color: red; font-family: DejaVu Sans Mono, monospace; }
+            a { color: blue; text-decoration: none; height: 100%; width: 100%; vertical-align: middle; }
+            a:link { color: blue; text-decoration: none; }
+            a:link { color: blue; text-decoration: none; }
+            a:hover { color: blue; text-decoration: underline; }
+            body, td { font: normal normal 100%/1.0 DejaVu Sans, sans-serif; }
+            h1 { font-weight: bold; font-size: 150%; }
+            h2 { font-weight: normal; font-size: 125%; border-top: 1px solid black; border-bottom: 1px solid black; background: #DEF; padding: 5px; margin-top: 36px; margin-bottom: 36px}
+            .container{ margin: 0px auto; width: 70%; min-width: 700px; margin-top: 1.8cm; margin-bottom: 1.8cm; }
+            .rwordb{ color: blue; font-weight: bold; }
+            .rwordv{ color:#8000ff; font-weight: bold; }
+            .vcomment{ color: green; }
+            .bcomment{ color: green; }
+            .niz{ color:#a31515; }
+            .stevilo{ color:#ff8000; }
+            tab { padding-left: 4em; }
+            #grad1 {
+                background: -webkit-linear-gradient(left, #E0E0E0 , white);
+                background: -o-linear-gradient(right, #E0E0E0, white);
+                background: -moz-linear-gradient(right, #E0E0E0, white);
+                background: linear-gradient(to right, #E0E0E0 , white);
+            }
+            #grad2 {
+                background: -webkit-linear-gradient(left, #9F9 , white);
+                background: -o-linear-gradient(right, #9F9, white);
+                background: -moz-linear-gradient(right, #9F9, white);
+                background: linear-gradient(to right, #9F9 , white);
+            }
+            .capSlika { display:block; height: 25px; margin:0 auto; font-size: 1.0em; text-align: left; }
+            .dborder { padding: 0px; border: 1px solid #CACACA; }
+            .capText { display: block; margin:0 auto; font-size: 0.9em; text-align: left; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+        <a name="top"></a>
+        <h1 id="grad2" style="padding: 10px; border: 0px solid black; color: #000000;">Rezultati preverjanja metod programa (10/10)</h1>
+        <div style="height: 20px"></div>
+        <a name="summary"></a>
+        <h2>Povzetek rezultatov</h2>
+        <table id="nasredini" class="tableBase tableResults">
+            <tbody>
+                <tr>
+                <td class="hoverOk"><a href="#testcase1">1</a></td>
+                <td class="hoverOk"><a href="#testcase2">2</a></td>
+                <td class="hoverOk"><a href="#testcase3">3</a></td>
+                <td class="hoverOk"><a href="#testcase4">4</a></td>
+                <td class="hoverOk"><a href="#testcase5">5</a></td>
+                <td class="hoverOk"><a href="#testcase6">6</a></td>
+                <td class="hoverOk"><a href="#testcase7">7</a></td>
+                <td class="hoverOk"><a href="#testcase8">8</a></td>
+                <td class="hoverOk"><a href="#testcase9">9</a></td>
+                <td class="hoverOk"><a href="#testcase10">10</a></td>
+                </tr>
+                <tr></tr>
+            </tbody>
+        </table>
+        <div style="height: 20px"></div>
+        <h2>Rezultati</h2>
+        <a name="testcase1"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 1</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test01 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab>Map<String, Set<String>> sinonimi = <span class="rwordb">new</span> HashMap<>();<br/>
+<tab><tab>sinonimi.put(<span class="niz">"hisa"</span>, Set.of(<span class="niz">"hisa"</span>, <span class="niz">"bajta"</span>, <span class="niz">"koca"</span>, <span class="niz">"dom"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"bajta"</span>, Set.of(<span class="niz">"hisa"</span>, <span class="niz">"bajta"</span>, <span class="niz">"koca"</span>, <span class="niz">"dom"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"koca"</span>, Set.of(<span class="niz">"hisa"</span>, <span class="niz">"bajta"</span>, <span class="niz">"koca"</span>, <span class="niz">"dom"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"dom"</span>, Set.of(<span class="niz">"hisa"</span>, <span class="niz">"bajta"</span>, <span class="niz">"koca"</span>, <span class="niz">"dom"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"veselje"</span>, Set.of(<span class="niz">"veselje"</span>, <span class="niz">"radost"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"radost"</span>, Set.of(<span class="niz">"veselje"</span>, <span class="niz">"radost"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"spet"</span>, Set.of(<span class="niz">"spet"</span>, <span class="niz">"zopet"</span>, <span class="niz">"ponovno"</span>, <span class="niz">"znova"</span>, <span class="niz">"vnovic"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"zopet"</span>, Set.of(<span class="niz">"spet"</span>, <span class="niz">"zopet"</span>, <span class="niz">"ponovno"</span>, <span class="niz">"znova"</span>, <span class="niz">"vnovic"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ponovno"</span>, Set.of(<span class="niz">"spet"</span>, <span class="niz">"zopet"</span>, <span class="niz">"ponovno"</span>, <span class="niz">"znova"</span>, <span class="niz">"vnovic"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"znova"</span>, Set.of(<span class="niz">"spet"</span>, <span class="niz">"zopet"</span>, <span class="niz">"ponovno"</span>, <span class="niz">"znova"</span>, <span class="niz">"vnovic"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"vnovic"</span>, Set.of(<span class="niz">"spet"</span>, <span class="niz">"zopet"</span>, <span class="niz">"ponovno"</span>, <span class="niz">"znova"</span>, <span class="niz">"vnovic"</span>));<br/>
+<br/>
+<tab><tab>List<String> besede = <span class="rwordb">new</span> ArrayList<>(Cetrta.najMnozica(sinonimi));<br/>
+<tab><tab>besede.sort(null);<br/>
+<tab><tab>System.out.println(besede);<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [ponovno,&nbsp;spet,&nbsp;vnovic,&nbsp;znova,&nbsp;zopet]<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase2"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 2</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test02 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<br/>
+<tab><tab>Map<String, Set<String>> sinonimi = <span class="rwordb">new</span> HashMap<>();<br/>
+<tab><tab>sinonimi.put(<span class="niz">"gehz"</span>, Set.of(<span class="niz">"gehz"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"eb"</span>, Set.of(<span class="niz">"eb"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"seo"</span>, Set.of(<span class="niz">"seo"</span>, <span class="niz">"xiugb"</span>, <span class="niz">"eba"</span>, <span class="niz">"pupp"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"xiugb"</span>, Set.of(<span class="niz">"seo"</span>, <span class="niz">"xiugb"</span>, <span class="niz">"eba"</span>, <span class="niz">"pupp"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"eba"</span>, Set.of(<span class="niz">"seo"</span>, <span class="niz">"xiugb"</span>, <span class="niz">"eba"</span>, <span class="niz">"pupp"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"pupp"</span>, Set.of(<span class="niz">"seo"</span>, <span class="niz">"xiugb"</span>, <span class="niz">"eba"</span>, <span class="niz">"pupp"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"qckv"</span>, Set.of(<span class="niz">"qckv"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"nvyr"</span>, Set.of(<span class="niz">"nvyr"</span>, <span class="niz">"zino"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"zino"</span>, Set.of(<span class="niz">"nvyr"</span>, <span class="niz">"zino"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"mint"</span>, Set.of(<span class="niz">"mint"</span>, <span class="niz">"lg"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"lg"</span>, Set.of(<span class="niz">"mint"</span>, <span class="niz">"lg"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ns"</span>, Set.of(<span class="niz">"ns"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"zl"</span>, Set.of(<span class="niz">"zl"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"zta"</span>, Set.of(<span class="niz">"zta"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"xang"</span>, Set.of(<span class="niz">"xang"</span>, <span class="niz">"gg"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"gg"</span>, Set.of(<span class="niz">"xang"</span>, <span class="niz">"gg"</span>));<br/>
+<br/>
+<tab><tab>List<String> besede = <span class="rwordb">new</span> ArrayList<>(Cetrta.najMnozica(sinonimi));<br/>
+<tab><tab>besede.sort(null);<br/>
+<tab><tab>System.out.println(besede);<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [eba,&nbsp;pupp,&nbsp;seo,&nbsp;xiugb]<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase3"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 3</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test03 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<br/>
+<tab><tab>Map<String, Set<String>> sinonimi = <span class="rwordb">new</span> HashMap<>();<br/>
+<tab><tab>sinonimi.put(<span class="niz">"pad"</span>, Set.of(<span class="niz">"pad"</span>, <span class="niz">"os"</span>, <span class="niz">"vupjx"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"os"</span>, Set.of(<span class="niz">"pad"</span>, <span class="niz">"os"</span>, <span class="niz">"vupjx"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"vupjx"</span>, Set.of(<span class="niz">"pad"</span>, <span class="niz">"os"</span>, <span class="niz">"vupjx"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"zh"</span>, Set.of(<span class="niz">"zh"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"tvqfb"</span>, Set.of(<span class="niz">"tvqfb"</span>, <span class="niz">"aaqef"</span>, <span class="niz">"hoqd"</span>, <span class="niz">"pwi"</span>, <span class="niz">"zk"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"aaqef"</span>, Set.of(<span class="niz">"tvqfb"</span>, <span class="niz">"aaqef"</span>, <span class="niz">"hoqd"</span>, <span class="niz">"pwi"</span>, <span class="niz">"zk"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"hoqd"</span>, Set.of(<span class="niz">"tvqfb"</span>, <span class="niz">"aaqef"</span>, <span class="niz">"hoqd"</span>, <span class="niz">"pwi"</span>, <span class="niz">"zk"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"pwi"</span>, Set.of(<span class="niz">"tvqfb"</span>, <span class="niz">"aaqef"</span>, <span class="niz">"hoqd"</span>, <span class="niz">"pwi"</span>, <span class="niz">"zk"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"zk"</span>, Set.of(<span class="niz">"tvqfb"</span>, <span class="niz">"aaqef"</span>, <span class="niz">"hoqd"</span>, <span class="niz">"pwi"</span>, <span class="niz">"zk"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"tjof"</span>, Set.of(<span class="niz">"tjof"</span>, <span class="niz">"qbnj"</span>, <span class="niz">"zp"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"qbnj"</span>, Set.of(<span class="niz">"tjof"</span>, <span class="niz">"qbnj"</span>, <span class="niz">"zp"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"zp"</span>, Set.of(<span class="niz">"tjof"</span>, <span class="niz">"qbnj"</span>, <span class="niz">"zp"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"kcn"</span>, Set.of(<span class="niz">"kcn"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"bj"</span>, Set.of(<span class="niz">"bj"</span>, <span class="niz">"t"</span>, <span class="niz">"cwe"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"t"</span>, Set.of(<span class="niz">"bj"</span>, <span class="niz">"t"</span>, <span class="niz">"cwe"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"cwe"</span>, Set.of(<span class="niz">"bj"</span>, <span class="niz">"t"</span>, <span class="niz">"cwe"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"wa"</span>, Set.of(<span class="niz">"wa"</span>, <span class="niz">"dmkg"</span>, <span class="niz">"gevhx"</span>, <span class="niz">"mwzj"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"dmkg"</span>, Set.of(<span class="niz">"wa"</span>, <span class="niz">"dmkg"</span>, <span class="niz">"gevhx"</span>, <span class="niz">"mwzj"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"gevhx"</span>, Set.of(<span class="niz">"wa"</span>, <span class="niz">"dmkg"</span>, <span class="niz">"gevhx"</span>, <span class="niz">"mwzj"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"mwzj"</span>, Set.of(<span class="niz">"wa"</span>, <span class="niz">"dmkg"</span>, <span class="niz">"gevhx"</span>, <span class="niz">"mwzj"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ftht"</span>, Set.of(<span class="niz">"ftht"</span>, <span class="niz">"kbgo"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"kbgo"</span>, Set.of(<span class="niz">"ftht"</span>, <span class="niz">"kbgo"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"atlsl"</span>, Set.of(<span class="niz">"atlsl"</span>, <span class="niz">"zbkrf"</span>, <span class="niz">"hqi"</span>, <span class="niz">"lys"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"zbkrf"</span>, Set.of(<span class="niz">"atlsl"</span>, <span class="niz">"zbkrf"</span>, <span class="niz">"hqi"</span>, <span class="niz">"lys"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"hqi"</span>, Set.of(<span class="niz">"atlsl"</span>, <span class="niz">"zbkrf"</span>, <span class="niz">"hqi"</span>, <span class="niz">"lys"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"lys"</span>, Set.of(<span class="niz">"atlsl"</span>, <span class="niz">"zbkrf"</span>, <span class="niz">"hqi"</span>, <span class="niz">"lys"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"axhta"</span>, Set.of(<span class="niz">"axhta"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"tx"</span>, Set.of(<span class="niz">"tx"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"lit"</span>, Set.of(<span class="niz">"lit"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"igec"</span>, Set.of(<span class="niz">"igec"</span>, <span class="niz">"ghhps"</span>, <span class="niz">"nq"</span>, <span class="niz">"ken"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ghhps"</span>, Set.of(<span class="niz">"igec"</span>, <span class="niz">"ghhps"</span>, <span class="niz">"nq"</span>, <span class="niz">"ken"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"nq"</span>, Set.of(<span class="niz">"igec"</span>, <span class="niz">"ghhps"</span>, <span class="niz">"nq"</span>, <span class="niz">"ken"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ken"</span>, Set.of(<span class="niz">"igec"</span>, <span class="niz">"ghhps"</span>, <span class="niz">"nq"</span>, <span class="niz">"ken"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ei"</span>, Set.of(<span class="niz">"ei"</span>, <span class="niz">"gd"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"gd"</span>, Set.of(<span class="niz">"ei"</span>, <span class="niz">"gd"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ggbg"</span>, Set.of(<span class="niz">"ggbg"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"zn"</span>, Set.of(<span class="niz">"zn"</span>, <span class="niz">"kj"</span>, <span class="niz">"kc"</span>, <span class="niz">"zvutb"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"kj"</span>, Set.of(<span class="niz">"zn"</span>, <span class="niz">"kj"</span>, <span class="niz">"kc"</span>, <span class="niz">"zvutb"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"kc"</span>, Set.of(<span class="niz">"zn"</span>, <span class="niz">"kj"</span>, <span class="niz">"kc"</span>, <span class="niz">"zvutb"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"zvutb"</span>, Set.of(<span class="niz">"zn"</span>, <span class="niz">"kj"</span>, <span class="niz">"kc"</span>, <span class="niz">"zvutb"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"nxj"</span>, Set.of(<span class="niz">"nxj"</span>, <span class="niz">"blbr"</span>, <span class="niz">"psgl"</span>, <span class="niz">"kedt"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"blbr"</span>, Set.of(<span class="niz">"nxj"</span>, <span class="niz">"blbr"</span>, <span class="niz">"psgl"</span>, <span class="niz">"kedt"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"psgl"</span>, Set.of(<span class="niz">"nxj"</span>, <span class="niz">"blbr"</span>, <span class="niz">"psgl"</span>, <span class="niz">"kedt"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"kedt"</span>, Set.of(<span class="niz">"nxj"</span>, <span class="niz">"blbr"</span>, <span class="niz">"psgl"</span>, <span class="niz">"kedt"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"zhww"</span>, Set.of(<span class="niz">"zhww"</span>, <span class="niz">"jdc"</span>, <span class="niz">"clkgh"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"jdc"</span>, Set.of(<span class="niz">"zhww"</span>, <span class="niz">"jdc"</span>, <span class="niz">"clkgh"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"clkgh"</span>, Set.of(<span class="niz">"zhww"</span>, <span class="niz">"jdc"</span>, <span class="niz">"clkgh"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"gdiw"</span>, Set.of(<span class="niz">"gdiw"</span>, <span class="niz">"nkw"</span>, <span class="niz">"vzrk"</span>, <span class="niz">"tljqi"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"nkw"</span>, Set.of(<span class="niz">"gdiw"</span>, <span class="niz">"nkw"</span>, <span class="niz">"vzrk"</span>, <span class="niz">"tljqi"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"vzrk"</span>, Set.of(<span class="niz">"gdiw"</span>, <span class="niz">"nkw"</span>, <span class="niz">"vzrk"</span>, <span class="niz">"tljqi"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"tljqi"</span>, Set.of(<span class="niz">"gdiw"</span>, <span class="niz">"nkw"</span>, <span class="niz">"vzrk"</span>, <span class="niz">"tljqi"</span>));<br/>
+<br/>
+<tab><tab>List<String> besede = <span class="rwordb">new</span> ArrayList<>(Cetrta.najMnozica(sinonimi));<br/>
+<tab><tab>besede.sort(null);<br/>
+<tab><tab>System.out.println(besede);<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [aaqef,&nbsp;hoqd,&nbsp;pwi,&nbsp;tvqfb,&nbsp;zk]<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase4"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 4</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test04 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<br/>
+<tab><tab>Map<String, Set<String>> sinonimi = <span class="rwordb">new</span> HashMap<>();<br/>
+<tab><tab>sinonimi.put(<span class="niz">"zki"</span>, Set.of(<span class="niz">"zki"</span>, <span class="niz">"xhjkr"</span>, <span class="niz">"ufh"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"xhjkr"</span>, Set.of(<span class="niz">"zki"</span>, <span class="niz">"xhjkr"</span>, <span class="niz">"ufh"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ufh"</span>, Set.of(<span class="niz">"zki"</span>, <span class="niz">"xhjkr"</span>, <span class="niz">"ufh"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"sqt"</span>, Set.of(<span class="niz">"sqt"</span>, <span class="niz">"zr"</span>, <span class="niz">"kx"</span>, <span class="niz">"ntk"</span>, <span class="niz">"m"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"zr"</span>, Set.of(<span class="niz">"sqt"</span>, <span class="niz">"zr"</span>, <span class="niz">"kx"</span>, <span class="niz">"ntk"</span>, <span class="niz">"m"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"kx"</span>, Set.of(<span class="niz">"sqt"</span>, <span class="niz">"zr"</span>, <span class="niz">"kx"</span>, <span class="niz">"ntk"</span>, <span class="niz">"m"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ntk"</span>, Set.of(<span class="niz">"sqt"</span>, <span class="niz">"zr"</span>, <span class="niz">"kx"</span>, <span class="niz">"ntk"</span>, <span class="niz">"m"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"m"</span>, Set.of(<span class="niz">"sqt"</span>, <span class="niz">"zr"</span>, <span class="niz">"kx"</span>, <span class="niz">"ntk"</span>, <span class="niz">"m"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"pcg"</span>, Set.of(<span class="niz">"pcg"</span>, <span class="niz">"duknb"</span>, <span class="niz">"obz"</span>, <span class="niz">"sx"</span>, <span class="niz">"ebn"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"duknb"</span>, Set.of(<span class="niz">"pcg"</span>, <span class="niz">"duknb"</span>, <span class="niz">"obz"</span>, <span class="niz">"sx"</span>, <span class="niz">"ebn"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"obz"</span>, Set.of(<span class="niz">"pcg"</span>, <span class="niz">"duknb"</span>, <span class="niz">"obz"</span>, <span class="niz">"sx"</span>, <span class="niz">"ebn"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"sx"</span>, Set.of(<span class="niz">"pcg"</span>, <span class="niz">"duknb"</span>, <span class="niz">"obz"</span>, <span class="niz">"sx"</span>, <span class="niz">"ebn"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ebn"</span>, Set.of(<span class="niz">"pcg"</span>, <span class="niz">"duknb"</span>, <span class="niz">"obz"</span>, <span class="niz">"sx"</span>, <span class="niz">"ebn"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"cl"</span>, Set.of(<span class="niz">"cl"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"o"</span>, Set.of(<span class="niz">"o"</span>, <span class="niz">"egfn"</span>, <span class="niz">"vd"</span>, <span class="niz">"vqtln"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"egfn"</span>, Set.of(<span class="niz">"o"</span>, <span class="niz">"egfn"</span>, <span class="niz">"vd"</span>, <span class="niz">"vqtln"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"vd"</span>, Set.of(<span class="niz">"o"</span>, <span class="niz">"egfn"</span>, <span class="niz">"vd"</span>, <span class="niz">"vqtln"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"vqtln"</span>, Set.of(<span class="niz">"o"</span>, <span class="niz">"egfn"</span>, <span class="niz">"vd"</span>, <span class="niz">"vqtln"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ckl"</span>, Set.of(<span class="niz">"ckl"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"bipc"</span>, Set.of(<span class="niz">"bipc"</span>, <span class="niz">"nqgka"</span>, <span class="niz">"uycmx"</span>, <span class="niz">"mo"</span>, <span class="niz">"foqbz"</span>, <span class="niz">"epdq"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"nqgka"</span>, Set.of(<span class="niz">"bipc"</span>, <span class="niz">"nqgka"</span>, <span class="niz">"uycmx"</span>, <span class="niz">"mo"</span>, <span class="niz">"foqbz"</span>, <span class="niz">"epdq"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"uycmx"</span>, Set.of(<span class="niz">"bipc"</span>, <span class="niz">"nqgka"</span>, <span class="niz">"uycmx"</span>, <span class="niz">"mo"</span>, <span class="niz">"foqbz"</span>, <span class="niz">"epdq"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"mo"</span>, Set.of(<span class="niz">"bipc"</span>, <span class="niz">"nqgka"</span>, <span class="niz">"uycmx"</span>, <span class="niz">"mo"</span>, <span class="niz">"foqbz"</span>, <span class="niz">"epdq"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"foqbz"</span>, Set.of(<span class="niz">"bipc"</span>, <span class="niz">"nqgka"</span>, <span class="niz">"uycmx"</span>, <span class="niz">"mo"</span>, <span class="niz">"foqbz"</span>, <span class="niz">"epdq"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"epdq"</span>, Set.of(<span class="niz">"bipc"</span>, <span class="niz">"nqgka"</span>, <span class="niz">"uycmx"</span>, <span class="niz">"mo"</span>, <span class="niz">"foqbz"</span>, <span class="niz">"epdq"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"eeznh"</span>, Set.of(<span class="niz">"eeznh"</span>, <span class="niz">"yno"</span>, <span class="niz">"jyd"</span>, <span class="niz">"xcoe"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"yno"</span>, Set.of(<span class="niz">"eeznh"</span>, <span class="niz">"yno"</span>, <span class="niz">"jyd"</span>, <span class="niz">"xcoe"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"jyd"</span>, Set.of(<span class="niz">"eeznh"</span>, <span class="niz">"yno"</span>, <span class="niz">"jyd"</span>, <span class="niz">"xcoe"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"xcoe"</span>, Set.of(<span class="niz">"eeznh"</span>, <span class="niz">"yno"</span>, <span class="niz">"jyd"</span>, <span class="niz">"xcoe"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"zl"</span>, Set.of(<span class="niz">"zl"</span>, <span class="niz">"egqu"</span>, <span class="niz">"cugm"</span>, <span class="niz">"irl"</span>, <span class="niz">"ece"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"egqu"</span>, Set.of(<span class="niz">"zl"</span>, <span class="niz">"egqu"</span>, <span class="niz">"cugm"</span>, <span class="niz">"irl"</span>, <span class="niz">"ece"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"cugm"</span>, Set.of(<span class="niz">"zl"</span>, <span class="niz">"egqu"</span>, <span class="niz">"cugm"</span>, <span class="niz">"irl"</span>, <span class="niz">"ece"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"irl"</span>, Set.of(<span class="niz">"zl"</span>, <span class="niz">"egqu"</span>, <span class="niz">"cugm"</span>, <span class="niz">"irl"</span>, <span class="niz">"ece"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ece"</span>, Set.of(<span class="niz">"zl"</span>, <span class="niz">"egqu"</span>, <span class="niz">"cugm"</span>, <span class="niz">"irl"</span>, <span class="niz">"ece"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"sy"</span>, Set.of(<span class="niz">"sy"</span>, <span class="niz">"qftz"</span>, <span class="niz">"like"</span>, <span class="niz">"gjepo"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"qftz"</span>, Set.of(<span class="niz">"sy"</span>, <span class="niz">"qftz"</span>, <span class="niz">"like"</span>, <span class="niz">"gjepo"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"like"</span>, Set.of(<span class="niz">"sy"</span>, <span class="niz">"qftz"</span>, <span class="niz">"like"</span>, <span class="niz">"gjepo"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"gjepo"</span>, Set.of(<span class="niz">"sy"</span>, <span class="niz">"qftz"</span>, <span class="niz">"like"</span>, <span class="niz">"gjepo"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"btltm"</span>, Set.of(<span class="niz">"btltm"</span>, <span class="niz">"reedy"</span>, <span class="niz">"umkm"</span>, <span class="niz">"njnsc"</span>, <span class="niz">"j"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"reedy"</span>, Set.of(<span class="niz">"btltm"</span>, <span class="niz">"reedy"</span>, <span class="niz">"umkm"</span>, <span class="niz">"njnsc"</span>, <span class="niz">"j"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"umkm"</span>, Set.of(<span class="niz">"btltm"</span>, <span class="niz">"reedy"</span>, <span class="niz">"umkm"</span>, <span class="niz">"njnsc"</span>, <span class="niz">"j"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"njnsc"</span>, Set.of(<span class="niz">"btltm"</span>, <span class="niz">"reedy"</span>, <span class="niz">"umkm"</span>, <span class="niz">"njnsc"</span>, <span class="niz">"j"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"j"</span>, Set.of(<span class="niz">"btltm"</span>, <span class="niz">"reedy"</span>, <span class="niz">"umkm"</span>, <span class="niz">"njnsc"</span>, <span class="niz">"j"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"kjzeg"</span>, Set.of(<span class="niz">"kjzeg"</span>, <span class="niz">"wh"</span>, <span class="niz">"exjrj"</span>, <span class="niz">"jy"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"wh"</span>, Set.of(<span class="niz">"kjzeg"</span>, <span class="niz">"wh"</span>, <span class="niz">"exjrj"</span>, <span class="niz">"jy"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"exjrj"</span>, Set.of(<span class="niz">"kjzeg"</span>, <span class="niz">"wh"</span>, <span class="niz">"exjrj"</span>, <span class="niz">"jy"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"jy"</span>, Set.of(<span class="niz">"kjzeg"</span>, <span class="niz">"wh"</span>, <span class="niz">"exjrj"</span>, <span class="niz">"jy"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"wlsyn"</span>, Set.of(<span class="niz">"wlsyn"</span>, <span class="niz">"noo"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"noo"</span>, Set.of(<span class="niz">"wlsyn"</span>, <span class="niz">"noo"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"gknlo"</span>, Set.of(<span class="niz">"gknlo"</span>, <span class="niz">"ev"</span>, <span class="niz">"pri"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ev"</span>, Set.of(<span class="niz">"gknlo"</span>, <span class="niz">"ev"</span>, <span class="niz">"pri"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"pri"</span>, Set.of(<span class="niz">"gknlo"</span>, <span class="niz">"ev"</span>, <span class="niz">"pri"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"hn"</span>, Set.of(<span class="niz">"hn"</span>, <span class="niz">"hnkpt"</span>, <span class="niz">"xwnv"</span>, <span class="niz">"vwdk"</span>, <span class="niz">"hbzac"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"hnkpt"</span>, Set.of(<span class="niz">"hn"</span>, <span class="niz">"hnkpt"</span>, <span class="niz">"xwnv"</span>, <span class="niz">"vwdk"</span>, <span class="niz">"hbzac"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"xwnv"</span>, Set.of(<span class="niz">"hn"</span>, <span class="niz">"hnkpt"</span>, <span class="niz">"xwnv"</span>, <span class="niz">"vwdk"</span>, <span class="niz">"hbzac"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"vwdk"</span>, Set.of(<span class="niz">"hn"</span>, <span class="niz">"hnkpt"</span>, <span class="niz">"xwnv"</span>, <span class="niz">"vwdk"</span>, <span class="niz">"hbzac"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"hbzac"</span>, Set.of(<span class="niz">"hn"</span>, <span class="niz">"hnkpt"</span>, <span class="niz">"xwnv"</span>, <span class="niz">"vwdk"</span>, <span class="niz">"hbzac"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"pnw"</span>, Set.of(<span class="niz">"pnw"</span>, <span class="niz">"qwz"</span>, <span class="niz">"oov"</span>, <span class="niz">"xpm"</span>, <span class="niz">"uqje"</span>, <span class="niz">"gbr"</span>, <span class="niz">"fdob"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"qwz"</span>, Set.of(<span class="niz">"pnw"</span>, <span class="niz">"qwz"</span>, <span class="niz">"oov"</span>, <span class="niz">"xpm"</span>, <span class="niz">"uqje"</span>, <span class="niz">"gbr"</span>, <span class="niz">"fdob"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"oov"</span>, Set.of(<span class="niz">"pnw"</span>, <span class="niz">"qwz"</span>, <span class="niz">"oov"</span>, <span class="niz">"xpm"</span>, <span class="niz">"uqje"</span>, <span class="niz">"gbr"</span>, <span class="niz">"fdob"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"xpm"</span>, Set.of(<span class="niz">"pnw"</span>, <span class="niz">"qwz"</span>, <span class="niz">"oov"</span>, <span class="niz">"xpm"</span>, <span class="niz">"uqje"</span>, <span class="niz">"gbr"</span>, <span class="niz">"fdob"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"uqje"</span>, Set.of(<span class="niz">"pnw"</span>, <span class="niz">"qwz"</span>, <span class="niz">"oov"</span>, <span class="niz">"xpm"</span>, <span class="niz">"uqje"</span>, <span class="niz">"gbr"</span>, <span class="niz">"fdob"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"gbr"</span>, Set.of(<span class="niz">"pnw"</span>, <span class="niz">"qwz"</span>, <span class="niz">"oov"</span>, <span class="niz">"xpm"</span>, <span class="niz">"uqje"</span>, <span class="niz">"gbr"</span>, <span class="niz">"fdob"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"fdob"</span>, Set.of(<span class="niz">"pnw"</span>, <span class="niz">"qwz"</span>, <span class="niz">"oov"</span>, <span class="niz">"xpm"</span>, <span class="niz">"uqje"</span>, <span class="niz">"gbr"</span>, <span class="niz">"fdob"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"snc"</span>, Set.of(<span class="niz">"snc"</span>, <span class="niz">"iog"</span>, <span class="niz">"dwj"</span>, <span class="niz">"jtw"</span>, <span class="niz">"zf"</span>, <span class="niz">"co"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"iog"</span>, Set.of(<span class="niz">"snc"</span>, <span class="niz">"iog"</span>, <span class="niz">"dwj"</span>, <span class="niz">"jtw"</span>, <span class="niz">"zf"</span>, <span class="niz">"co"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"dwj"</span>, Set.of(<span class="niz">"snc"</span>, <span class="niz">"iog"</span>, <span class="niz">"dwj"</span>, <span class="niz">"jtw"</span>, <span class="niz">"zf"</span>, <span class="niz">"co"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"jtw"</span>, Set.of(<span class="niz">"snc"</span>, <span class="niz">"iog"</span>, <span class="niz">"dwj"</span>, <span class="niz">"jtw"</span>, <span class="niz">"zf"</span>, <span class="niz">"co"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"zf"</span>, Set.of(<span class="niz">"snc"</span>, <span class="niz">"iog"</span>, <span class="niz">"dwj"</span>, <span class="niz">"jtw"</span>, <span class="niz">"zf"</span>, <span class="niz">"co"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"co"</span>, Set.of(<span class="niz">"snc"</span>, <span class="niz">"iog"</span>, <span class="niz">"dwj"</span>, <span class="niz">"jtw"</span>, <span class="niz">"zf"</span>, <span class="niz">"co"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"eq"</span>, Set.of(<span class="niz">"eq"</span>, <span class="niz">"mgllq"</span>, <span class="niz">"ocffm"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"mgllq"</span>, Set.of(<span class="niz">"eq"</span>, <span class="niz">"mgllq"</span>, <span class="niz">"ocffm"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ocffm"</span>, Set.of(<span class="niz">"eq"</span>, <span class="niz">"mgllq"</span>, <span class="niz">"ocffm"</span>));<br/>
+<br/>
+<tab><tab>List<String> besede = <span class="rwordb">new</span> ArrayList<>(Cetrta.najMnozica(sinonimi));<br/>
+<tab><tab>besede.sort(null);<br/>
+<tab><tab>System.out.println(besede);<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [fdob,&nbsp;gbr,&nbsp;oov,&nbsp;pnw,&nbsp;qwz,&nbsp;uqje,&nbsp;xpm]<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase5"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 5</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test05 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<br/>
+<tab><tab>Map<String, Set<String>> sinonimi = <span class="rwordb">new</span> HashMap<>();<br/>
+<tab><tab>sinonimi.put(<span class="niz">"mcpae"</span>, Set.of(<span class="niz">"mcpae"</span>, <span class="niz">"iqhk"</span>, <span class="niz">"nz"</span>, <span class="niz">"kwgjo"</span>, <span class="niz">"okgky"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"iqhk"</span>, Set.of(<span class="niz">"mcpae"</span>, <span class="niz">"iqhk"</span>, <span class="niz">"nz"</span>, <span class="niz">"kwgjo"</span>, <span class="niz">"okgky"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"nz"</span>, Set.of(<span class="niz">"mcpae"</span>, <span class="niz">"iqhk"</span>, <span class="niz">"nz"</span>, <span class="niz">"kwgjo"</span>, <span class="niz">"okgky"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"kwgjo"</span>, Set.of(<span class="niz">"mcpae"</span>, <span class="niz">"iqhk"</span>, <span class="niz">"nz"</span>, <span class="niz">"kwgjo"</span>, <span class="niz">"okgky"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"okgky"</span>, Set.of(<span class="niz">"mcpae"</span>, <span class="niz">"iqhk"</span>, <span class="niz">"nz"</span>, <span class="niz">"kwgjo"</span>, <span class="niz">"okgky"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"da"</span>, Set.of(<span class="niz">"da"</span>, <span class="niz">"eea"</span>, <span class="niz">"xp"</span>, <span class="niz">"az"</span>, <span class="niz">"fu"</span>, <span class="niz">"exw"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"eea"</span>, Set.of(<span class="niz">"da"</span>, <span class="niz">"eea"</span>, <span class="niz">"xp"</span>, <span class="niz">"az"</span>, <span class="niz">"fu"</span>, <span class="niz">"exw"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"xp"</span>, Set.of(<span class="niz">"da"</span>, <span class="niz">"eea"</span>, <span class="niz">"xp"</span>, <span class="niz">"az"</span>, <span class="niz">"fu"</span>, <span class="niz">"exw"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"az"</span>, Set.of(<span class="niz">"da"</span>, <span class="niz">"eea"</span>, <span class="niz">"xp"</span>, <span class="niz">"az"</span>, <span class="niz">"fu"</span>, <span class="niz">"exw"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"fu"</span>, Set.of(<span class="niz">"da"</span>, <span class="niz">"eea"</span>, <span class="niz">"xp"</span>, <span class="niz">"az"</span>, <span class="niz">"fu"</span>, <span class="niz">"exw"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"exw"</span>, Set.of(<span class="niz">"da"</span>, <span class="niz">"eea"</span>, <span class="niz">"xp"</span>, <span class="niz">"az"</span>, <span class="niz">"fu"</span>, <span class="niz">"exw"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"zcraa"</span>, Set.of(<span class="niz">"zcraa"</span>, <span class="niz">"sjv"</span>, <span class="niz">"qa"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"sjv"</span>, Set.of(<span class="niz">"zcraa"</span>, <span class="niz">"sjv"</span>, <span class="niz">"qa"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"qa"</span>, Set.of(<span class="niz">"zcraa"</span>, <span class="niz">"sjv"</span>, <span class="niz">"qa"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"yxrus"</span>, Set.of(<span class="niz">"yxrus"</span>, <span class="niz">"hx"</span>, <span class="niz">"b"</span>, <span class="niz">"ot"</span>, <span class="niz">"qn"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"hx"</span>, Set.of(<span class="niz">"yxrus"</span>, <span class="niz">"hx"</span>, <span class="niz">"b"</span>, <span class="niz">"ot"</span>, <span class="niz">"qn"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"b"</span>, Set.of(<span class="niz">"yxrus"</span>, <span class="niz">"hx"</span>, <span class="niz">"b"</span>, <span class="niz">"ot"</span>, <span class="niz">"qn"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ot"</span>, Set.of(<span class="niz">"yxrus"</span>, <span class="niz">"hx"</span>, <span class="niz">"b"</span>, <span class="niz">"ot"</span>, <span class="niz">"qn"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"qn"</span>, Set.of(<span class="niz">"yxrus"</span>, <span class="niz">"hx"</span>, <span class="niz">"b"</span>, <span class="niz">"ot"</span>, <span class="niz">"qn"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"rbheo"</span>, Set.of(<span class="niz">"rbheo"</span>, <span class="niz">"or"</span>, <span class="niz">"zql"</span>, <span class="niz">"nlmna"</span>, <span class="niz">"mqxg"</span>, <span class="niz">"onhmn"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"or"</span>, Set.of(<span class="niz">"rbheo"</span>, <span class="niz">"or"</span>, <span class="niz">"zql"</span>, <span class="niz">"nlmna"</span>, <span class="niz">"mqxg"</span>, <span class="niz">"onhmn"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"zql"</span>, Set.of(<span class="niz">"rbheo"</span>, <span class="niz">"or"</span>, <span class="niz">"zql"</span>, <span class="niz">"nlmna"</span>, <span class="niz">"mqxg"</span>, <span class="niz">"onhmn"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"nlmna"</span>, Set.of(<span class="niz">"rbheo"</span>, <span class="niz">"or"</span>, <span class="niz">"zql"</span>, <span class="niz">"nlmna"</span>, <span class="niz">"mqxg"</span>, <span class="niz">"onhmn"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"mqxg"</span>, Set.of(<span class="niz">"rbheo"</span>, <span class="niz">"or"</span>, <span class="niz">"zql"</span>, <span class="niz">"nlmna"</span>, <span class="niz">"mqxg"</span>, <span class="niz">"onhmn"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"onhmn"</span>, Set.of(<span class="niz">"rbheo"</span>, <span class="niz">"or"</span>, <span class="niz">"zql"</span>, <span class="niz">"nlmna"</span>, <span class="niz">"mqxg"</span>, <span class="niz">"onhmn"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"am"</span>, Set.of(<span class="niz">"am"</span>, <span class="niz">"urxxd"</span>, <span class="niz">"krsau"</span>, <span class="niz">"ws"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"urxxd"</span>, Set.of(<span class="niz">"am"</span>, <span class="niz">"urxxd"</span>, <span class="niz">"krsau"</span>, <span class="niz">"ws"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"krsau"</span>, Set.of(<span class="niz">"am"</span>, <span class="niz">"urxxd"</span>, <span class="niz">"krsau"</span>, <span class="niz">"ws"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ws"</span>, Set.of(<span class="niz">"am"</span>, <span class="niz">"urxxd"</span>, <span class="niz">"krsau"</span>, <span class="niz">"ws"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"gt"</span>, Set.of(<span class="niz">"gt"</span>, <span class="niz">"rdpms"</span>, <span class="niz">"ucne"</span>, <span class="niz">"drcf"</span>, <span class="niz">"ezgx"</span>, <span class="niz">"rag"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"rdpms"</span>, Set.of(<span class="niz">"gt"</span>, <span class="niz">"rdpms"</span>, <span class="niz">"ucne"</span>, <span class="niz">"drcf"</span>, <span class="niz">"ezgx"</span>, <span class="niz">"rag"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ucne"</span>, Set.of(<span class="niz">"gt"</span>, <span class="niz">"rdpms"</span>, <span class="niz">"ucne"</span>, <span class="niz">"drcf"</span>, <span class="niz">"ezgx"</span>, <span class="niz">"rag"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"drcf"</span>, Set.of(<span class="niz">"gt"</span>, <span class="niz">"rdpms"</span>, <span class="niz">"ucne"</span>, <span class="niz">"drcf"</span>, <span class="niz">"ezgx"</span>, <span class="niz">"rag"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ezgx"</span>, Set.of(<span class="niz">"gt"</span>, <span class="niz">"rdpms"</span>, <span class="niz">"ucne"</span>, <span class="niz">"drcf"</span>, <span class="niz">"ezgx"</span>, <span class="niz">"rag"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"rag"</span>, Set.of(<span class="niz">"gt"</span>, <span class="niz">"rdpms"</span>, <span class="niz">"ucne"</span>, <span class="niz">"drcf"</span>, <span class="niz">"ezgx"</span>, <span class="niz">"rag"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"af"</span>, Set.of(<span class="niz">"af"</span>, <span class="niz">"mcwxf"</span>, <span class="niz">"u"</span>, <span class="niz">"dds"</span>, <span class="niz">"lvjf"</span>, <span class="niz">"p"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"mcwxf"</span>, Set.of(<span class="niz">"af"</span>, <span class="niz">"mcwxf"</span>, <span class="niz">"u"</span>, <span class="niz">"dds"</span>, <span class="niz">"lvjf"</span>, <span class="niz">"p"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"u"</span>, Set.of(<span class="niz">"af"</span>, <span class="niz">"mcwxf"</span>, <span class="niz">"u"</span>, <span class="niz">"dds"</span>, <span class="niz">"lvjf"</span>, <span class="niz">"p"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"dds"</span>, Set.of(<span class="niz">"af"</span>, <span class="niz">"mcwxf"</span>, <span class="niz">"u"</span>, <span class="niz">"dds"</span>, <span class="niz">"lvjf"</span>, <span class="niz">"p"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"lvjf"</span>, Set.of(<span class="niz">"af"</span>, <span class="niz">"mcwxf"</span>, <span class="niz">"u"</span>, <span class="niz">"dds"</span>, <span class="niz">"lvjf"</span>, <span class="niz">"p"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"p"</span>, Set.of(<span class="niz">"af"</span>, <span class="niz">"mcwxf"</span>, <span class="niz">"u"</span>, <span class="niz">"dds"</span>, <span class="niz">"lvjf"</span>, <span class="niz">"p"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"njzex"</span>, Set.of(<span class="niz">"njzex"</span>, <span class="niz">"ypaul"</span>, <span class="niz">"ha"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ypaul"</span>, Set.of(<span class="niz">"njzex"</span>, <span class="niz">"ypaul"</span>, <span class="niz">"ha"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ha"</span>, Set.of(<span class="niz">"njzex"</span>, <span class="niz">"ypaul"</span>, <span class="niz">"ha"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"rzr"</span>, Set.of(<span class="niz">"rzr"</span>, <span class="niz">"wp"</span>, <span class="niz">"rjan"</span>, <span class="niz">"kl"</span>, <span class="niz">"xrn"</span>, <span class="niz">"hsy"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"wp"</span>, Set.of(<span class="niz">"rzr"</span>, <span class="niz">"wp"</span>, <span class="niz">"rjan"</span>, <span class="niz">"kl"</span>, <span class="niz">"xrn"</span>, <span class="niz">"hsy"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"rjan"</span>, Set.of(<span class="niz">"rzr"</span>, <span class="niz">"wp"</span>, <span class="niz">"rjan"</span>, <span class="niz">"kl"</span>, <span class="niz">"xrn"</span>, <span class="niz">"hsy"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"kl"</span>, Set.of(<span class="niz">"rzr"</span>, <span class="niz">"wp"</span>, <span class="niz">"rjan"</span>, <span class="niz">"kl"</span>, <span class="niz">"xrn"</span>, <span class="niz">"hsy"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"xrn"</span>, Set.of(<span class="niz">"rzr"</span>, <span class="niz">"wp"</span>, <span class="niz">"rjan"</span>, <span class="niz">"kl"</span>, <span class="niz">"xrn"</span>, <span class="niz">"hsy"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"hsy"</span>, Set.of(<span class="niz">"rzr"</span>, <span class="niz">"wp"</span>, <span class="niz">"rjan"</span>, <span class="niz">"kl"</span>, <span class="niz">"xrn"</span>, <span class="niz">"hsy"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"rkzgs"</span>, Set.of(<span class="niz">"rkzgs"</span>, <span class="niz">"xxv"</span>, <span class="niz">"y"</span>, <span class="niz">"jwj"</span>, <span class="niz">"alla"</span>, <span class="niz">"jt"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"xxv"</span>, Set.of(<span class="niz">"rkzgs"</span>, <span class="niz">"xxv"</span>, <span class="niz">"y"</span>, <span class="niz">"jwj"</span>, <span class="niz">"alla"</span>, <span class="niz">"jt"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"y"</span>, Set.of(<span class="niz">"rkzgs"</span>, <span class="niz">"xxv"</span>, <span class="niz">"y"</span>, <span class="niz">"jwj"</span>, <span class="niz">"alla"</span>, <span class="niz">"jt"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"jwj"</span>, Set.of(<span class="niz">"rkzgs"</span>, <span class="niz">"xxv"</span>, <span class="niz">"y"</span>, <span class="niz">"jwj"</span>, <span class="niz">"alla"</span>, <span class="niz">"jt"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"alla"</span>, Set.of(<span class="niz">"rkzgs"</span>, <span class="niz">"xxv"</span>, <span class="niz">"y"</span>, <span class="niz">"jwj"</span>, <span class="niz">"alla"</span>, <span class="niz">"jt"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"jt"</span>, Set.of(<span class="niz">"rkzgs"</span>, <span class="niz">"xxv"</span>, <span class="niz">"y"</span>, <span class="niz">"jwj"</span>, <span class="niz">"alla"</span>, <span class="niz">"jt"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ivv"</span>, Set.of(<span class="niz">"ivv"</span>, <span class="niz">"dw"</span>, <span class="niz">"il"</span>, <span class="niz">"qxdsb"</span>, <span class="niz">"glbc"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"dw"</span>, Set.of(<span class="niz">"ivv"</span>, <span class="niz">"dw"</span>, <span class="niz">"il"</span>, <span class="niz">"qxdsb"</span>, <span class="niz">"glbc"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"il"</span>, Set.of(<span class="niz">"ivv"</span>, <span class="niz">"dw"</span>, <span class="niz">"il"</span>, <span class="niz">"qxdsb"</span>, <span class="niz">"glbc"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"qxdsb"</span>, Set.of(<span class="niz">"ivv"</span>, <span class="niz">"dw"</span>, <span class="niz">"il"</span>, <span class="niz">"qxdsb"</span>, <span class="niz">"glbc"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"glbc"</span>, Set.of(<span class="niz">"ivv"</span>, <span class="niz">"dw"</span>, <span class="niz">"il"</span>, <span class="niz">"qxdsb"</span>, <span class="niz">"glbc"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"bkoit"</span>, Set.of(<span class="niz">"bkoit"</span>, <span class="niz">"sq"</span>, <span class="niz">"oljse"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"sq"</span>, Set.of(<span class="niz">"bkoit"</span>, <span class="niz">"sq"</span>, <span class="niz">"oljse"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"oljse"</span>, Set.of(<span class="niz">"bkoit"</span>, <span class="niz">"sq"</span>, <span class="niz">"oljse"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"yvd"</span>, Set.of(<span class="niz">"yvd"</span>, <span class="niz">"uze"</span>, <span class="niz">"cqosg"</span>, <span class="niz">"mihhj"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"uze"</span>, Set.of(<span class="niz">"yvd"</span>, <span class="niz">"uze"</span>, <span class="niz">"cqosg"</span>, <span class="niz">"mihhj"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"cqosg"</span>, Set.of(<span class="niz">"yvd"</span>, <span class="niz">"uze"</span>, <span class="niz">"cqosg"</span>, <span class="niz">"mihhj"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"mihhj"</span>, Set.of(<span class="niz">"yvd"</span>, <span class="niz">"uze"</span>, <span class="niz">"cqosg"</span>, <span class="niz">"mihhj"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ouumu"</span>, Set.of(<span class="niz">"ouumu"</span>, <span class="niz">"gtj"</span>, <span class="niz">"eyq"</span>, <span class="niz">"fse"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"gtj"</span>, Set.of(<span class="niz">"ouumu"</span>, <span class="niz">"gtj"</span>, <span class="niz">"eyq"</span>, <span class="niz">"fse"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"eyq"</span>, Set.of(<span class="niz">"ouumu"</span>, <span class="niz">"gtj"</span>, <span class="niz">"eyq"</span>, <span class="niz">"fse"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"fse"</span>, Set.of(<span class="niz">"ouumu"</span>, <span class="niz">"gtj"</span>, <span class="niz">"eyq"</span>, <span class="niz">"fse"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"embu"</span>, Set.of(<span class="niz">"embu"</span>, <span class="niz">"gczz"</span>, <span class="niz">"imehz"</span>, <span class="niz">"lrl"</span>, <span class="niz">"hohx"</span>, <span class="niz">"hcycq"</span>, <span class="niz">"grj"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"gczz"</span>, Set.of(<span class="niz">"embu"</span>, <span class="niz">"gczz"</span>, <span class="niz">"imehz"</span>, <span class="niz">"lrl"</span>, <span class="niz">"hohx"</span>, <span class="niz">"hcycq"</span>, <span class="niz">"grj"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"imehz"</span>, Set.of(<span class="niz">"embu"</span>, <span class="niz">"gczz"</span>, <span class="niz">"imehz"</span>, <span class="niz">"lrl"</span>, <span class="niz">"hohx"</span>, <span class="niz">"hcycq"</span>, <span class="niz">"grj"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"lrl"</span>, Set.of(<span class="niz">"embu"</span>, <span class="niz">"gczz"</span>, <span class="niz">"imehz"</span>, <span class="niz">"lrl"</span>, <span class="niz">"hohx"</span>, <span class="niz">"hcycq"</span>, <span class="niz">"grj"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"hohx"</span>, Set.of(<span class="niz">"embu"</span>, <span class="niz">"gczz"</span>, <span class="niz">"imehz"</span>, <span class="niz">"lrl"</span>, <span class="niz">"hohx"</span>, <span class="niz">"hcycq"</span>, <span class="niz">"grj"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"hcycq"</span>, Set.of(<span class="niz">"embu"</span>, <span class="niz">"gczz"</span>, <span class="niz">"imehz"</span>, <span class="niz">"lrl"</span>, <span class="niz">"hohx"</span>, <span class="niz">"hcycq"</span>, <span class="niz">"grj"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"grj"</span>, Set.of(<span class="niz">"embu"</span>, <span class="niz">"gczz"</span>, <span class="niz">"imehz"</span>, <span class="niz">"lrl"</span>, <span class="niz">"hohx"</span>, <span class="niz">"hcycq"</span>, <span class="niz">"grj"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ophef"</span>, Set.of(<span class="niz">"ophef"</span>, <span class="niz">"kx"</span>, <span class="niz">"lgt"</span>, <span class="niz">"tulkw"</span>, <span class="niz">"npm"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"kx"</span>, Set.of(<span class="niz">"ophef"</span>, <span class="niz">"kx"</span>, <span class="niz">"lgt"</span>, <span class="niz">"tulkw"</span>, <span class="niz">"npm"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"lgt"</span>, Set.of(<span class="niz">"ophef"</span>, <span class="niz">"kx"</span>, <span class="niz">"lgt"</span>, <span class="niz">"tulkw"</span>, <span class="niz">"npm"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"tulkw"</span>, Set.of(<span class="niz">"ophef"</span>, <span class="niz">"kx"</span>, <span class="niz">"lgt"</span>, <span class="niz">"tulkw"</span>, <span class="niz">"npm"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"npm"</span>, Set.of(<span class="niz">"ophef"</span>, <span class="niz">"kx"</span>, <span class="niz">"lgt"</span>, <span class="niz">"tulkw"</span>, <span class="niz">"npm"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ph"</span>, Set.of(<span class="niz">"ph"</span>, <span class="niz">"pd"</span>, <span class="niz">"sw"</span>, <span class="niz">"lyksy"</span>, <span class="niz">"i"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"pd"</span>, Set.of(<span class="niz">"ph"</span>, <span class="niz">"pd"</span>, <span class="niz">"sw"</span>, <span class="niz">"lyksy"</span>, <span class="niz">"i"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"sw"</span>, Set.of(<span class="niz">"ph"</span>, <span class="niz">"pd"</span>, <span class="niz">"sw"</span>, <span class="niz">"lyksy"</span>, <span class="niz">"i"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"lyksy"</span>, Set.of(<span class="niz">"ph"</span>, <span class="niz">"pd"</span>, <span class="niz">"sw"</span>, <span class="niz">"lyksy"</span>, <span class="niz">"i"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"i"</span>, Set.of(<span class="niz">"ph"</span>, <span class="niz">"pd"</span>, <span class="niz">"sw"</span>, <span class="niz">"lyksy"</span>, <span class="niz">"i"</span>));<br/>
+<br/>
+<tab><tab>List<String> besede = <span class="rwordb">new</span> ArrayList<>(Cetrta.najMnozica(sinonimi));<br/>
+<tab><tab>besede.sort(null);<br/>
+<tab><tab>System.out.println(besede);<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [embu,&nbsp;gczz,&nbsp;grj,&nbsp;hcycq,&nbsp;hohx,&nbsp;imehz,&nbsp;lrl]<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase6"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 6</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test06 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab>Map<String, Set<String>> sinonimi = <span class="rwordb">new</span> HashMap<>();<br/>
+<tab><tab>sinonimi.put(<span class="niz">"hisa"</span>, Set.of(<span class="niz">"hisa"</span>, <span class="niz">"bajta"</span>, <span class="niz">"koca"</span>, <span class="niz">"dom"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"bajta"</span>, Set.of(<span class="niz">"hisa"</span>, <span class="niz">"bajta"</span>, <span class="niz">"koca"</span>, <span class="niz">"dom"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"koca"</span>, Set.of(<span class="niz">"hisa"</span>, <span class="niz">"bajta"</span>, <span class="niz">"koca"</span>, <span class="niz">"dom"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"dom"</span>, Set.of(<span class="niz">"hisa"</span>, <span class="niz">"bajta"</span>, <span class="niz">"koca"</span>, <span class="niz">"dom"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"veselje"</span>, Set.of(<span class="niz">"veselje"</span>, <span class="niz">"radost"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"radost"</span>, Set.of(<span class="niz">"veselje"</span>, <span class="niz">"radost"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"spet"</span>, Set.of(<span class="niz">"spet"</span>, <span class="niz">"zopet"</span>, <span class="niz">"ponovno"</span>, <span class="niz">"znova"</span>, <span class="niz">"vnovic"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"zopet"</span>, Set.of(<span class="niz">"spet"</span>, <span class="niz">"zopet"</span>, <span class="niz">"ponovno"</span>, <span class="niz">"znova"</span>, <span class="niz">"vnovic"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ponovno"</span>, Set.of(<span class="niz">"spet"</span>, <span class="niz">"zopet"</span>, <span class="niz">"ponovno"</span>, <span class="niz">"znova"</span>, <span class="niz">"vnovic"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"znova"</span>, Set.of(<span class="niz">"spet"</span>, <span class="niz">"zopet"</span>, <span class="niz">"ponovno"</span>, <span class="niz">"znova"</span>, <span class="niz">"vnovic"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"vnovic"</span>, Set.of(<span class="niz">"spet"</span>, <span class="niz">"zopet"</span>, <span class="niz">"ponovno"</span>, <span class="niz">"znova"</span>, <span class="niz">"vnovic"</span>));<br/>
+<br/>
+<tab><tab>Map<Set<String>, Integer> slovar = Cetrta.pogostost(<br/>
+<tab><tab><tab><span class="niz">"hisa ni velika je pa veselje spet in zopet in znova veselje "</span> +<br/>
+<tab><tab><tab><span class="niz">"in radost in znova in vnovic in spet in zopet veselje "</span> +<br/>
+<tab><tab><tab><span class="niz">"ta bajta je res pravi dom moj prvi pravi dom "</span> +<br/>
+<tab><tab><tab><span class="niz">"ceprav je bolj koca kot hisa"</span>,<br/>
+<tab><tab><tab>sinonimi<br/>
+<tab><tab>);<br/>
+<br/>
+<tab><tab>List<String> seznam = <span class="rwordb">new</span> ArrayList<>();<br/>
+<tab><tab><span class="rwordb">for</span> (Set<String> mnozica: slovar.keySet()) {<br/>
+<tab><tab><tab>List<String> lstMnozica = <span class="rwordb">new</span> ArrayList<>(mnozica);<br/>
+<tab><tab><tab>lstMnozica.sort(null);<br/>
+<tab><tab><tab>seznam.add(String.format(<span class="niz">"%s -> %d"</span>, lstMnozica, slovar.get(mnozica)));<br/>
+<tab><tab>}<br/>
+<tab><tab>seznam.sort(null);<br/>
+<tab><tab><span class="rwordb">for</span> (String s: seznam) {<br/>
+<tab><tab><tab>System.out.println(s);<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [bajta,&nbsp;dom,&nbsp;hisa,&nbsp;koca]&nbsp;->&nbsp;6<br/>[ponovno,&nbsp;spet,&nbsp;vnovic,&nbsp;znova,&nbsp;zopet]&nbsp;->&nbsp;7<br/>[radost,&nbsp;veselje]&nbsp;->&nbsp;4<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase7"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 7</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test07 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<br/>
+<tab><tab>Map<String, Set<String>> sinonimi = <span class="rwordb">new</span> HashMap<>();<br/>
+<tab><tab>sinonimi.put(<span class="niz">"z"</span>, Set.of(<span class="niz">"z"</span>, <span class="niz">"cgg"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"cgg"</span>, Set.of(<span class="niz">"z"</span>, <span class="niz">"cgg"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"oz"</span>, Set.of(<span class="niz">"oz"</span>, <span class="niz">"br"</span>, <span class="niz">"sppx"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"br"</span>, Set.of(<span class="niz">"oz"</span>, <span class="niz">"br"</span>, <span class="niz">"sppx"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"sppx"</span>, Set.of(<span class="niz">"oz"</span>, <span class="niz">"br"</span>, <span class="niz">"sppx"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"txnd"</span>, Set.of(<span class="niz">"txnd"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"zmvfp"</span>, Set.of(<span class="niz">"zmvfp"</span>, <span class="niz">"uqlm"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"uqlm"</span>, Set.of(<span class="niz">"zmvfp"</span>, <span class="niz">"uqlm"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"frm"</span>, Set.of(<span class="niz">"frm"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"vuyv"</span>, Set.of(<span class="niz">"vuyv"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ph"</span>, Set.of(<span class="niz">"ph"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"bkgg"</span>, Set.of(<span class="niz">"bkgg"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"uxq"</span>, Set.of(<span class="niz">"uxq"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"bduq"</span>, Set.of(<span class="niz">"bduq"</span>, <span class="niz">"kdgol"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"kdgol"</span>, Set.of(<span class="niz">"bduq"</span>, <span class="niz">"kdgol"</span>));<br/>
+<br/>
+<tab><tab>Map<Set<String>, Integer> slovar = Cetrta.pogostost(<span class="niz">"dxcl tj bdohk wuge cjgks dzy ca hv sbby sbby bapo ks qcr pn ciwyt usatj zmp xreb itqa y gee gr sbby nsdn nfjc weof gho dx alni mw fqe tino sew un rks eehco vmjn pq lz roh ier qbmn ibg olkwp jl uxmxk dwa tq glqv fy qbmn lhist xssnz mcchd xhs kgxv o bgkdq nsdn u qgmwv db ws sr g ka qlue wmjvm m p rrk s ymfzz gr xjv atcx mxds beai wlxbe oalb tt jkcxc mrnos xd evfwz fphb cjgks rejg dkhwy oq ui mgsk tsxrb ocezj rylvq qtiob bkgg gmkxc qdak jstpg kp rewle uxmxk nequx z djqfp rjs nfjc bfz ht gbzdc tpfrb ee atcx l saaj fzls wihnu xssnz nd c heufb qnock tq fn gbuo jl ggpxz si kp ez yf kdkp sabri zzke usatj wluh ws levl vnkuj vyy gee qdak iirz oqca cz wfjcu okin ibg zzke lz yf gx ugrja lpqd"</span>, sinonimi);<br/>
+<tab><tab>List<String> seznam = <span class="rwordb">new</span> ArrayList<>();<br/>
+<tab><tab><span class="rwordb">for</span> (Set<String> mnozica: slovar.keySet()) {<br/>
+<tab><tab><tab>List<String> lstMnozica = <span class="rwordb">new</span> ArrayList<>(mnozica);<br/>
+<tab><tab><tab>lstMnozica.sort(null);<br/>
+<tab><tab><tab>seznam.add(String.format(<span class="niz">"%s -> %d"</span>, lstMnozica, slovar.get(mnozica)));<br/>
+<tab><tab>}<br/>
+<tab><tab>seznam.sort(null);<br/>
+<tab><tab><span class="rwordb">for</span> (String s: seznam) {<br/>
+<tab><tab><tab>System.out.println(s);<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [bkgg]&nbsp;->&nbsp;1<br/>[cgg,&nbsp;z]&nbsp;->&nbsp;1<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase8"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 8</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test08 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<br/>
+<tab><tab>Map<String, Set<String>> sinonimi = <span class="rwordb">new</span> HashMap<>();<br/>
+<tab><tab>sinonimi.put(<span class="niz">"pm"</span>, Set.of(<span class="niz">"pm"</span>, <span class="niz">"dgdio"</span>, <span class="niz">"chmx"</span>, <span class="niz">"ztiv"</span>, <span class="niz">"dw"</span>, <span class="niz">"owfr"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"dgdio"</span>, Set.of(<span class="niz">"pm"</span>, <span class="niz">"dgdio"</span>, <span class="niz">"chmx"</span>, <span class="niz">"ztiv"</span>, <span class="niz">"dw"</span>, <span class="niz">"owfr"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"chmx"</span>, Set.of(<span class="niz">"pm"</span>, <span class="niz">"dgdio"</span>, <span class="niz">"chmx"</span>, <span class="niz">"ztiv"</span>, <span class="niz">"dw"</span>, <span class="niz">"owfr"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ztiv"</span>, Set.of(<span class="niz">"pm"</span>, <span class="niz">"dgdio"</span>, <span class="niz">"chmx"</span>, <span class="niz">"ztiv"</span>, <span class="niz">"dw"</span>, <span class="niz">"owfr"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"dw"</span>, Set.of(<span class="niz">"pm"</span>, <span class="niz">"dgdio"</span>, <span class="niz">"chmx"</span>, <span class="niz">"ztiv"</span>, <span class="niz">"dw"</span>, <span class="niz">"owfr"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"owfr"</span>, Set.of(<span class="niz">"pm"</span>, <span class="niz">"dgdio"</span>, <span class="niz">"chmx"</span>, <span class="niz">"ztiv"</span>, <span class="niz">"dw"</span>, <span class="niz">"owfr"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ie"</span>, Set.of(<span class="niz">"ie"</span>, <span class="niz">"zxxkp"</span>, <span class="niz">"eswqh"</span>, <span class="niz">"gs"</span>, <span class="niz">"jj"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"zxxkp"</span>, Set.of(<span class="niz">"ie"</span>, <span class="niz">"zxxkp"</span>, <span class="niz">"eswqh"</span>, <span class="niz">"gs"</span>, <span class="niz">"jj"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"eswqh"</span>, Set.of(<span class="niz">"ie"</span>, <span class="niz">"zxxkp"</span>, <span class="niz">"eswqh"</span>, <span class="niz">"gs"</span>, <span class="niz">"jj"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"gs"</span>, Set.of(<span class="niz">"ie"</span>, <span class="niz">"zxxkp"</span>, <span class="niz">"eswqh"</span>, <span class="niz">"gs"</span>, <span class="niz">"jj"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"jj"</span>, Set.of(<span class="niz">"ie"</span>, <span class="niz">"zxxkp"</span>, <span class="niz">"eswqh"</span>, <span class="niz">"gs"</span>, <span class="niz">"jj"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"j"</span>, Set.of(<span class="niz">"j"</span>, <span class="niz">"fn"</span>, <span class="niz">"qlpqf"</span>, <span class="niz">"c"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"fn"</span>, Set.of(<span class="niz">"j"</span>, <span class="niz">"fn"</span>, <span class="niz">"qlpqf"</span>, <span class="niz">"c"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"qlpqf"</span>, Set.of(<span class="niz">"j"</span>, <span class="niz">"fn"</span>, <span class="niz">"qlpqf"</span>, <span class="niz">"c"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"c"</span>, Set.of(<span class="niz">"j"</span>, <span class="niz">"fn"</span>, <span class="niz">"qlpqf"</span>, <span class="niz">"c"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"id"</span>, Set.of(<span class="niz">"id"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"zp"</span>, Set.of(<span class="niz">"zp"</span>, <span class="niz">"asvdo"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"asvdo"</span>, Set.of(<span class="niz">"zp"</span>, <span class="niz">"asvdo"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"fudl"</span>, Set.of(<span class="niz">"fudl"</span>, <span class="niz">"qr"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"qr"</span>, Set.of(<span class="niz">"fudl"</span>, <span class="niz">"qr"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"dcpx"</span>, Set.of(<span class="niz">"dcpx"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"whkc"</span>, Set.of(<span class="niz">"whkc"</span>, <span class="niz">"ynec"</span>, <span class="niz">"lq"</span>, <span class="niz">"oxd"</span>, <span class="niz">"mb"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ynec"</span>, Set.of(<span class="niz">"whkc"</span>, <span class="niz">"ynec"</span>, <span class="niz">"lq"</span>, <span class="niz">"oxd"</span>, <span class="niz">"mb"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"lq"</span>, Set.of(<span class="niz">"whkc"</span>, <span class="niz">"ynec"</span>, <span class="niz">"lq"</span>, <span class="niz">"oxd"</span>, <span class="niz">"mb"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"oxd"</span>, Set.of(<span class="niz">"whkc"</span>, <span class="niz">"ynec"</span>, <span class="niz">"lq"</span>, <span class="niz">"oxd"</span>, <span class="niz">"mb"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"mb"</span>, Set.of(<span class="niz">"whkc"</span>, <span class="niz">"ynec"</span>, <span class="niz">"lq"</span>, <span class="niz">"oxd"</span>, <span class="niz">"mb"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"rn"</span>, Set.of(<span class="niz">"rn"</span>, <span class="niz">"mdj"</span>, <span class="niz">"jrb"</span>, <span class="niz">"mk"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"mdj"</span>, Set.of(<span class="niz">"rn"</span>, <span class="niz">"mdj"</span>, <span class="niz">"jrb"</span>, <span class="niz">"mk"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"jrb"</span>, Set.of(<span class="niz">"rn"</span>, <span class="niz">"mdj"</span>, <span class="niz">"jrb"</span>, <span class="niz">"mk"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"mk"</span>, Set.of(<span class="niz">"rn"</span>, <span class="niz">"mdj"</span>, <span class="niz">"jrb"</span>, <span class="niz">"mk"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"jqe"</span>, Set.of(<span class="niz">"jqe"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"eocjd"</span>, Set.of(<span class="niz">"eocjd"</span>, <span class="niz">"wmggt"</span>, <span class="niz">"xnkv"</span>, <span class="niz">"xg"</span>, <span class="niz">"ei"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"wmggt"</span>, Set.of(<span class="niz">"eocjd"</span>, <span class="niz">"wmggt"</span>, <span class="niz">"xnkv"</span>, <span class="niz">"xg"</span>, <span class="niz">"ei"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"xnkv"</span>, Set.of(<span class="niz">"eocjd"</span>, <span class="niz">"wmggt"</span>, <span class="niz">"xnkv"</span>, <span class="niz">"xg"</span>, <span class="niz">"ei"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"xg"</span>, Set.of(<span class="niz">"eocjd"</span>, <span class="niz">"wmggt"</span>, <span class="niz">"xnkv"</span>, <span class="niz">"xg"</span>, <span class="niz">"ei"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ei"</span>, Set.of(<span class="niz">"eocjd"</span>, <span class="niz">"wmggt"</span>, <span class="niz">"xnkv"</span>, <span class="niz">"xg"</span>, <span class="niz">"ei"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"eb"</span>, Set.of(<span class="niz">"eb"</span>, <span class="niz">"h"</span>, <span class="niz">"jal"</span>, <span class="niz">"uaw"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"h"</span>, Set.of(<span class="niz">"eb"</span>, <span class="niz">"h"</span>, <span class="niz">"jal"</span>, <span class="niz">"uaw"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"jal"</span>, Set.of(<span class="niz">"eb"</span>, <span class="niz">"h"</span>, <span class="niz">"jal"</span>, <span class="niz">"uaw"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"uaw"</span>, Set.of(<span class="niz">"eb"</span>, <span class="niz">"h"</span>, <span class="niz">"jal"</span>, <span class="niz">"uaw"</span>));<br/>
+<br/>
+<tab><tab>Map<Set<String>, Integer> slovar = Cetrta.pogostost(<span class="niz">"xnkv emv ywjcf ydqx idm trzq n jrj jeen plwwq pful kf zhhrv it pxh ztiv tmowk wvd sa bi r jpy dsgd hgpoa cu rl isyi cu pm msv taef ut tmowk v zzbo rjc jal sdcx zly hzyn ze orkh ib wvxhd oa p fw rfep qzpb zqaso idm m fdl va uj plp fcldp zgloi ztiv zly fhet wmdbe vbmz i jj r uzki vjv eseh jhmfi panp ydqj l wrbsd cg chuz owfr lkmd xnln jwp fn fn ti he mux it ojme priu thpk wrbsd mbutt fxlx zuklv ad zu mux rjdfa zhhrv dcpx rfep agkvm bddxh bky ykybk vv qmmp woq ebnv fw x ek cqg mp rh eawi xhnh szg brj idm plwwq oe rqrt th ja qlpqf panp ay sapnw bbu km lwm e ja eq qa ghf nhvod cxzv ntxg fdl zqaso xkr wvd v hzyn d lkmd qr qlpqf hhnu xkr lnwy breuu zusev ti uaw kweh nqtl cxsyk gnpxe zesxi tup cni chmx ojme qb tlqp ptd cew brj k bn ut xzopt ay laoep bi xvilz xnkv ke qzpb hbt fw aya uzki mbutt jrb ko jdouj mbutt rjdfa wzf czng jz jwp xuv ospa drpon idm wl ojme fcldp tigvj mdj bcqg ku fk oxd bmf su ebx nzb mp usr bd vjv ywjcf ykybk lgqs tp x y dtqj oa la p mhjc az sghcz qm tup rsw fudt krze qll ay inru wfa ebx jdouj priu ezr zly nx kq mdj pm uduh asv<span class="rwordv">do</span> vjv srecl qb ke pful asv<span class="rwordv">do</span> jwp q lq ea xerf ioeax bcqg saf jal mfx gii cew posen ojbo lwm xfhqo dum srecl dp idbwl pdpb yu fxlx eb hgpoa wmggt szg ptsi ples eocjd whkc ie ccpvo sapnw a dkz ybw xnln zhhrv uqmeb s eswqh rfep th bcqg izu l bbu uvz brj rqvsw tm dcsp bpc lcxn mux de uvz jv cg asv<span class="rwordv">do</span> rgau wmdbe qzpb xkr eocjd xzopt gii ghf zuklv laoep qg goqqp trzq iy sjamc vbmz dcsp gnpxe lft g sdcx rau jr isyi hbt zxxkp bbu xm gs dsgd ynec ri oxd rsw dgf oxd lkrsk bet msv eawi hzrqh wvxhd nw md trzq id posen rsw hedpo p ss szg hwkfw cprr bn qh whkc e he tm gii foj or hzyn wh plwwq plwwq owfr ybw xhnh he fcldp jyg tp xvilz vbw orkh lkmd bqti goqqp mb sjamc ti hzyn hzlkn uduh xmx cg nqtl lkmd tcib zesxi tup uistv sapnw or laoep vza posen y xg wrc xm jrb zhhrv tabd kmgy fn cuvqs mp"</span>, sinonimi);<br/>
+<tab><tab>List<String> seznam = <span class="rwordb">new</span> ArrayList<>();<br/>
+<tab><tab><span class="rwordb">for</span> (Set<String> mnozica: slovar.keySet()) {<br/>
+<tab><tab><tab>List<String> lstMnozica = <span class="rwordb">new</span> ArrayList<>(mnozica);<br/>
+<tab><tab><tab>lstMnozica.sort(null);<br/>
+<tab><tab><tab>seznam.add(String.format(<span class="niz">"%s -> %d"</span>, lstMnozica, slovar.get(mnozica)));<br/>
+<tab><tab>}<br/>
+<tab><tab>seznam.sort(null);<br/>
+<tab><tab><span class="rwordb">for</span> (String s: seznam) {<br/>
+<tab><tab><tab>System.out.println(s);<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [asvdo,&nbsp;zp]&nbsp;->&nbsp;3<br/>[c,&nbsp;fn,&nbsp;j,&nbsp;qlpqf]&nbsp;->&nbsp;5<br/>[chmx,&nbsp;dgdio,&nbsp;dw,&nbsp;owfr,&nbsp;pm,&nbsp;ztiv]&nbsp;->&nbsp;7<br/>[dcpx]&nbsp;->&nbsp;1<br/>[eb,&nbsp;h,&nbsp;jal,&nbsp;uaw]&nbsp;->&nbsp;4<br/>[ei,&nbsp;eocjd,&nbsp;wmggt,&nbsp;xg,&nbsp;xnkv]&nbsp;->&nbsp;6<br/>[eswqh,&nbsp;gs,&nbsp;ie,&nbsp;jj,&nbsp;zxxkp]&nbsp;->&nbsp;5<br/>[fudl,&nbsp;qr]&nbsp;->&nbsp;1<br/>[id]&nbsp;->&nbsp;1<br/>[jrb,&nbsp;mdj,&nbsp;mk,&nbsp;rn]&nbsp;->&nbsp;4<br/>[lq,&nbsp;mb,&nbsp;oxd,&nbsp;whkc,&nbsp;ynec]&nbsp;->&nbsp;8<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase9"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 9</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test09 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<br/>
+<tab><tab>Map<String, Set<String>> sinonimi = <span class="rwordb">new</span> HashMap<>();<br/>
+<tab><tab>sinonimi.put(<span class="niz">"zdee"</span>, Set.of(<span class="niz">"zdee"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"gknc"</span>, Set.of(<span class="niz">"gknc"</span>, <span class="niz">"sgo"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"sgo"</span>, Set.of(<span class="niz">"gknc"</span>, <span class="niz">"sgo"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"rf"</span>, Set.of(<span class="niz">"rf"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"fsw"</span>, Set.of(<span class="niz">"fsw"</span>, <span class="niz">"np"</span>, <span class="niz">"ieo"</span>, <span class="niz">"oqvny"</span>, <span class="niz">"uvmv"</span>, <span class="niz">"j"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"np"</span>, Set.of(<span class="niz">"fsw"</span>, <span class="niz">"np"</span>, <span class="niz">"ieo"</span>, <span class="niz">"oqvny"</span>, <span class="niz">"uvmv"</span>, <span class="niz">"j"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ieo"</span>, Set.of(<span class="niz">"fsw"</span>, <span class="niz">"np"</span>, <span class="niz">"ieo"</span>, <span class="niz">"oqvny"</span>, <span class="niz">"uvmv"</span>, <span class="niz">"j"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"oqvny"</span>, Set.of(<span class="niz">"fsw"</span>, <span class="niz">"np"</span>, <span class="niz">"ieo"</span>, <span class="niz">"oqvny"</span>, <span class="niz">"uvmv"</span>, <span class="niz">"j"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"uvmv"</span>, Set.of(<span class="niz">"fsw"</span>, <span class="niz">"np"</span>, <span class="niz">"ieo"</span>, <span class="niz">"oqvny"</span>, <span class="niz">"uvmv"</span>, <span class="niz">"j"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"j"</span>, Set.of(<span class="niz">"fsw"</span>, <span class="niz">"np"</span>, <span class="niz">"ieo"</span>, <span class="niz">"oqvny"</span>, <span class="niz">"uvmv"</span>, <span class="niz">"j"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"mtxeu"</span>, Set.of(<span class="niz">"mtxeu"</span>, <span class="niz">"fezm"</span>, <span class="niz">"mfqkx"</span>, <span class="niz">"aazsl"</span>, <span class="niz">"rb"</span>, <span class="niz">"tgf"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"fezm"</span>, Set.of(<span class="niz">"mtxeu"</span>, <span class="niz">"fezm"</span>, <span class="niz">"mfqkx"</span>, <span class="niz">"aazsl"</span>, <span class="niz">"rb"</span>, <span class="niz">"tgf"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"mfqkx"</span>, Set.of(<span class="niz">"mtxeu"</span>, <span class="niz">"fezm"</span>, <span class="niz">"mfqkx"</span>, <span class="niz">"aazsl"</span>, <span class="niz">"rb"</span>, <span class="niz">"tgf"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"aazsl"</span>, Set.of(<span class="niz">"mtxeu"</span>, <span class="niz">"fezm"</span>, <span class="niz">"mfqkx"</span>, <span class="niz">"aazsl"</span>, <span class="niz">"rb"</span>, <span class="niz">"tgf"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"rb"</span>, Set.of(<span class="niz">"mtxeu"</span>, <span class="niz">"fezm"</span>, <span class="niz">"mfqkx"</span>, <span class="niz">"aazsl"</span>, <span class="niz">"rb"</span>, <span class="niz">"tgf"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"tgf"</span>, Set.of(<span class="niz">"mtxeu"</span>, <span class="niz">"fezm"</span>, <span class="niz">"mfqkx"</span>, <span class="niz">"aazsl"</span>, <span class="niz">"rb"</span>, <span class="niz">"tgf"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ohxu"</span>, Set.of(<span class="niz">"ohxu"</span>, <span class="niz">"crshe"</span>, <span class="niz">"ida"</span>, <span class="niz">"ho"</span>, <span class="niz">"cqbu"</span>, <span class="niz">"e"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"crshe"</span>, Set.of(<span class="niz">"ohxu"</span>, <span class="niz">"crshe"</span>, <span class="niz">"ida"</span>, <span class="niz">"ho"</span>, <span class="niz">"cqbu"</span>, <span class="niz">"e"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ida"</span>, Set.of(<span class="niz">"ohxu"</span>, <span class="niz">"crshe"</span>, <span class="niz">"ida"</span>, <span class="niz">"ho"</span>, <span class="niz">"cqbu"</span>, <span class="niz">"e"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ho"</span>, Set.of(<span class="niz">"ohxu"</span>, <span class="niz">"crshe"</span>, <span class="niz">"ida"</span>, <span class="niz">"ho"</span>, <span class="niz">"cqbu"</span>, <span class="niz">"e"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"cqbu"</span>, Set.of(<span class="niz">"ohxu"</span>, <span class="niz">"crshe"</span>, <span class="niz">"ida"</span>, <span class="niz">"ho"</span>, <span class="niz">"cqbu"</span>, <span class="niz">"e"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"e"</span>, Set.of(<span class="niz">"ohxu"</span>, <span class="niz">"crshe"</span>, <span class="niz">"ida"</span>, <span class="niz">"ho"</span>, <span class="niz">"cqbu"</span>, <span class="niz">"e"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"vkyn"</span>, Set.of(<span class="niz">"vkyn"</span>, <span class="niz">"bk"</span>, <span class="niz">"vzv"</span>, <span class="niz">"ucve"</span>, <span class="niz">"aocv"</span>, <span class="niz">"ugrca"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"bk"</span>, Set.of(<span class="niz">"vkyn"</span>, <span class="niz">"bk"</span>, <span class="niz">"vzv"</span>, <span class="niz">"ucve"</span>, <span class="niz">"aocv"</span>, <span class="niz">"ugrca"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"vzv"</span>, Set.of(<span class="niz">"vkyn"</span>, <span class="niz">"bk"</span>, <span class="niz">"vzv"</span>, <span class="niz">"ucve"</span>, <span class="niz">"aocv"</span>, <span class="niz">"ugrca"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ucve"</span>, Set.of(<span class="niz">"vkyn"</span>, <span class="niz">"bk"</span>, <span class="niz">"vzv"</span>, <span class="niz">"ucve"</span>, <span class="niz">"aocv"</span>, <span class="niz">"ugrca"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"aocv"</span>, Set.of(<span class="niz">"vkyn"</span>, <span class="niz">"bk"</span>, <span class="niz">"vzv"</span>, <span class="niz">"ucve"</span>, <span class="niz">"aocv"</span>, <span class="niz">"ugrca"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ugrca"</span>, Set.of(<span class="niz">"vkyn"</span>, <span class="niz">"bk"</span>, <span class="niz">"vzv"</span>, <span class="niz">"ucve"</span>, <span class="niz">"aocv"</span>, <span class="niz">"ugrca"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"jrtv"</span>, Set.of(<span class="niz">"jrtv"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"his"</span>, Set.of(<span class="niz">"his"</span>, <span class="niz">"md"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"md"</span>, Set.of(<span class="niz">"his"</span>, <span class="niz">"md"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ofe"</span>, Set.of(<span class="niz">"ofe"</span>, <span class="niz">"if"</span>, <span class="niz">"zj"</span>, <span class="niz">"csyng"</span>, <span class="niz">"zzdu"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"if"</span>, Set.of(<span class="niz">"ofe"</span>, <span class="niz">"if"</span>, <span class="niz">"zj"</span>, <span class="niz">"csyng"</span>, <span class="niz">"zzdu"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"zj"</span>, Set.of(<span class="niz">"ofe"</span>, <span class="niz">"if"</span>, <span class="niz">"zj"</span>, <span class="niz">"csyng"</span>, <span class="niz">"zzdu"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"csyng"</span>, Set.of(<span class="niz">"ofe"</span>, <span class="niz">"if"</span>, <span class="niz">"zj"</span>, <span class="niz">"csyng"</span>, <span class="niz">"zzdu"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"zzdu"</span>, Set.of(<span class="niz">"ofe"</span>, <span class="niz">"if"</span>, <span class="niz">"zj"</span>, <span class="niz">"csyng"</span>, <span class="niz">"zzdu"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"hlusi"</span>, Set.of(<span class="niz">"hlusi"</span>, <span class="niz">"co"</span>, <span class="niz">"k"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"co"</span>, Set.of(<span class="niz">"hlusi"</span>, <span class="niz">"co"</span>, <span class="niz">"k"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"k"</span>, Set.of(<span class="niz">"hlusi"</span>, <span class="niz">"co"</span>, <span class="niz">"k"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"smc"</span>, Set.of(<span class="niz">"smc"</span>, <span class="niz">"vx"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"vx"</span>, Set.of(<span class="niz">"smc"</span>, <span class="niz">"vx"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"guvt"</span>, Set.of(<span class="niz">"guvt"</span>, <span class="niz">"uba"</span>, <span class="niz">"zfrq"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"uba"</span>, Set.of(<span class="niz">"guvt"</span>, <span class="niz">"uba"</span>, <span class="niz">"zfrq"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"zfrq"</span>, Set.of(<span class="niz">"guvt"</span>, <span class="niz">"uba"</span>, <span class="niz">"zfrq"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"osrnt"</span>, Set.of(<span class="niz">"osrnt"</span>, <span class="niz">"jpiqu"</span>, <span class="niz">"uhr"</span>, <span class="niz">"je"</span>, <span class="niz">"ajb"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"jpiqu"</span>, Set.of(<span class="niz">"osrnt"</span>, <span class="niz">"jpiqu"</span>, <span class="niz">"uhr"</span>, <span class="niz">"je"</span>, <span class="niz">"ajb"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"uhr"</span>, Set.of(<span class="niz">"osrnt"</span>, <span class="niz">"jpiqu"</span>, <span class="niz">"uhr"</span>, <span class="niz">"je"</span>, <span class="niz">"ajb"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"je"</span>, Set.of(<span class="niz">"osrnt"</span>, <span class="niz">"jpiqu"</span>, <span class="niz">"uhr"</span>, <span class="niz">"je"</span>, <span class="niz">"ajb"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ajb"</span>, Set.of(<span class="niz">"osrnt"</span>, <span class="niz">"jpiqu"</span>, <span class="niz">"uhr"</span>, <span class="niz">"je"</span>, <span class="niz">"ajb"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"rs"</span>, Set.of(<span class="niz">"rs"</span>, <span class="niz">"uxxe"</span>, <span class="niz">"jsd"</span>, <span class="niz">"mqnn"</span>, <span class="niz">"zwl"</span>, <span class="niz">"mhf"</span>, <span class="niz">"ka"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"uxxe"</span>, Set.of(<span class="niz">"rs"</span>, <span class="niz">"uxxe"</span>, <span class="niz">"jsd"</span>, <span class="niz">"mqnn"</span>, <span class="niz">"zwl"</span>, <span class="niz">"mhf"</span>, <span class="niz">"ka"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"jsd"</span>, Set.of(<span class="niz">"rs"</span>, <span class="niz">"uxxe"</span>, <span class="niz">"jsd"</span>, <span class="niz">"mqnn"</span>, <span class="niz">"zwl"</span>, <span class="niz">"mhf"</span>, <span class="niz">"ka"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"mqnn"</span>, Set.of(<span class="niz">"rs"</span>, <span class="niz">"uxxe"</span>, <span class="niz">"jsd"</span>, <span class="niz">"mqnn"</span>, <span class="niz">"zwl"</span>, <span class="niz">"mhf"</span>, <span class="niz">"ka"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"zwl"</span>, Set.of(<span class="niz">"rs"</span>, <span class="niz">"uxxe"</span>, <span class="niz">"jsd"</span>, <span class="niz">"mqnn"</span>, <span class="niz">"zwl"</span>, <span class="niz">"mhf"</span>, <span class="niz">"ka"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"mhf"</span>, Set.of(<span class="niz">"rs"</span>, <span class="niz">"uxxe"</span>, <span class="niz">"jsd"</span>, <span class="niz">"mqnn"</span>, <span class="niz">"zwl"</span>, <span class="niz">"mhf"</span>, <span class="niz">"ka"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ka"</span>, Set.of(<span class="niz">"rs"</span>, <span class="niz">"uxxe"</span>, <span class="niz">"jsd"</span>, <span class="niz">"mqnn"</span>, <span class="niz">"zwl"</span>, <span class="niz">"mhf"</span>, <span class="niz">"ka"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"nesf"</span>, Set.of(<span class="niz">"nesf"</span>, <span class="niz">"phkk"</span>, <span class="niz">"axzf"</span>, <span class="niz">"du"</span>, <span class="niz">"ath"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"phkk"</span>, Set.of(<span class="niz">"nesf"</span>, <span class="niz">"phkk"</span>, <span class="niz">"axzf"</span>, <span class="niz">"du"</span>, <span class="niz">"ath"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"axzf"</span>, Set.of(<span class="niz">"nesf"</span>, <span class="niz">"phkk"</span>, <span class="niz">"axzf"</span>, <span class="niz">"du"</span>, <span class="niz">"ath"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"du"</span>, Set.of(<span class="niz">"nesf"</span>, <span class="niz">"phkk"</span>, <span class="niz">"axzf"</span>, <span class="niz">"du"</span>, <span class="niz">"ath"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ath"</span>, Set.of(<span class="niz">"nesf"</span>, <span class="niz">"phkk"</span>, <span class="niz">"axzf"</span>, <span class="niz">"du"</span>, <span class="niz">"ath"</span>));<br/>
+<br/>
+<tab><tab>Map<Set<String>, Integer> slovar = Cetrta.pogostost(<span class="niz">"mqnn o qbtcp reh gik tx yxd q rcg qbwya czt mekrv kojfn oqvny dbsjn co zprb sgo uxsm syzy xct kvpmu iflw kxm lw ldmh j zegce bay hxsl ow nqml bhd ljr dqsqz bsszg ljr ot jzw dm aocv jlmyr mbdia dyox afdg mz mbdia zz hsgos vn a xyo hwlo cpvh ymlbf md km nvguk b qbtcp tsyxa eho axxgq mo jisqp mbdia qsn cxh dc vx ftj li abvee pj vhuvb om cpvh bk u mspks lyvbj gknc tx xcowl nm bk vh zl fat yvi ui gkh li dqsqz uici nqml uxxe vq so ndhwo reh npbp vkyn zbtxt vmh kkx iuze rk hmkl zcmky b nxn fsw nb vp nctnz kt axxgq ryvo lyvbj phkk pzcvg jrtv mp hmwnc txlzz pr ldmh nu eho xpzed dhify cnl wbzr jhwoi co cba vhwqo hmkl cxh pr qmv sj zfrq nesf zwl xjgu dbr atbk nfm nnris rk zfrq xv zb zva axxgq cxl t jvy pkg dbr vhbz ldmh zji ajb ocvyw xcmem xw s lab htjyi cfslc oz aocv honu ptu kzgar wqfk reh rwng gody mfqkx lu l qsk cdofh akf <span class="rwordb">if</span> ui jop nesf aoe rv irjol p zzdu zenvl mbvp muuj dhify yvi dbsjn zwl lni abvee ho npbp jsfsk grun vln oz mspks crjr vhwqo crjr dhify vh owks siz lni onvcg tamus xdw odh ebmxq yjxr zegce tgf yjxr wbzr gxsh wc lp dwgpy xcmem lubrt mbvp ieo n r vx ndhwo mr cxl qgrve kzgar awk kt dceru csm hlusi jwuho uxxe kojfn np dh qsk mfqkx uhs hfxqy htjyi gq jpiqu lp hsgos sj ryvo zwl csyng tamus cxl qem ldmh xcjq tsyxa tdki xjgu zr qh fxme nesf ijiw spi l hommm ajb r atbk hsgos cau so oyat jrtv xky erxnl dm f awk ay hxsl uvmv bi sy ns tw dbr cnl yk ya uklwc tdki pqea reh"</span>, sinonimi);<br/>
+<tab><tab>List<String> seznam = <span class="rwordb">new</span> ArrayList<>();<br/>
+<tab><tab><span class="rwordb">for</span> (Set<String> mnozica: slovar.keySet()) {<br/>
+<tab><tab><tab>List<String> lstMnozica = <span class="rwordb">new</span> ArrayList<>(mnozica);<br/>
+<tab><tab><tab>lstMnozica.sort(null);<br/>
+<tab><tab><tab>seznam.add(String.format(<span class="niz">"%s -> %d"</span>, lstMnozica, slovar.get(mnozica)));<br/>
+<tab><tab>}<br/>
+<tab><tab>seznam.sort(null);<br/>
+<tab><tab><span class="rwordb">for</span> (String s: seznam) {<br/>
+<tab><tab><tab>System.out.println(s);<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [aazsl,&nbsp;fezm,&nbsp;mfqkx,&nbsp;mtxeu,&nbsp;rb,&nbsp;tgf]&nbsp;->&nbsp;3<br/>[ajb,&nbsp;je,&nbsp;jpiqu,&nbsp;osrnt,&nbsp;uhr]&nbsp;->&nbsp;3<br/>[aocv,&nbsp;bk,&nbsp;ucve,&nbsp;ugrca,&nbsp;vkyn,&nbsp;vzv]&nbsp;->&nbsp;5<br/>[ath,&nbsp;axzf,&nbsp;du,&nbsp;nesf,&nbsp;phkk]&nbsp;->&nbsp;4<br/>[co,&nbsp;hlusi,&nbsp;k]&nbsp;->&nbsp;3<br/>[cqbu,&nbsp;crshe,&nbsp;e,&nbsp;ho,&nbsp;ida,&nbsp;ohxu]&nbsp;->&nbsp;1<br/>[csyng,&nbsp;if,&nbsp;ofe,&nbsp;zj,&nbsp;zzdu]&nbsp;->&nbsp;3<br/>[fsw,&nbsp;ieo,&nbsp;j,&nbsp;np,&nbsp;oqvny,&nbsp;uvmv]&nbsp;->&nbsp;6<br/>[gknc,&nbsp;sgo]&nbsp;->&nbsp;2<br/>[guvt,&nbsp;uba,&nbsp;zfrq]&nbsp;->&nbsp;2<br/>[his,&nbsp;md]&nbsp;->&nbsp;1<br/>[jrtv]&nbsp;->&nbsp;2<br/>[jsd,&nbsp;ka,&nbsp;mhf,&nbsp;mqnn,&nbsp;rs,&nbsp;uxxe,&nbsp;zwl]&nbsp;->&nbsp;6<br/>[smc,&nbsp;vx]&nbsp;->&nbsp;2<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase10"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 10</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.*;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test10 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<br/>
+<tab><tab>Map<String, Set<String>> sinonimi = <span class="rwordb">new</span> HashMap<>();<br/>
+<tab><tab>sinonimi.put(<span class="niz">"kuaf"</span>, Set.of(<span class="niz">"kuaf"</span>, <span class="niz">"znqe"</span>, <span class="niz">"qme"</span>, <span class="niz">"tucky"</span>, <span class="niz">"vwzh"</span>, <span class="niz">"vmbjw"</span>, <span class="niz">"lkk"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"znqe"</span>, Set.of(<span class="niz">"kuaf"</span>, <span class="niz">"znqe"</span>, <span class="niz">"qme"</span>, <span class="niz">"tucky"</span>, <span class="niz">"vwzh"</span>, <span class="niz">"vmbjw"</span>, <span class="niz">"lkk"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"qme"</span>, Set.of(<span class="niz">"kuaf"</span>, <span class="niz">"znqe"</span>, <span class="niz">"qme"</span>, <span class="niz">"tucky"</span>, <span class="niz">"vwzh"</span>, <span class="niz">"vmbjw"</span>, <span class="niz">"lkk"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"tucky"</span>, Set.of(<span class="niz">"kuaf"</span>, <span class="niz">"znqe"</span>, <span class="niz">"qme"</span>, <span class="niz">"tucky"</span>, <span class="niz">"vwzh"</span>, <span class="niz">"vmbjw"</span>, <span class="niz">"lkk"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"vwzh"</span>, Set.of(<span class="niz">"kuaf"</span>, <span class="niz">"znqe"</span>, <span class="niz">"qme"</span>, <span class="niz">"tucky"</span>, <span class="niz">"vwzh"</span>, <span class="niz">"vmbjw"</span>, <span class="niz">"lkk"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"vmbjw"</span>, Set.of(<span class="niz">"kuaf"</span>, <span class="niz">"znqe"</span>, <span class="niz">"qme"</span>, <span class="niz">"tucky"</span>, <span class="niz">"vwzh"</span>, <span class="niz">"vmbjw"</span>, <span class="niz">"lkk"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"lkk"</span>, Set.of(<span class="niz">"kuaf"</span>, <span class="niz">"znqe"</span>, <span class="niz">"qme"</span>, <span class="niz">"tucky"</span>, <span class="niz">"vwzh"</span>, <span class="niz">"vmbjw"</span>, <span class="niz">"lkk"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"gkb"</span>, Set.of(<span class="niz">"gkb"</span>, <span class="niz">"wy"</span>, <span class="niz">"pgos"</span>, <span class="niz">"ye"</span>, <span class="niz">"f"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"wy"</span>, Set.of(<span class="niz">"gkb"</span>, <span class="niz">"wy"</span>, <span class="niz">"pgos"</span>, <span class="niz">"ye"</span>, <span class="niz">"f"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"pgos"</span>, Set.of(<span class="niz">"gkb"</span>, <span class="niz">"wy"</span>, <span class="niz">"pgos"</span>, <span class="niz">"ye"</span>, <span class="niz">"f"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ye"</span>, Set.of(<span class="niz">"gkb"</span>, <span class="niz">"wy"</span>, <span class="niz">"pgos"</span>, <span class="niz">"ye"</span>, <span class="niz">"f"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"f"</span>, Set.of(<span class="niz">"gkb"</span>, <span class="niz">"wy"</span>, <span class="niz">"pgos"</span>, <span class="niz">"ye"</span>, <span class="niz">"f"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"kf"</span>, Set.of(<span class="niz">"kf"</span>, <span class="niz">"yjx"</span>, <span class="niz">"cwuk"</span>, <span class="niz">"odqh"</span>, <span class="niz">"oprcm"</span>, <span class="niz">"gkhv"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"yjx"</span>, Set.of(<span class="niz">"kf"</span>, <span class="niz">"yjx"</span>, <span class="niz">"cwuk"</span>, <span class="niz">"odqh"</span>, <span class="niz">"oprcm"</span>, <span class="niz">"gkhv"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"cwuk"</span>, Set.of(<span class="niz">"kf"</span>, <span class="niz">"yjx"</span>, <span class="niz">"cwuk"</span>, <span class="niz">"odqh"</span>, <span class="niz">"oprcm"</span>, <span class="niz">"gkhv"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"odqh"</span>, Set.of(<span class="niz">"kf"</span>, <span class="niz">"yjx"</span>, <span class="niz">"cwuk"</span>, <span class="niz">"odqh"</span>, <span class="niz">"oprcm"</span>, <span class="niz">"gkhv"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"oprcm"</span>, Set.of(<span class="niz">"kf"</span>, <span class="niz">"yjx"</span>, <span class="niz">"cwuk"</span>, <span class="niz">"odqh"</span>, <span class="niz">"oprcm"</span>, <span class="niz">"gkhv"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"gkhv"</span>, Set.of(<span class="niz">"kf"</span>, <span class="niz">"yjx"</span>, <span class="niz">"cwuk"</span>, <span class="niz">"odqh"</span>, <span class="niz">"oprcm"</span>, <span class="niz">"gkhv"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"jk"</span>, Set.of(<span class="niz">"jk"</span>, <span class="niz">"iemp"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"iemp"</span>, Set.of(<span class="niz">"jk"</span>, <span class="niz">"iemp"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ct"</span>, Set.of(<span class="niz">"ct"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"topj"</span>, Set.of(<span class="niz">"topj"</span>, <span class="niz">"ft"</span>, <span class="niz">"dlgu"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ft"</span>, Set.of(<span class="niz">"topj"</span>, <span class="niz">"ft"</span>, <span class="niz">"dlgu"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"dlgu"</span>, Set.of(<span class="niz">"topj"</span>, <span class="niz">"ft"</span>, <span class="niz">"dlgu"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"aljx"</span>, Set.of(<span class="niz">"aljx"</span>, <span class="niz">"pdma"</span>, <span class="niz">"fgftg"</span>, <span class="niz">"qiqf"</span>, <span class="niz">"unp"</span>, <span class="niz">"kuafw"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"pdma"</span>, Set.of(<span class="niz">"aljx"</span>, <span class="niz">"pdma"</span>, <span class="niz">"fgftg"</span>, <span class="niz">"qiqf"</span>, <span class="niz">"unp"</span>, <span class="niz">"kuafw"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"fgftg"</span>, Set.of(<span class="niz">"aljx"</span>, <span class="niz">"pdma"</span>, <span class="niz">"fgftg"</span>, <span class="niz">"qiqf"</span>, <span class="niz">"unp"</span>, <span class="niz">"kuafw"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"qiqf"</span>, Set.of(<span class="niz">"aljx"</span>, <span class="niz">"pdma"</span>, <span class="niz">"fgftg"</span>, <span class="niz">"qiqf"</span>, <span class="niz">"unp"</span>, <span class="niz">"kuafw"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"unp"</span>, Set.of(<span class="niz">"aljx"</span>, <span class="niz">"pdma"</span>, <span class="niz">"fgftg"</span>, <span class="niz">"qiqf"</span>, <span class="niz">"unp"</span>, <span class="niz">"kuafw"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"kuafw"</span>, Set.of(<span class="niz">"aljx"</span>, <span class="niz">"pdma"</span>, <span class="niz">"fgftg"</span>, <span class="niz">"qiqf"</span>, <span class="niz">"unp"</span>, <span class="niz">"kuafw"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"arlcr"</span>, Set.of(<span class="niz">"arlcr"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"gsxm"</span>, Set.of(<span class="niz">"gsxm"</span>, <span class="niz">"fhm"</span>, <span class="niz">"edctb"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"fhm"</span>, Set.of(<span class="niz">"gsxm"</span>, <span class="niz">"fhm"</span>, <span class="niz">"edctb"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"edctb"</span>, Set.of(<span class="niz">"gsxm"</span>, <span class="niz">"fhm"</span>, <span class="niz">"edctb"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ggp"</span>, Set.of(<span class="niz">"ggp"</span>, <span class="niz">"onmv"</span>, <span class="niz">"zuvae"</span>, <span class="niz">"ybl"</span>, <span class="niz">"aip"</span>, <span class="niz">"cdn"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"onmv"</span>, Set.of(<span class="niz">"ggp"</span>, <span class="niz">"onmv"</span>, <span class="niz">"zuvae"</span>, <span class="niz">"ybl"</span>, <span class="niz">"aip"</span>, <span class="niz">"cdn"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"zuvae"</span>, Set.of(<span class="niz">"ggp"</span>, <span class="niz">"onmv"</span>, <span class="niz">"zuvae"</span>, <span class="niz">"ybl"</span>, <span class="niz">"aip"</span>, <span class="niz">"cdn"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ybl"</span>, Set.of(<span class="niz">"ggp"</span>, <span class="niz">"onmv"</span>, <span class="niz">"zuvae"</span>, <span class="niz">"ybl"</span>, <span class="niz">"aip"</span>, <span class="niz">"cdn"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"aip"</span>, Set.of(<span class="niz">"ggp"</span>, <span class="niz">"onmv"</span>, <span class="niz">"zuvae"</span>, <span class="niz">"ybl"</span>, <span class="niz">"aip"</span>, <span class="niz">"cdn"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"cdn"</span>, Set.of(<span class="niz">"ggp"</span>, <span class="niz">"onmv"</span>, <span class="niz">"zuvae"</span>, <span class="niz">"ybl"</span>, <span class="niz">"aip"</span>, <span class="niz">"cdn"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"df"</span>, Set.of(<span class="niz">"df"</span>, <span class="niz">"vv"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"vv"</span>, Set.of(<span class="niz">"df"</span>, <span class="niz">"vv"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"zhmkl"</span>, Set.of(<span class="niz">"zhmkl"</span>, <span class="niz">"typ"</span>, <span class="niz">"zp"</span>, <span class="niz">"plf"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"typ"</span>, Set.of(<span class="niz">"zhmkl"</span>, <span class="niz">"typ"</span>, <span class="niz">"zp"</span>, <span class="niz">"plf"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"zp"</span>, Set.of(<span class="niz">"zhmkl"</span>, <span class="niz">"typ"</span>, <span class="niz">"zp"</span>, <span class="niz">"plf"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"plf"</span>, Set.of(<span class="niz">"zhmkl"</span>, <span class="niz">"typ"</span>, <span class="niz">"zp"</span>, <span class="niz">"plf"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ncln"</span>, Set.of(<span class="niz">"ncln"</span>, <span class="niz">"vfvd"</span>, <span class="niz">"zg"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"vfvd"</span>, Set.of(<span class="niz">"ncln"</span>, <span class="niz">"vfvd"</span>, <span class="niz">"zg"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"zg"</span>, Set.of(<span class="niz">"ncln"</span>, <span class="niz">"vfvd"</span>, <span class="niz">"zg"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"gig"</span>, Set.of(<span class="niz">"gig"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"xvib"</span>, Set.of(<span class="niz">"xvib"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"bsxmn"</span>, Set.of(<span class="niz">"bsxmn"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"tjzq"</span>, Set.of(<span class="niz">"tjzq"</span>, <span class="niz">"gvj"</span>, <span class="niz">"zjc"</span>, <span class="niz">"fblc"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"gvj"</span>, Set.of(<span class="niz">"tjzq"</span>, <span class="niz">"gvj"</span>, <span class="niz">"zjc"</span>, <span class="niz">"fblc"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"zjc"</span>, Set.of(<span class="niz">"tjzq"</span>, <span class="niz">"gvj"</span>, <span class="niz">"zjc"</span>, <span class="niz">"fblc"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"fblc"</span>, Set.of(<span class="niz">"tjzq"</span>, <span class="niz">"gvj"</span>, <span class="niz">"zjc"</span>, <span class="niz">"fblc"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"bozrc"</span>, Set.of(<span class="niz">"bozrc"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"bbfe"</span>, Set.of(<span class="niz">"bbfe"</span>, <span class="niz">"kjo"</span>, <span class="niz">"geovm"</span>, <span class="niz">"pbmdz"</span>, <span class="niz">"vcy"</span>, <span class="niz">"ixz"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"kjo"</span>, Set.of(<span class="niz">"bbfe"</span>, <span class="niz">"kjo"</span>, <span class="niz">"geovm"</span>, <span class="niz">"pbmdz"</span>, <span class="niz">"vcy"</span>, <span class="niz">"ixz"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"geovm"</span>, Set.of(<span class="niz">"bbfe"</span>, <span class="niz">"kjo"</span>, <span class="niz">"geovm"</span>, <span class="niz">"pbmdz"</span>, <span class="niz">"vcy"</span>, <span class="niz">"ixz"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"pbmdz"</span>, Set.of(<span class="niz">"bbfe"</span>, <span class="niz">"kjo"</span>, <span class="niz">"geovm"</span>, <span class="niz">"pbmdz"</span>, <span class="niz">"vcy"</span>, <span class="niz">"ixz"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"vcy"</span>, Set.of(<span class="niz">"bbfe"</span>, <span class="niz">"kjo"</span>, <span class="niz">"geovm"</span>, <span class="niz">"pbmdz"</span>, <span class="niz">"vcy"</span>, <span class="niz">"ixz"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"ixz"</span>, Set.of(<span class="niz">"bbfe"</span>, <span class="niz">"kjo"</span>, <span class="niz">"geovm"</span>, <span class="niz">"pbmdz"</span>, <span class="niz">"vcy"</span>, <span class="niz">"ixz"</span>));<br/>
+<tab><tab>sinonimi.put(<span class="niz">"za"</span>, Set.of(<span class="niz">"za"</span>));<br/>
+<br/>
+<tab><tab>Map<Set<String>, Integer> slovar = Cetrta.pogostost(<span class="niz">"gnfg vfvd a mxxgl uhi irl ncln impk gkhv vmbjw rvg uud ecfd iemp lmh rj aip yph irl nyl vcy evagv aofhx j ojlq bozrc gnfg vnpfr rsqf gu xbna rx oxafn ecfd hfx jxo dn waq xm oxruc bc jnq uyb gkhv kuaf vb lcswf vb n vbzvb cssy kgan uypm tucky cpjd fdtcz hieo xz hxfxl uypm qcp dnm uypm h lnxuc qru lxur wvuq kuaf yph p hnwd gxgx esd wumo o p bow gpru szx e sv dgd vfvd wxqrw xq fl jgxam jbmn gpru wsh kpbl gig iybmt typ dy grs yci dsb spf vz ja pgos aljx gpglm rx ioy jq lnxuc ecfd xr khssm sv dync lyujw brqju amjp wxjnh wiqm dvav fazn yzv ekv topj vwzh amlb ahh zppm sg zy hud waw edctb iaxgi rsqf frwzt oe ypbf egkcl impk evagv bl topj vnpfr okjlh h oug fotes bozrc tndf kuafw lyrtt ysta gsxm kpbl fmg onmv wxqrw upmu dapw esd edctb mu wzv iaxgi izgql b tjzq tucky brqju a fs snx ybl ilom nl za okw qru ncw kpbl oxym bl dgd jzua ahh sg zp qiw qi gh z hd no bnwjn xs uhi ye ja myr myr dnm h tndf qw zjc iisv jq fw ct bl nyl cssy ov grs akgq iur ecb zhlnw cqxr vsrdn ko oxym gxgx ioy phq paps bbfe kuaf spf wy kpbl oug ncw hxfxl achy xcdf aofhx gkb wxwbg zx ekv cmxk gkb qme dldkh pt y aljx xxh ugfol cisid hvxio bbfe gpsi jfl fazn xhucm vz bm ko zz ai xbna qiqf cusy zuvae frwzt dvav v nidm wbip lxur p okjlh dhwl onmv fxp razit c dnm hxfxl ekv a zik x xqvj ft uey a pt qi bpd paps gig dlgu fw fx oug brqju csjkp okw qw oubzr ybl kqws vmbjw mv qx xz zzz wxqrw ny zz oxop gugu yci anrw lxur jnq bl acurz jxo toy cgfy r sw vbzvb ilom izgql ouuk fe gig qua bnldj mub ekls wklv impk cisid fnbo gf h rdpd gu rafk jxrz q kpbl komhv ja uypm jnq yci yci obum lnuj kuafw oprcm typ esd dvclw vz iur okjlh wxjnh txh dsb tndf xs hieo komhv iaxgi aljx zjc yopm gprb ouuk xyda ybl iaxgi cdn zp ixz p<span class="rwordv">do</span> zbxrn jwpyg komhv achy cpjd iaxgi ecfd jo vz o yph bc lx xq lnxuc jtbq khssm fgftg grs fnbo yzv xfiq zzz xvib cbwbk fe ysta sdx bbs ekr ryu bdxa yq x<span class="rwordv">do</span> szx dhwl dvclw lnuj fw bbs yul cdn vw a frwzt vnpfr oubzr aic lmh vz uey oubzr qwnwm fnbo gkb topj gnfg iisv amjp zhlnw csjkp kuaf doh xs ecruj qx k ugfol bbfe ugfol anrw fmg iisv ojlq ecruj kuafw lmy lyujw ugfol jq muqq gsxm qiw lx d glnbf"</span>, sinonimi);<br/>
+<tab><tab>List<String> seznam = <span class="rwordb">new</span> ArrayList<>();<br/>
+<tab><tab><span class="rwordb">for</span> (Set<String> mnozica: slovar.keySet()) {<br/>
+<tab><tab><tab>List<String> lstMnozica = <span class="rwordb">new</span> ArrayList<>(mnozica);<br/>
+<tab><tab><tab>lstMnozica.sort(null);<br/>
+<tab><tab><tab>seznam.add(String.format(<span class="niz">"%s -> %d"</span>, lstMnozica, slovar.get(mnozica)));<br/>
+<tab><tab>}<br/>
+<tab><tab>seznam.sort(null);<br/>
+<tab><tab><span class="rwordb">for</span> (String s: seznam) {<br/>
+<tab><tab><tab>System.out.println(s);<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [aip,&nbsp;cdn,&nbsp;ggp,&nbsp;onmv,&nbsp;ybl,&nbsp;zuvae]&nbsp;->&nbsp;9<br/>[aljx,&nbsp;fgftg,&nbsp;kuafw,&nbsp;pdma,&nbsp;qiqf,&nbsp;unp]&nbsp;->&nbsp;8<br/>[bbfe,&nbsp;geovm,&nbsp;ixz,&nbsp;kjo,&nbsp;pbmdz,&nbsp;vcy]&nbsp;->&nbsp;5<br/>[bozrc]&nbsp;->&nbsp;2<br/>[ct]&nbsp;->&nbsp;1<br/>[cwuk,&nbsp;gkhv,&nbsp;kf,&nbsp;odqh,&nbsp;oprcm,&nbsp;yjx]&nbsp;->&nbsp;3<br/>[dlgu,&nbsp;ft,&nbsp;topj]&nbsp;->&nbsp;5<br/>[edctb,&nbsp;fhm,&nbsp;gsxm]&nbsp;->&nbsp;4<br/>[f,&nbsp;gkb,&nbsp;pgos,&nbsp;wy,&nbsp;ye]&nbsp;->&nbsp;6<br/>[fblc,&nbsp;gvj,&nbsp;tjzq,&nbsp;zjc]&nbsp;->&nbsp;3<br/>[gig]&nbsp;->&nbsp;3<br/>[iemp,&nbsp;jk]&nbsp;->&nbsp;1<br/>[kuaf,&nbsp;lkk,&nbsp;qme,&nbsp;tucky,&nbsp;vmbjw,&nbsp;vwzh,&nbsp;znqe]&nbsp;->&nbsp;10<br/>[ncln,&nbsp;vfvd,&nbsp;zg]&nbsp;->&nbsp;3<br/>[plf,&nbsp;typ,&nbsp;zhmkl,&nbsp;zp]&nbsp;->&nbsp;4<br/>[xvib]&nbsp;->&nbsp;1<br/>[za]&nbsp;->&nbsp;1<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+
+        <div style="height: 30px"></div>
+
+        <table id="grad1" class="tableLegend tableSummary"
+          <tbody>
+            <tr>
+              <td style="color: black;">
+              <table class="tableLegend">
+                <tr>
+	              <td style="background-color: #9F9; color: black; width: 10px; text-align: center; border: 1px solid black; padding: 2px;"></td>
+	              <td style="font-size: 0.7em; padding: 3px;">ok</td>
+                </tr>
+              </table>
+              </td>
+              <td style="color: black;">
+              <table class="tableLegend">
+                <tr>
+	              <td style="background-color: #FFBF00; color: black; width: 10px; text-align: center; border: 1px solid black; padding: 2px;"></td>
+	              <td style="font-size: 0.7em; padding: 3px;">napaka</td>
+                </tr>
+              </table>
+              </td>
+              <td style="color: black;">
+              <table class="tableLegend">
+                <tr>
+	              <td style="background-color: #FF9; color: black; width: 10px; text-align: center; border: 1px solid black; padding: 2px;"></td>
+	              <td style="font-size: 0.7em; padding: 3px;">napaka med izvajanjem</td>
+                </tr>
+              </table>
+              </td>
+              <td style="color: black;">
+              <table class="tableLegend">
+                <tr>
+	              <td style="background-color: #C00000; color: black; width: 10px; text-align: center; border: 1px solid black; padding: 2px;"></td>
+	              <td style="font-size: 0.7em; padding: 3px;">se ne prevede</td>
+                </tr>
+              </table>
+              </td>
+              <td style="color: black;">
+              <table class="tableLegend">
+                <tr>
+	              <td style="background-color: #B9F; color: black; width: 10px; text-align: center; border: 1px solid black; padding: 2px;"></td>
+	              <td style="font-size: 0.7em; padding: 3px;">timeout (1000 ms)</td>
+                </tr>
+              </table>
+              </td>
+              <td style="color: black;">
+              <table class="tableLegend">
+                <tr>
+	              <td style="background-color: #D0E0F0; color: black; width: 10px; text-align: center; border: 1px solid black; padding: 2px;"></td>
+	              <td style="font-size: 0.7em; padding: 3px;">rezultat izrisa</td>
+                </tr>
+              </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <a name="bottom"></a>
+        </div>
+    </body>
+    <!-- java class tester version "1.5.12" -->
+    <!-- 16.8.2025 11:21.50 -->
+    <!-- Gajs-MacBook-Air, [OSSupportsIPv6 v6]: True [SocketException]: Could not resolve host 'Gajs-MacBook-Air' -->
+</html>
